@@ -1,0 +1,127 @@
+/*
+1 - 1b365d
+2 - 1c3775
+3 -  9199ac
+4 - 97999b
+5 - c5cfda*/
+h3 {
+    text-align: center;
+  }
+
+.nome {
+    background-color: #9199ac;
+    padding: 0.1px 0.1px 0.1px 0.1px;
+    color: #1b365d;
+}
+
+.botao {
+    padding: 8px 8px;
+    border-style: unset;
+    margin-left: 225px;
+    background-color: #c5cfda;
+    color: black;
+  }
+
+.botao:hover {
+    padding: 8px 8px;
+    border-style: unset;
+    margin-left: 225px;
+    background-color: rgba(255, 255, 255, 0.633);
+  }
+
+.options {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #c5cfda;
+    border-top: 1px solid rgb(0, 0, 0);
+  }
+  
+  li {
+    float: left;
+  }
+  
+  li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+    .conteudo {
+    display: none;
+  }
+  
+  .visible {
+    display: block;
+  }
+  
+
+  input[type="number"] {
+    width: 35%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #9199ac;
+    border-radius: 4px;
+    box-sizing: border-box;
+    outline-color: #9199ac;
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+
+  .searchArea {
+    margin-left: 38%;
+    margin-top: 7%;
+}
+
+.card {
+  width: 25%;
+  height: 8%;
+  margin-top: 30px;
+  margin-left: 80px;
+  border: 1.5px solid #9199ac;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  display: inline-block;
+}
+
+.card-content {
+  padding: 20px;
+  height: 280px;
+  display: inline-block;
+}
+
+#btnAdquirir{
+  border: 2px solid #E3D8F1;
+  border-radius: 5px;
+  width: 250px;
+  height: 35px;
+  margin-top: auto
+}
+
+.div {
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+}
+#div1 {
+  background-color: magenta;    
+}
+#div2 {
+  background-color: teal;
+}
+
+#btnBusca{
+  background-color: #c5cfda;
+  height: 42px;
+  width: 42px;
+  margin-left: -3px;
+  border-radius: 5px;
+  border: 1px solid #9199ac;
+}

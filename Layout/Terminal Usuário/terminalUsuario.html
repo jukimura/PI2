@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minha Página</title>
+  <link rel="stylesheet" type="text/css" href="terminalUsuario.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="nome">
+        <h3>Nome da clínica</h3>
+    </div>
+
+  <ul class="options">
+    <li><a href="#" class="botao" id="servicosBtn" onclick="exibirPaginaCorreta('servico')">Serviço</a></li>
+    <li><a href="#" class="botao" id="gerarCartaoBtn" onclick="exibirPaginaCorreta('gerarCartao')">Gerar Cartão</a></li>
+    <li><a href="#" class="botao" id="relatorioUsuarioBtn" onclick="exibirPaginaCorreta('relatorio')">Relatório</a></li>
+  </ul>
+
+<div id="servico" class="conteudo visible">
+  <!--<h2>Página de Serviço</h2>-->
+  <form class="searchArea">
+    <p>Digite o número do cartão: </p>
+    <input type="number" placeholder="Número do cartão" name="numeroCartao">
+    <button type="submit" id="btnBusca"><i class="fa fa-search"></i></button>
+  </form>
+
+  <div class="card">
+    <div class="card-content">
+        <h2>Title1</h2>
+        <p>Description</p>
+        <button id="btnAdquirir" onclick="showDetails()">Show Details</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-content">
+        <h2>Title2</h2>
+        <p>Description</p>
+        <button id="btnAdquirir" onclick="showDetails()">Show Details</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-content">
+        <h2>Title3</h2>
+        <p>Description</p>
+        <button id="btnAdquirir" onclick="showDetails()">Show Details</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-content">
+        <h2>Title4</h2>
+        <p>Description</p>
+        <button id="btnAdquirir" onclick="showDetails()">Show Details</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-content">
+        <h2>Title5</h2>
+        <p>Description</p>
+        <button id="btnAdquirir" onclick="showDetails()">Show Details</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-content">
+        <h2>Title6</h2>
+        <p>Description</p>
+        <button id="btnAdquirir" onclick="showDetails()">Show Details</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-content">
+        <h2>Title7</h2>
+        <p>Description</p>
+        <button id="btnAdquirir" onclick="showDetails()">Show Details</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-content">
+        <h2>Title8</h2>
+        <p>Description</p>
+        <button id="btnAdquirir" onclick="showDetails()">Show Details</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-content">
+        <h2>Title9</h2>
+        <p>Description</p>
+        <button id="btnAdquirir" onclick="showDetails()">Show Details</button>
+    </div>
+  </div>
+  
+</div>
+
+<div id="gerarCartao" class="conteudo">
+  <h2>Página de Gerar Cartão</h2>
+
+  <div class="div" id="div1"></div>
+  <div class="div" id="div2"></div>
+</div>
+
+<div id="relatorio" class="conteudo">
+  <h2>Página de Relatório</h2>
+</div>
+
+<script src="terminalUsuario.js"></script>
+</body>
+</html>
