@@ -97,24 +97,12 @@ h3 {
   display: inline-block;
 }
 
-#btnAdquirir{
+.buttonScreen{
   border: 2px solid #E3D8F1;
   border-radius: 5px;
   width: 250px;
   height: 35px;
   margin-top: auto
-}
-
-.div {
-  width: 100px;
-  height: 100px;
-  display: inline-block;
-}
-#div1 {
-  background-color: magenta;    
-}
-#div2 {
-  background-color: teal;
 }
 
 #btnBusca{
@@ -125,3 +113,13 @@ h3 {
   border-radius: 5px;
   border: 1px solid #9199ac;
 }
+
+.divFormGerarCartao {
+  width: 300px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
