@@ -12,81 +12,115 @@
         <h3>Nome da clínica</h3>
     </div>
 
-  <ul class="options">
-    <li><a href="#" class="botao" id="servicosBtn" onclick="exibirPaginaCorreta('servico')">Serviço</a></li>
-    <li><a href="#" class="botao" id="gerarCartaoBtn" onclick="exibirPaginaCorreta('gerarCartao')">Gerar Cartão</a></li>
-    <li><a href="#" class="botao" id="relatorioUsuarioBtn" onclick="exibirPaginaCorreta('relatorio')">Relatório</a></li>
-  </ul>
+    <ul class="options">
+      <div class="navBar">
+      <li><a href="#" class="botao" id="servicosBtn" onclick="exibirPaginaCorreta('servico')">Comprar serviços</a></li>
+      <li><a href="#" class="botao" id="gerarCartaoBtn" onclick="exibirPaginaCorreta('gerarCartao')">Gerar Cartão</a></li>
+      <li><a href="#" class="botao" id="relatorioUsuarioBtn" onclick="exibirPaginaCorreta('relatorio')">Relatório</a></li>
+    </div>
+    </ul>
+  
 
 <div id="servico" class="conteudo visible">
-  <!--<h2>Página de Serviço</h2>-->
-  <form class="searchArea">
+  <!--Página de compra de serviços-->
+  <form class="searchArea" >
     <p>Digite o número do cartão: </p>
     <input type="number" placeholder="Número do cartão" name="numeroCartao">
     <button type="submit" id="btnBusca"><i class="fa fa-search"></i></button>
   </form>
 
-  <div class="card">
+  <div class="card" >
     <div class="card-content">
-        <h2>Title1</h2>
-        <p>Description</p>
-        <button class="buttonScreen" onclick="showDetails()">Show Details</button>
+      <img class ="imagens" src="C:\Meus arquivos\Pucc\2º Semestre 2023\PI2\Layout\Imagens\Botox.jfif" alt="Descrição da Imagem">
+        <h2>Preenchimento Labial</h2>
+        <div class="descricao">
+          <p>O preenchimento labial é um procedimento estético que visa aumentar ou resgatar o volume dos lábios de forma natural, previsível e precisa. Para obter esses resultados é preciso conhecer a anatomia dos lábios e realizar uma técnica eficaz e segura.</p>
+          <p>O procedimento é feito com ácido hialurônico, que é um material preenchedor biocompatível sob anestesia, sem dor, com resultado imediato, que traz como resultado aumento do volume e hidratação do lábio.</p>
+        </div>
+        <button class="buttonScreen" onclick="adquirirServico()">Adquirir serviço</button>
     </div>
   </div>
   <div class="card">
     <div class="card-content">
-        <h2>Title2</h2>
-        <p>Description</p>
-        <button class="buttonScreen" onclick="showDetails()">Show Details</button>
+      <img class ="imagens" src="C:\Meus arquivos\Pucc\2º Semestre 2023\PI2\Layout\Imagens\preenchimento facial.jfif" alt="Descrição da Imagem">
+        <h2>Preenchimento Facial</h2>
+        <div class="descricao">
+       <p>O preenchimento facial é um procedimento estético que visa corrigir ou melhorar as imperfeições do rosto, como rugas, sulcos, linhas de expressão e perda de volume. </p>
+          O procedimento é realizado com ácido hialurônico, que é um material preenchedor biocompatível.</p>
+        </div>
+        <button class="buttonScreen" onclick="adquirirServico()">Adquirir serviço</button>
     </div>
   </div>
   <div class="card">
     <div class="card-content">
-        <h2>Title3</h2>
-        <p>Description</p>
-        <button class="buttonScreen" onclick="showDetails()">Show Details</button>
+      <img class ="imagens" src="C:\Meus arquivos\Pucc\2º Semestre 2023\PI2\Layout\Imagens\harmonização.jfif" alt="Descrição da Imagem">
+        <h2>Harmonização Facial</h2>
+        <div class="descricao">
+        <p>A harmonização facial é um conjunto de procedimentos estéticos que visam melhorar a harmonia do rosto, corrigindo assimetrias, realçando os traços e promovendo o rejuvenescimento.</p>
+          O procedimento é realizado com uma combinação de técnicas, como preenchimento facial, toxina botulínica, bioestimuladores de colágeno e fios de sustentação.</p>
+        </p>
+        </div>
+        <button class="buttonScreen" onclick="adquirirServico()">Adquirir serviço</button>
     </div>
   </div>
   <div class="card">
     <div class="card-content">
-        <h2>Title4</h2>
+      <img class ="imagens" src="C:\Meus arquivos\Pucc\2º Semestre 2023\PI2\Layout\Imagens\limpeza.jfif" alt="Descrição da Imagem">
+        <h2>Limpeza de Pele</h2>
+        <div class="descricao">
         <p>Description</p>
-        <button class="buttonScreen" onclick="showDetails()">Show Details</button>
+        </div>
+        <button class="buttonScreen" onclick="adquirirServico()">Adquirir serviço</button>
     </div>
   </div>
   <div class="card">
     <div class="card-content">
-        <h2>Title5</h2>
+      <img class ="imagens" src="C:\Meus arquivos\Pucc\2º Semestre 2023\PI2\Layout\Imagens\micro pig" alt="Descrição da Imagem">
+        <h2>Micropigmentação</h2>
+        <div class="descricao">
         <p>Description</p>
-        <button class="buttonScreen" onclick="showDetails()">Show Details</button>
+        </div>
+        <button class="buttonScreen" onclick="adquirirServico()">Adquirir serviço</button>
     </div>
   </div>
   <div class="card">
     <div class="card-content">
-        <h2>Title6</h2>
+      <img class ="imagens" src="C:\Meus arquivos\Pucc\2º Semestre 2023\PI2\Layout\Imagens\rinoplastia_1.jpg" alt="Descrição da Imagem">
+        <h2>Rinomodelação</h2>
+        <div class="descricao">
         <p>Description</p>
-        <button class="buttonScreen" onclick="showDetails()">Show Details</button>
+        </div>
+        <button class="buttonScreen" onclick="adquirirServico()">Adquirir serviço</button>
     </div>
   </div>
   <div class="card">
     <div class="card-content">
-        <h2>Title7</h2>
+      <img class ="imagens" src="C:\Meus arquivos\Pucc\2º Semestre 2023\PI2\Layout\Imagens\depilação laser.jfif" alt="Descrição da Imagem">
+        <h2>Depilação a Laser</h2>
+        <div class="descricao">
         <p>Description</p>
-        <button class="buttonScreen" onclick="showDetails()">Show Details</button>
+        </div>
+        <button class="buttonScreen" onclick="adquirirServico()">Adquirir serviço</button>
     </div>
   </div>
   <div class="card">
     <div class="card-content">
-        <h2>Title8</h2>
+      <img class ="imagens" src="C:\Meus arquivos\Pucc\2º Semestre 2023\PI2\Layout\Imagens\manicure.jfif" alt="Descrição da Imagem">
+        <h2>Manicure</h2>
+        <div class="descricao">
         <p>Description</p>
-        <button class="buttonScreen" onclick="showDetails()">Show Details</button>
+        </div>
+        <button class="buttonScreen" onclick="adquirirServico()">Adquirir serviço</button>
     </div>
   </div>
   <div class="card">
     <div class="card-content">
-        <h2>Title9</h2>
+      <img class ="imagens" src="C:\Meus arquivos\Pucc\2º Semestre 2023\PI2\Layout\Imagens\pedicure.jfif" alt="Descrição da Imagem">
+        <h2>Pedicure</h2>
+        <div class="descricao">
         <p>Description</p>
-        <button class="buttonScreen" onclick="showDetails()">Show Details</button>
+        </div>
+        <button class="buttonScreen" onclick="adquirirServico()">Adquirir serviço</button>
     </div>
   </div>
   
@@ -96,13 +130,13 @@
   <!--<h2>Página de Gerar cartão</h2>-->
   <div class="divFormGerarCartao">
     <form class="formGerarCartao">
-      <h2>Você já possui um cartão?</h2>
+      <div class="textCenter"><h2>Você já possui um cartão?</h2></div>
       <!--<input type="submit" value="Enviar">-->
       <div>
-        <button class="buttonScreen" id="btnVoltarPagServicos" onclick="showDetails()">Já possuo</button>
+        <button class="buttonScreen" id="btnVoltarPagServicos" onclick="exibirPaginaCorreta('servico')">Já possuo</button>
       </div>
       <div>
-        <button class="buttonScreen" id="btnGerarCartao" onclick="showDetails()">Gerar Cartão</button>
+        <button class="buttonScreen" id="btnGerarCartao" onclick="adquirirServico()">Gerar Cartão</button>
       </div>
     </form>
   </div>

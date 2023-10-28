@@ -77,7 +77,8 @@ h3 {
 
   .searchArea {
     margin-left: 38%;
-    margin-top: 7%;
+    margin-top: 5%;
+    margin-bottom: 2%;
 }
 
 .card {
@@ -88,23 +89,27 @@ h3 {
   border: 1.5px solid #9199ac;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   position: relative;
   display: inline-block;
 }
 
 .card-content {
   padding: 20px;
-  height: 280px;
-  display: inline-block;
+  height: 500px;
 }
 
 .buttonScreen{
-  border: 2px solid #E3D8F1;
+  border: 2px solid #9199ac;
   border-radius: 5px;
   width: 250px;
   height: 35px;
-  margin-top: auto
+  margin-top: auto;
+  background-color: #c5cfda;
+}
+
+.buttonScreen:hover{
+  background-color: rgba(255, 255, 255, 0.633);
 }
 
 #btnBusca{
@@ -117,11 +122,45 @@ h3 {
 }
 
 .divFormGerarCartao {
-  width: 300px;
+  width: 400px;
+  height: 250px;
   margin: 20px auto;
-  padding: 20px;
+  padding: 15px;
+  margin-top: 100px;
   border: 1px solid #ccc;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+.formGerarCartao{
+  text-align: center;
+}
+
+
+#btnVoltarPagServicos{
+  margin-top: 10px;
+  margin-left: 15px;
+}
+
+#btnGerarCartao{
+  margin-top: 20px;
+  margin-left: 15px;
+}
+
+.imagens{
+  width: 150px;
+  height: 130px;
+  margin-top: 10px;
+  margin-left: 60px;
+  align-self: center;
+}
+
+
+.descricao{
+  height: 250px;
+  width: 300px;
+}
+
+.navBar{
+  margin-left: 40px;
+}

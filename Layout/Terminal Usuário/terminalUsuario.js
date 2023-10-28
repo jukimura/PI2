@@ -14,7 +14,8 @@ function exibirPaginaCorreta(pagina) {
   }
   
 
-  function showDetails() {
+  function adquirirServico() {
     alert("O serviço foi comprado");
     // Você pode adicionar mais lógica aqui para exibir detalhes ou realizar outras ações.
 }
+
