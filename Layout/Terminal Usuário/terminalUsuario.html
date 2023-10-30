@@ -25,7 +25,7 @@
   <!--Página de compra de serviços-->
   <form class="searchArea" >
     <p>Digite o número do cartão: </p>
-    <input type="number" placeholder="Número do cartão" name="numeroCartao">
+    <input type="text" placeholder="Número do cartão" name="numeroCartao" id="campoNumeroCartao" oninput="validarNumeros(this)">
     <button type="submit" id="btnBusca"><i class="fa fa-search"></i></button>
   </form>
 
@@ -46,7 +46,7 @@
         <h2>Preenchimento Facial</h2>
         <div class="descricao">
        <p>O preenchimento facial é um procedimento estético que visa corrigir ou melhorar as imperfeições do rosto, como rugas, sulcos, linhas de expressão e perda de volume. </p>
-          O procedimento é realizado com ácido hialurônico, que é um material preenchedor biocompatível.</p>
+        <p>O procedimento é realizado com ácido hialurônico, que é um material preenchedor biocompatível.</p>
         </div>
         <button class="buttonScreen" onclick="adquirirServico()">Adquirir serviço</button>
     </div>
@@ -57,7 +57,7 @@
         <h2>Harmonização Facial</h2>
         <div class="descricao">
         <p>A harmonização facial é um conjunto de procedimentos estéticos que visam melhorar a harmonia do rosto, corrigindo assimetrias, realçando os traços e promovendo o rejuvenescimento.</p>
-          O procedimento é realizado com uma combinação de técnicas, como preenchimento facial, toxina botulínica, bioestimuladores de colágeno e fios de sustentação.</p>
+        <p>O procedimento é realizado com uma combinação de técnicas, como preenchimento facial, toxina botulínica, bioestimuladores de colágeno e fios de sustentação.</p>
         </p>
         </div>
         <button class="buttonScreen" onclick="adquirirServico()">Adquirir serviço</button>
@@ -68,7 +68,8 @@
       <img class ="imagens" src="C:\Meus arquivos\Pucc\2º Semestre 2023\PI2\Layout\Imagens\limpeza.jfif" alt="Descrição da Imagem">
         <h2>Limpeza de Pele</h2>
         <div class="descricao">
-        <p>Description</p>
+        <p>A limpeza de pele é um procedimento estético que visa remover as impurezas da pele, como cravos, espinhas, células mortas e excesso de oleosidade. </p>
+        <p>O procedimento é realizado por um profissional qualificado, que utiliza técnicas específicas para cada tipo de pele.</p>
         </div>
         <button class="buttonScreen" onclick="adquirirServico()">Adquirir serviço</button>
     </div>
@@ -78,7 +79,8 @@
       <img class ="imagens" src="C:\Meus arquivos\Pucc\2º Semestre 2023\PI2\Layout\Imagens\micro pig" alt="Descrição da Imagem">
         <h2>Micropigmentação</h2>
         <div class="descricao">
-        <p>Description</p>
+        <p>A micropigmentação é um procedimento estético que visa corrigir ou melhorar a aparência das sobrancelhas, lábios e olhos. </p>
+          <p>O procedimento é realizado com um aparelho que deposita pigmentos na pele, de forma a criar um efeito natural.</p>
         </div>
         <button class="buttonScreen" onclick="adquirirServico()">Adquirir serviço</button>
     </div>
@@ -88,7 +90,8 @@
       <img class ="imagens" src="C:\Meus arquivos\Pucc\2º Semestre 2023\PI2\Layout\Imagens\rinoplastia_1.jpg" alt="Descrição da Imagem">
         <h2>Rinomodelação</h2>
         <div class="descricao">
-        <p>Description</p>
+        <p>A rinomodelação é um procedimento estético que visa corrigir imperfeições do nariz sem a necessidade de cirurgia.</p>
+        <p> O procedimento é realizado com injeções de ácido hialurônico, um material preenchedor biocompatível.</p>
         </div>
         <button class="buttonScreen" onclick="adquirirServico()">Adquirir serviço</button>
     </div>
@@ -98,7 +101,8 @@
       <img class ="imagens" src="C:\Meus arquivos\Pucc\2º Semestre 2023\PI2\Layout\Imagens\depilação laser.jfif" alt="Descrição da Imagem">
         <h2>Depilação a Laser</h2>
         <div class="descricao">
-        <p>Description</p>
+        <p>A depilação a laser é um procedimento estético que visa remover os pelos de forma permanente. </p>
+        <p>O procedimento é realizado com um aparelho que emite uma luz intensa, que é absorvida pela melanina do pelo, levando à sua destruição.</p>
         </div>
         <button class="buttonScreen" onclick="adquirirServico()">Adquirir serviço</button>
     </div>
@@ -108,7 +112,9 @@
       <img class ="imagens" src="C:\Meus arquivos\Pucc\2º Semestre 2023\PI2\Layout\Imagens\manicure.jfif" alt="Descrição da Imagem">
         <h2>Manicure</h2>
         <div class="descricao">
-        <p>Description</p>
+        <p>A manicure é um serviço de beleza que visa cuidar das mãos e unhas. </p>
+        <p>O procedimento inclui a limpeza, corte, lixamento e esmaltação das unhas, além da hidratação das mãos e cutículas.
+        </p>
         </div>
         <button class="buttonScreen" onclick="adquirirServico()">Adquirir serviço</button>
     </div>
@@ -118,11 +124,15 @@
       <img class ="imagens" src="C:\Meus arquivos\Pucc\2º Semestre 2023\PI2\Layout\Imagens\pedicure.jfif" alt="Descrição da Imagem">
         <h2>Pedicure</h2>
         <div class="descricao">
-        <p>Description</p>
+        <p>O pedicure é um serviço de beleza que visa cuidar dos pés e unhas.</p>
+        <p>O procedimento inclui a limpeza, corte, lixamento e esmaltação das unhas, além da hidratação dos pés e cutículas. 
+        </p>
         </div>
         <button class="buttonScreen" onclick="adquirirServico()">Adquirir serviço</button>
     </div>
   </div>
+
+  <div class="rodape"></div>
   
 </div>
 
@@ -130,17 +140,26 @@
   <!--<h2>Página de Gerar cartão</h2>-->
   <div class="divFormGerarCartao">
     <form class="formGerarCartao">
-      <div class="textCenter"><h2>Você já possui um cartão?</h2></div>
+      <div class="textCenter"><h2>Você já possui um cartão?</h2>
       <!--<input type="submit" value="Enviar">-->
       <div>
-        <button class="buttonScreen" id="btnVoltarPagServicos" onclick="exibirPaginaCorreta('servico')">Já possuo</button>
+        <button class="buttonScreenGerarCartao" id="btnVoltarPagServicos" onclick="exibirPaginaCorreta('servico')">Já possuo</button>
       </div>
       <div>
-        <button class="buttonScreen" id="btnGerarCartao" onclick="adquirirServico()">Gerar Cartão</button>
+        <button class="buttonScreenGerarCartao" id="btnGerarCartao" onclick="gerarCartao('cartao')">Gerar Cartão</button>
       </div>
+    </div>
     </form>
   </div>
- 
+ </div>
+
+<div id="cartao" class="conteudo">
+  <div id="imgCartao">
+    <div id="numeroCartao"> {Numero cartão}</div>
+    <p>CLÍNICA SAPPHIRE</p>
+    <div id="logo"> logo </div>
+  </div>  
+  <div class="rodape"></div>
 </div>
 
 <div id="relatorio" class="conteudo">

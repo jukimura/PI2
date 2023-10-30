@@ -15,7 +15,37 @@ function exibirPaginaCorreta(pagina) {
   
 
   function adquirirServico() {
-    alert("O serviço foi comprado");
-    // Você pode adicionar mais lógica aqui para exibir detalhes ou realizar outras ações.
+    var campoNumCartao = document.getElementById("campoNumeroCartao").value;
+    if(campoNumCartao == "")
+    {
+      alert("Preencha o número do cartão antes de comprar um serviço!");
+    }
+    //inserir aqui o método para adicionar na tabela
 }
 
+
+function validarNumeros(campo){
+  var numeroCartao = campo.value;
+  var valoresAceitos =  /^[0-9]+$/;
+  if(!valoresAceitos.test(numeroCartao))
+  {
+      campo.value = numeroCartao.slice(0, -1);
+      alert("Digite apenas números");
+  }
+}
+
+function gerarCartao(pagina)
+{
+   var pages = document.getElementsByClassName('conteudo');
+   for (var i = 0; i < pages.length; i++) {
+     pages[i].classList.remove('visible');
+   }
+
+  //inserir logica de gerar cartao
+  var exibir = document.getElementById(pagina);
+    if (exibir) {
+      exibir.classList.add('visible');
+    }
+
+  //alert("Cartão Gerado com sucesso!");
+}
