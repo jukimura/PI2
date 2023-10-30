@@ -11,13 +11,14 @@ h3 {
   }
 body{
   margin-right: 20px;
+  background-color: #c5cfda74;
 }
 head{
   margin-right: 20px;
 }
 
 .nome {
-    background-color: #9199ac;
+    background-color: #002962;
     padding: 0.1px 0.1px 0.1px 0.1px;
     color: #1b365d;
     text-align: center;
@@ -27,8 +28,9 @@ head{
     padding: 8px 8px;
     border-style: unset;
     margin-left: 225px;
-    background-color: #c5cfda;
-    color: black;
+    background-color: #407ba7;
+    color: white;
+    font-weight: bold;
   }
 
 .botao:hover {
@@ -36,6 +38,7 @@ head{
     border-style: unset;
     margin-left: 225px;
     background-color: rgba(255, 255, 255, 0.633);
+    color: #407ba7;
   }
 
 .options {
@@ -43,7 +46,7 @@ head{
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #c5cfda;
+    background-color: #407ba7;
     border-top: 1px solid rgb(0, 0, 0);
   }
   
@@ -93,6 +96,7 @@ head{
   height: 8%;
   margin-top: 30px;
   margin-left: 80px;
+  background-color: white;
   border: 1.5px solid #9199ac;
   border-radius: 8px;
   overflow: hidden;
@@ -109,7 +113,7 @@ head{
 .buttonScreen{
   border: 2px solid #9199ac;
   border-radius: 5px;
-  width: 250px;
+  width: 285px;
   height: 35px;
   margin-top: auto;
   background-color: #c5cfda;
@@ -136,6 +140,7 @@ head{
   margin-top: 100px;
   border: 1px solid #ccc;
   border-radius: 8px;
+  background-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -167,11 +172,11 @@ head{
 }
 
 .navBar{
-  margin-left: 40px;
+  margin-left: 20px;
 }
 
 .rodape{
-  height: 60px;
+  height: 100px;
 }
 
 .textCenter{
@@ -225,7 +230,11 @@ head{
 }
 
 .logoPagina{
-  height: 80px;
-  width: 170px;
+  height: 90px;
+  width: 190px;
   align-items: center;
+}
+
+#obs{
+  text-align: center;
 }
