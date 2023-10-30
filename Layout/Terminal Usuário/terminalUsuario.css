@@ -6,8 +6,11 @@
 5 - c5cfda
 oi ju*/
 
-h3 {
-    text-align: center;
+.nomesProc{
+    font-size: 21px;
+    font-weight: 400px;
+    color: #002962;
+    font-family: 'Source Sans', sans-serif;
   }
 body{
   margin-right: 20px;
@@ -30,7 +33,6 @@ head{
     margin-left: 225px;
     background-color: #407ba7;
     color: white;
-    font-weight: bold;
   }
 
 .botao:hover {
@@ -48,6 +50,7 @@ head{
     overflow: hidden;
     background-color: #407ba7;
     border-top: 1px solid rgb(0, 0, 0);
+    font-family: 'Source Sans', sans-serif;
   }
   
   li {
@@ -237,4 +240,8 @@ head{
 
 #obs{
   text-align: center;
+}
+
+.desc{
+  font-family: 'Source Sans', sans-serif;
 }
