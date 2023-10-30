@@ -9,11 +9,18 @@ oi ju*/
 h3 {
     text-align: center;
   }
+body{
+  margin-right: 20px;
+}
+head{
+  margin-right: 20px;
+}
 
 .nome {
     background-color: #9199ac;
     padding: 0.1px 0.1px 0.1px 0.1px;
     color: #1b365d;
+    text-align: center;
 }
 
 .botao {
@@ -190,16 +197,35 @@ h3 {
   margin: 20px auto;
   padding: 15px;
   margin-top: 100px;
-  border: 1px solid #ccc;
+  border: 2px solid #1b365d;
   background-color: #9199ac;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 2px 2px 2px rgba(3, 0, 0, 0.286);
+  border-color: #1b365d;
 }
 
 #logo{
-  width: 50px;
-  height: 50px;
-  background-color: #fff;
-  margin-left: 220px;
-  margin-top: 70px;
+  margin-left: 150px;
+  margin-top: 40px;
+}
+
+.logoCartao{
+  width: 150px;
+  height: 80px;
+}
+
+.tituloCartao{
+  color: #1b365d;
+  font-weight: bold;
+}
+
+#numeroCartao{
+  color: #1b365d;
+  font-size: 23px;
+}
+
+.logoPagina{
+  height: 80px;
+  width: 170px;
+  align-items: center;
 }
