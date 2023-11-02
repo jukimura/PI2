@@ -15,8 +15,8 @@ function exibirPaginaCorreta(pagina) {
   
 
   function adquirirServico() {
-    var campoNumCartao = document.getElementById("campoNumeroCartao").value;
-    if(campoNumCartao == "")
+    var campoNumCartao = document.getElementById("campoNumeroCartao");
+    if(campoNumCartao.required)
     {
       alert("Preencha o número do cartão antes de comprar um serviço!");
     }
