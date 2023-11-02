@@ -11,7 +11,7 @@
 </head>
 <body>
     <div class="nome">
-      <img class ="logoPagina" src="C:\Meus arquivos\Pucc\2º Semestre 2023\PI2\Layout\Imagens\logo branco sem fundo.png" alt="Descrição da Imagem">
+      <img class ="logoPagina" src="Imagens\logo branco sem fundo.png" alt="Descrição da Imagem">
     </div>
 
     <ul class="options">
@@ -27,13 +27,13 @@
   <!--Página de compra de serviços-->
   <form class="searchArea" >
     <p>Digite o número do cartão: </p>
-    <input type="text" placeholder="Número do cartão" name="numeroCartao" id="campoNumeroCartao" oninput="validarNumeros(this)">
-    <button type="submit" id="btnBusca"><i class="fa fa-search"></i></button>
+    <input type="text" placeholder="Número do cartão" name="numeroCartao" id="campoNumeroCartao" oninput="validarNumeros(this)" onkeydown="evitarEnterLimpar('campoNumeroCartao')">
+    <button type="submit" id="btnBusca"><i class="fa fa-search" ></i></button>
   </form>
 
   <div class="card" >
     <div class="card-content">
-      <img class ="imagens" src="C:\Meus arquivos\Pucc\2º Semestre 2023\PI2\Layout\Imagens\Botox.jfif" alt="Descrição da Imagem">
+      <img class ="imagens" src="Imagens\Botox.jfif" alt="Descrição da Imagem">
         <p class="nomesProc">Preenchimento Labial</p>
         <div class="descricao">
           <p class="desc">O preenchimento labial é um procedimento estético que visa aumentar ou resgatar o volume dos lábios de forma natural, previsível e precisa. Para obter esses resultados é preciso conhecer a anatomia dos lábios e realizar uma técnica eficaz e segura.</p>
@@ -44,7 +44,7 @@
   </div>
   <div class="card">
     <div class="card-content">
-      <img class ="imagens" src="C:\Meus arquivos\Pucc\2º Semestre 2023\PI2\Layout\Imagens\preenchimento facial.jfif" alt="Descrição da Imagem">
+      <img class ="imagens" src="Imagens\preenchimento facial.jfif" alt="Descrição da Imagem">
         <p class="nomesProc">Preenchimento Facial</p>
         <div class="descricao">
        <p class="desc">O preenchimento facial é um procedimento estético que visa corrigir ou melhorar as imperfeições do rosto, como rugas, sulcos, linhas de expressão e perda de volume. </p>
@@ -55,7 +55,7 @@
   </div>
   <div class="card">
     <div class="card-content">
-      <img class ="imagens" src="C:\Meus arquivos\Pucc\2º Semestre 2023\PI2\Layout\Imagens\harmonização.jfif" alt="Descrição da Imagem">
+      <img class ="imagens" src="Imagens\harmonização.jfif" alt="Descrição da Imagem">
         <p class="nomesProc">Harmonização Facial</p>
         <div class="descricao">
         <p class="desc">A harmonização facial é um conjunto de procedimentos estéticos que visam melhorar a harmonia do rosto, corrigindo assimetrias, realçando os traços e promovendo o rejuvenescimento.</p>
@@ -67,7 +67,7 @@
   </div>
   <div class="card">
     <div class="card-content">
-      <img class ="imagens" src="C:\Meus arquivos\Pucc\2º Semestre 2023\PI2\Layout\Imagens\limpeza.jfif" alt="Descrição da Imagem">
+      <img class ="imagens" src="Imagens\limpeza.jfif" alt="Descrição da Imagem">
         <p class="nomesProc">Limpeza de Pele</p>
         <div class="descricao">
         <p class="desc">A limpeza de pele é um procedimento estético que visa remover as impurezas da pele, como cravos, espinhas, células mortas e excesso de oleosidade. </p>
@@ -78,7 +78,7 @@
   </div>
   <div class="card">
     <div class="card-content">
-      <img class ="imagens" src="C:\Meus arquivos\Pucc\2º Semestre 2023\PI2\Layout\Imagens\micro pig" alt="Descrição da Imagem">
+      <img class ="imagens" src="Imagens\micro pig" alt="Descrição da Imagem">
         <p class="nomesProc">Micropigmentação</p>
         <div class="descricao">
         <p class="desc">A micropigmentação é um procedimento estético que visa corrigir ou melhorar a aparência das sobrancelhas, lábios e olhos. </p>
@@ -89,7 +89,7 @@
   </div>
   <div class="card">
     <div class="card-content">
-      <img class ="imagens" src="C:\Meus arquivos\Pucc\2º Semestre 2023\PI2\Layout\Imagens\rinoplastia_1.jpg" alt="Descrição da Imagem">
+      <img class ="imagens" src="Imagens\rinoplastia_1.jpg" alt="Descrição da Imagem">
         <p class="nomesProc">Rinomodelação</p>
         <div class="descricao">
         <p class="desc">A rinomodelação é um procedimento estético que visa corrigir imperfeições do nariz sem a necessidade de cirurgia.</p>
@@ -100,7 +100,7 @@
   </div>
   <div class="card">
     <div class="card-content">
-      <img class ="imagens" src="C:\Meus arquivos\Pucc\2º Semestre 2023\PI2\Layout\Imagens\depilação laser.jfif" alt="Descrição da Imagem">
+      <img class ="imagens" src="Imagens\depilação laser.jfif" alt="Descrição da Imagem">
         <p class="nomesProc">Depilação a Laser</p>
         <div class="descricao">
         <p class="desc">A depilação a laser é um procedimento estético que visa remover os pelos de forma permanente. </p>
@@ -111,7 +111,7 @@
   </div>
   <div class="card">
     <div class="card-content">
-      <img class ="imagens" src="C:\Meus arquivos\Pucc\2º Semestre 2023\PI2\Layout\Imagens\manicure.jfif" alt="Descrição da Imagem">
+      <img class ="imagens" src="Imagens\manicure.jfif" alt="Descrição da Imagem">
         <p class="nomesProc">Manicure</p>
         <div class="descricao">
         <p class="desc">A manicure é um serviço de beleza que visa cuidar das mãos e unhas. </p>
@@ -123,7 +123,7 @@
   </div>
   <div class="card">
     <div class="card-content">
-      <img class ="imagens" src="C:\Meus arquivos\Pucc\2º Semestre 2023\PI2\Layout\Imagens\pedicure.jfif" alt="Descrição da Imagem">
+      <img class ="imagens" src="Imagens\pedicure.jfif" alt="Descrição da Imagem">
         <p class="nomesProc">Pedicure</p>
         <div class="descricao">
         <p class="desc">O pedicure é um serviço de beleza que visa cuidar dos pés e unhas.</p>
@@ -163,7 +163,7 @@
     <div id="numeroCartao"> {Numero cartão}</div>
     <p class="tituloCartao">CLÍNICA SAPPHIRE</p>
     <div id="logo"> 
-      <img class ="logoCartao" src="C:\Meus arquivos\Pucc\2º Semestre 2023\PI2\Layout\Imagens\logo.png" alt="Descrição da Imagem">
+      <img class ="logoCartao" src="Imagens\logo.png" alt="Descrição da Imagem">
     </div>
     <p id="obs">Obs: é importante que você lembre o número do seu cartão para adquirir os serviços em seu próximo retorno.</p>
   </div>  

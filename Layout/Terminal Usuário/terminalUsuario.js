@@ -49,3 +49,15 @@ function gerarCartao(pagina)
 
   //alert("Cartão Gerado com sucesso!");
 }
+
+
+function evitarEnterLimpar(campoInput) {
+  var campo = document.getElementById(campoInput);
+  console.log(campo);
+  var codigo = campo.value;
+  console.log(campo.value);
+  console.log(campo.keyCode);
+  if (campo.keyCode === 13) {
+    campo.value = codigo;
+  }
+}
