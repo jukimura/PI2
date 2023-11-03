@@ -30,6 +30,7 @@
     <input type="text" placeholder="Número do cartão" name="numeroCartao" id="campoNumeroCartao" oninput="validarNumeros(this)" required>
     <button type="submit" id="btnBusca" onclick="buscarCartao('campoNumeroCartao')"><i class="fa fa-search" ></i></button>
   </div>
+  <div id="listaServicos">
   <div class="card" >
     <div class="card-content">
       <img class ="imagens" src="Imagens\Botox.jfif" alt="Descrição da Imagem">
@@ -38,7 +39,7 @@
           <p class="desc">O preenchimento labial é um procedimento estético que visa aumentar ou resgatar o volume dos lábios de forma natural, previsível e precisa. Para obter esses resultados é preciso conhecer a anatomia dos lábios e realizar uma técnica eficaz e segura.</p>
           <p class="desc">O procedimento é feito com ácido hialurônico, que é um material preenchedor biocompatível sob anestesia, sem dor, com resultado imediato, que traz como resultado aumento do volume e hidratação do lábio.</p>
         </div>
-        <button class="buttonScreen" onclick="adquirirServico()">Adquirir serviço</button>
+        <button class="buttonScreen" onclick="adquirirServico()" idDoServico="1">Adquirir serviço</button>
     </div>
   </div>
   <div class="card">
@@ -49,7 +50,7 @@
        <p class="desc">O preenchimento facial é um procedimento estético que visa corrigir ou melhorar as imperfeições do rosto, como rugas, sulcos, linhas de expressão e perda de volume. </p>
         <p class="desc">O procedimento é realizado com ácido hialurônico, que é um material preenchedor biocompatível.</p>
         </div>
-        <button class="buttonScreen" onclick="adquirirServico()">Adquirir serviço</button>
+        <button class="buttonScreen" onclick="adquirirServico()" idDoServico="2">Adquirir serviço</button>
     </div>
   </div>
   <div class="card">
@@ -61,7 +62,7 @@
         <p class="desc">O procedimento é realizado com uma combinação de técnicas, como preenchimento facial, toxina botulínica, bioestimuladores de colágeno e fios de sustentação.</p>
         </p>
         </div>
-        <button class="buttonScreen" onclick="adquirirServico()">Adquirir serviço</button>
+        <button class="buttonScreen" onclick="adquirirServico()" idDoServico="3">Adquirir serviço</button>
     </div>
   </div>
   <div class="card">
@@ -72,7 +73,7 @@
         <p class="desc">A limpeza de pele é um procedimento estético que visa remover as impurezas da pele, como cravos, espinhas, células mortas e excesso de oleosidade. </p>
         <p class="desc">O procedimento é realizado por um profissional qualificado, que utiliza técnicas específicas para cada tipo de pele.</p>
         </div>
-        <button class="buttonScreen" onclick="adquirirServico()">Adquirir serviço</button>
+        <button class="buttonScreen" onclick="adquirirServico()" idDoServico="4">Adquirir serviço</button>
     </div>
   </div>
   <div class="card">
@@ -83,7 +84,7 @@
         <p class="desc">A micropigmentação é um procedimento estético que visa corrigir ou melhorar a aparência das sobrancelhas, lábios e olhos. </p>
           <p class="desc">O procedimento é realizado com um aparelho que deposita pigmentos na pele, de forma a criar um efeito natural.</p>
         </div>
-        <button class="buttonScreen" onclick="adquirirServico()">Adquirir serviço</button>
+        <button class="buttonScreen" onclick="adquirirServico()" idDoServico="5">Adquirir serviço</button>
     </div>
   </div>
   <div class="card">
@@ -94,7 +95,7 @@
         <p class="desc">A rinomodelação é um procedimento estético que visa corrigir imperfeições do nariz sem a necessidade de cirurgia.</p>
         <p class="desc"> O procedimento é realizado com injeções de ácido hialurônico, um material preenchedor biocompatível.</p>
         </div>
-        <button class="buttonScreen" onclick="adquirirServico()">Adquirir serviço</button>
+        <button class="buttonScreen" onclick="adquirirServico()" idDoServico="6">Adquirir serviço</button>
     </div>
   </div>
   <div class="card">
@@ -105,7 +106,7 @@
         <p class="desc">A depilação a laser é um procedimento estético que visa remover os pelos de forma permanente. </p>
         <p class="desc">O procedimento é realizado com um aparelho que emite uma luz intensa, que é absorvida pela melanina do pelo, levando à sua destruição.</p>
         </div>
-        <button class="buttonScreen" onclick="adquirirServico()">Adquirir serviço</button>
+        <button class="buttonScreen" onclick="adquirirServico()" idDoServico="7">Adquirir serviço</button>
     </div>
   </div>
   <div class="card">
@@ -117,7 +118,7 @@
         <p class="desc">O procedimento inclui a limpeza, corte, lixamento e esmaltação das unhas, além da hidratação das mãos e cutículas.
         </p>
         </div>
-        <button class="buttonScreen" onclick="adquirirServico()">Adquirir serviço</button>
+        <button class="buttonScreen" onclick="adquirirServico()" idDoServico="8">Adquirir serviço</button>
     </div>
   </div>
   <div class="card">
@@ -129,7 +130,7 @@
         <p class="desc">O procedimento inclui a limpeza, corte, lixamento e esmaltação das unhas, além da hidratação dos pés e cutículas. 
         </p>
         </div>
-        <button class="buttonScreen" onclick="adquirirServico()">Adquirir serviço</button>
+        <button class="buttonScreen" onclick="adquirirServico()" idDoServico="9">Adquirir serviço</button>
     </div>
   </div>
   <!---->
@@ -142,7 +143,7 @@
         <p class="desc">O procedimento inclui a limpeza, corte, lixamento e esmaltação das unhas, além da hidratação dos pés e cutículas. 
         </p>
         </div>
-        <button class="buttonScreen" onclick="adquirirServico()">Adquirir serviço</button>
+        <button class="buttonScreen" onclick="adquirirServico()" idDoServico="10">Adquirir serviço</button>
     </div>
   </div>
   <div class="card">
@@ -154,7 +155,7 @@
         <p class="desc">O procedimento inclui a limpeza, corte, lixamento e esmaltação das unhas, além da hidratação dos pés e cutículas. 
         </p>
         </div>
-        <button class="buttonScreen" onclick="adquirirServico()">Adquirir serviço</button>
+        <button class="buttonScreen" onclick="adquirirServico()" idDoServico="11">Adquirir serviço</button>
     </div>
   </div>
   <div class="card">
@@ -166,9 +167,10 @@
         <p class="desc">O procedimento inclui a limpeza, corte, lixamento e esmaltação das unhas, além da hidratação dos pés e cutículas. 
         </p>
         </div>
-        <button class="buttonScreen" onclick="adquirirServico()">Adquirir serviço</button>
+        <button class="buttonScreen" onclick="adquirirServico()" idDoServico="12">Adquirir serviço</button>
     </div>
   </div>
+</div>
   <div id="divBtnFinalizar"><button id="bntFinalizar" onclick="finalizarCompra(listaServicos)">Finalizar!</button></div>
   <div class="rodape"></div>
   

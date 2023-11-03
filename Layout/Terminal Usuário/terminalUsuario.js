@@ -23,16 +23,6 @@ function validarNumeros(campo){
   }
 }
 
-function evitarEnterLimpar(campoInput) { //nao esta funcionando
-  var campo = document.getElementById(campoInput);
-  console.log(campo);
-  var codigo = campo.value;
-  console.log(campo.value);
-  console.log(campo.keyCode);
-  if (campo.keyCode === 13) {
-    campo.value = codigo;
-  }
-}
 
 function gerarCartao(pagina) //terminar de testar depois de conectar o banco
 {
@@ -40,6 +30,7 @@ function gerarCartao(pagina) //terminar de testar depois de conectar o banco
     let podeGerar = false;
     const jaExiste = (idGerado) =>{
       return false;
+      //precisa fazer consulta no banco -> buscar todos os cartoes
     };
 
     do{
@@ -54,7 +45,7 @@ function gerarCartao(pagina) //terminar de testar depois de conectar o banco
       }
     }while(existeId == true);
 
-    if(podeGerar == true && existeId == false)
+    if(podeGerar == true)
     {
        /* let objCartao = { idCartao: idGerado };
         let url = `http://localhost:3000/cartao/gerarCartao/${idGerado}`;
@@ -109,14 +100,31 @@ function gerarCartao(pagina) //terminar de testar depois de conectar o banco
 
 function buscarCartao(campoNumeroCartao)
 {
+  //buscar cartao pra verificar se exsite
   var codCartao = document.getElementById(campoNumeroCartao).value;
     alert('Numero cartão' + codCartao);
-    
-  var divCartaoUtilizado = document.getElementById("cartaoUtilizado");
-  divCartaoUtilizado.textContent = 'Cartão sendo utilizado: ' + codCartao;
+/*
+    let codigo = document.getElementById('pesquisa').value
+    let url = `http://localhost:3000/cartao/${codigo}`
+  
+    axios.get(url)
+    .then(response => {
+      mostraDados (response.data)		
+    })
+    .catch(error  =>  {
+      if (error.response) {
+        const msg = new Comunicado (error.response.data.codigo, 
+                      error.response.data.mensagem, 
+                      error.response.data.descricao);
+        alert(msg.get());
+      }	
+    })
+  
+    event.preventDefault()
+*/
 }
 
-
+/*
 function adquirirServico() {
   var campoNumeroCartao = document.getElementById("campoNumeroCartao");
   var numeroCartao = campoNumeroCartao.value;
@@ -146,10 +154,10 @@ function adquirirServico() {
                       error.response.data.descricao);
         alert(msg.get());
       }
-    })*/
+    })
   }
 }
-
+*/
 
 function Comunicado (codigo,mensagem,descricao)
 {
@@ -165,3 +173,67 @@ function Comunicado (codigo,mensagem,descricao)
 
 	}
 }
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  const listaDeServicos = []; 
+  
+  document.querySelectorAll('#listaServicos button').forEach(function(button) {
+    button.addEventListener('click', function() {
+      var campoNumeroCartao = document.getElementById("campoNumeroCartao");
+      var numeroCartao = campoNumeroCartao.value;
+      if(campoNumeroCartao.required && (numeroCartao == null || numeroCartao == ''))
+      {
+          alert("Preencha o número do cartão antes de comprar um serviço!");
+      }else
+      {
+        const idServico = button.getAttribute('idDoServico');
+        inserirServicoNaLista(idServico);
+      }
+    });
+  });
+
+  function inserirServicoNaLista(idServico) {
+    listaDeServicos.push(idServico);
+    console.log('Serviços selecionados:', listaDeServicos);
+  }
+
+
+  
+
+  function finalizarCompra(listaServicos) {
+
+    var numeroCartao = document.getElementById("campoNumeroCartao").value;
+    //fazer um for each e pra cada elemento, inserir no banco como id do cartao e id do servico
+    
+    /*
+      let objServico = { codigo: numeroCartao};
+      let url = `http://localhost:3000/compra/` //post
+  
+      let res = axios.post(url, objServico)
+      .then(response => {
+        if (response.data) {
+          const msg = new Comunicado (response.data.codigo, 
+                                      response.data.mensagem, 
+                        response.data.descricao);
+          alert(msg.get());
+        }
+      })
+      .catch(error  =>  {
+        
+        if (error.response) {
+          const msg = new Comunicado (error.response.data.codigo, 
+                                      error.response.data.mensagem, 
+                        error.response.data.descricao);
+          alert(msg.get());
+        }
+      })
+      */
+    console.log('Compra finalizada com os seguintes serviços:', listaServicos);
+  }
+
+  const btnFinalizar = document.getElementById('bntFinalizar');
+  btnFinalizar.addEventListener('click', function() {
+    finalizarCompra(listaDeServicos);
+  });
+});
