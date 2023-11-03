@@ -25,12 +25,11 @@
 
 <div id="servico" class="conteudo visible">
   <!--Página de compra de serviços-->
-  <form class="searchArea" >
+    <div class="searchArea">
     <p>Digite o número do cartão: </p>
     <input type="text" placeholder="Número do cartão" name="numeroCartao" id="campoNumeroCartao" oninput="validarNumeros(this)" required>
-    <button type="submit" id="btnBusca"><i class="fa fa-search" ></i></button>
-  </form>
-<form onsubmit="adquirirServico(this)">
+    <button type="submit" id="btnBusca" onclick="buscarCartao('campoNumeroCartao')"><i class="fa fa-search" ></i></button>
+  </div>
   <div class="card" >
     <div class="card-content">
       <img class ="imagens" src="Imagens\Botox.jfif" alt="Descrição da Imagem">
@@ -170,7 +169,7 @@
         <button class="buttonScreen" onclick="adquirirServico()">Adquirir serviço</button>
     </div>
   </div>
-</form>
+  <div id="divBtnFinalizar"><button id="bntFinalizar" onclick="finalizarCompra(listaServicos)">Finalizar!</button></div>
   <div class="rodape"></div>
   
 </div>

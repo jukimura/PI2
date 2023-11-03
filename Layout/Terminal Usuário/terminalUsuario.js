@@ -23,7 +23,7 @@ function validarNumeros(campo){
   }
 }
 
-function evitarEnterLimpar(campoInput) {
+function evitarEnterLimpar(campoInput) { //nao esta funcionando
   var campo = document.getElementById(campoInput);
   console.log(campo);
   var codigo = campo.value;
@@ -34,19 +34,67 @@ function evitarEnterLimpar(campoInput) {
   }
 }
 
-function gerarCartao(pagina)
+function gerarCartao(pagina) //terminar de testar depois de conectar o banco
 {
-   var pages = document.getElementsByClassName('conteudo');
-   for (var i = 0; i < pages.length; i++) {
-     pages[i].classList.remove('visible');
-   }
+    let existeId;
+    let podeGerar = false;
+    const jaExiste = (idGerado) =>{
+      return false;
+    };
 
-  //inserir logica de gerar cartao
-  var exibir = document.getElementById(pagina);
-    if (exibir) {
-      exibir.classList.add('visible');
+    do{
+      var idGerado = geraCodigo();
+      if(jaExiste(idGerado))
+      {
+        existeId = true;
+      }
+      else{
+        podeGerar = true;
+        existeId = false;
+      }
+    }while(existeId == true);
+
+    if(podeGerar == true && existeId == false)
+    {
+       /* let objCartao = { idCartao: idGerado };
+        let url = `http://localhost:3000/cartao/gerarCartao/${idGerado}`;
+
+        let res = axios.post(url, objCartao)
+        .then(response => {
+          if (response.data) {
+            const msg = new Comunicado (response.data.codigo, 
+                                        response.data.mensagem, 
+                          response.data.descricao);
+            alert(msg.get());
+          }
+        })
+        .catch(error  =>  {
+          
+          if (error.response) {
+            const msg = new Comunicado (error.response.data.codigo, 
+                                        error.response.data.mensagem, 
+                          error.response.data.descricao);
+            alert(msg.get());
+          }
+        })
+*/
+      var pages = document.getElementsByClassName('conteudo');
+      for (var i = 0; i < pages.length; i++) {
+        pages[i].classList.remove('visible');
+      }
+
+      //inserir logica de gerar cartao
+      var exibir = document.getElementById(pagina);
+        if (exibir) {
+          exibir.classList.add('visible');
+        }
+
+      var divNumeroCartao = document.getElementById('numeroCartao');
+      divNumeroCartao.textContent = idGerado;
     }
+  }
 
+  function geraCodigo(){ //terminar de testar depois de conectar o banco
     const charset = '0123456789'; 
     let id = ' ';
 
@@ -56,42 +104,29 @@ function gerarCartao(pagina)
         const indiceAleatorio = Math.floor(Math.random() * charset.length);
         id += charset.charAt(indiceAleatorio);
     }
-    //select na tabela de cartao, if id existe na tabela, gerar outro id
-    var divNumeroCartao = document.getElementById('numeroCartao');
-    divNumeroCartao.textContent = id;
     return id;
   }
 
-function buscarCartao(codigoCartao) {
-  //let codigo = document.getElementById('campoNumeroCartao').value
-	let url = `http://localhost:3000/cartao/${codigoCartao}`
-
-  //verificar se o cartão existe
-	axios.get(url)
-	.then(response => {
-    alert('Seu cartão foi encontrado. Adquira nossos serviços abaixo!')
-  })
-	.catch(error  =>  {
-		if (error.response) {
-			const msg = new Comunicado (error.response.data.codigo, 
-										error.response.data.mensagem, 
-										error.response.data.descricao);
-			alert(msg.get());
-		}	
-	})
-
-	//this.preventDefault()
+function buscarCartao(campoNumeroCartao)
+{
+  var codCartao = document.getElementById(campoNumeroCartao).value;
+    alert('Numero cartão' + codCartao);
+    
+  var divCartaoUtilizado = document.getElementById("cartaoUtilizado");
+  divCartaoUtilizado.textContent = 'Cartão sendo utilizado: ' + codCartao;
 }
 
+
 function adquirirServico() {
-  var campoNumCartao = document.getElementById("campoNumeroCartao");
-  var numeroCartao = document.getElementById("campoNumeroCartao").value;
-  if(campoNumCartao.required && numeroCartao == null)
+  var campoNumeroCartao = document.getElementById("campoNumeroCartao");
+  var numeroCartao = campoNumeroCartao.value;
+  if(campoNumeroCartao.required && (numeroCartao == null || numeroCartao == ''))
   {
       alert("Preencha o número do cartão antes de comprar um serviço!");
   }
   else{
-    let objServico = { codigo: parseInt(numeroCartao)};
+    /*
+    let objServico = { codigo: numeroCartao};
     let url = `http://localhost:3000/compra/${numeroCartao}` //post
 
     let res = axios.post(url, objServico)
@@ -111,7 +146,7 @@ function adquirirServico() {
                       error.response.data.descricao);
         alert(msg.get());
       }
-    })
+    })*/
   }
 }
 
