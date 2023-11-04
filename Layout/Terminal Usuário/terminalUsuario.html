@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="https://fonts.google.com/specimen/Cormorant+Garamond?preview.size=58&sort=popularity" />
 </head>
 <body>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <div class="nome">
       <img class ="logoPagina" src="Imagens\logo branco sem fundo.png" alt="Descrição da Imagem">
     </div>
@@ -29,6 +30,7 @@
     <p>Digite o número do cartão: </p>
     <input type="text" placeholder="Número do cartão" name="numeroCartao" id="campoNumeroCartao" oninput="validarNumeros(this)" required>
     <button type="submit" id="btnBusca" onclick="buscarCartao('campoNumeroCartao')"><i class="fa fa-search" ></i></button>
+    <div id="cartaoExiste"></div>
   </div>
   <div id="listaServicos">
   <div class="card" >

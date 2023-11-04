@@ -28,14 +28,10 @@ function gerarCartao(pagina) //terminar de testar depois de conectar o banco
 {
     let existeId;
     let podeGerar = false;
-    const jaExiste = (idGerado) =>{
-      return false;
-      //precisa fazer consulta no banco -> buscar todos os cartoes
-    };
 
     do{
       var idGerado = geraCodigo();
-      if(jaExiste(idGerado))
+      if(existeCartaoNoBanco(idGerado))
       {
         existeId = true;
       }
@@ -47,8 +43,8 @@ function gerarCartao(pagina) //terminar de testar depois de conectar o banco
 
     if(podeGerar == true)
     {
-       /* let objCartao = { idCartao: idGerado };
-        let url = `http://localhost:3000/cartao/gerarCartao/${idGerado}`;
+        let objCartao = { idCartao: idGerado };
+        let url = `http://localhost:3000/cadastrarCartao/`;
 
         let res = axios.post(url, objCartao)
         .then(response => {
@@ -56,7 +52,6 @@ function gerarCartao(pagina) //terminar de testar depois de conectar o banco
             const msg = new Comunicado (response.data.codigo, 
                                         response.data.mensagem, 
                           response.data.descricao);
-            alert(msg.get());
           }
         })
         .catch(error  =>  {
@@ -68,7 +63,7 @@ function gerarCartao(pagina) //terminar de testar depois de conectar o banco
             alert(msg.get());
           }
         })
-*/
+
       var pages = document.getElementsByClassName('conteudo');
       for (var i = 0; i < pages.length; i++) {
         pages[i].classList.remove('visible');
@@ -85,6 +80,31 @@ function gerarCartao(pagina) //terminar de testar depois de conectar o banco
     }
   }
 
+  function existeCartaoNoBanco(idCartao)
+  {
+    console.log(idCartao);
+    let url = `http://localhost:3000/getCartao/${idCartao}`
+
+    axios.get(url)
+    .then(response => {
+      console.log(' response da request : ', response.data);
+      if (response.data == null || response.data === '') {
+        return false;
+      } else {
+        return true;
+      }
+    })
+    .catch(error  =>  {
+      if (error.response) {
+        const msg = new Comunicado (error.response.data.codigo, 
+                      error.response.data.mensagem, 
+                      error.response.data.descricao);
+        alert(msg.get());
+      }	
+      throw error;
+    })
+  }
+
   function geraCodigo(){ //terminar de testar depois de conectar o banco
     const charset = '0123456789'; 
     let id = ' ';
@@ -97,33 +117,22 @@ function gerarCartao(pagina) //terminar de testar depois de conectar o banco
     }
     return id;
   }
-
-function buscarCartao(campoNumeroCartao)
-{
-  //buscar cartao pra verificar se exsite
-  var codCartao = document.getElementById(campoNumeroCartao).value;
-    alert('Numero cartão' + codCartao);
 /*
-    let codigo = document.getElementById('pesquisa').value
-    let url = `http://localhost:3000/cartao/${codigo}`
-  
-    axios.get(url)
-    .then(response => {
-      mostraDados (response.data)		
-    })
-    .catch(error  =>  {
-      if (error.response) {
-        const msg = new Comunicado (error.response.data.codigo, 
-                      error.response.data.mensagem, 
-                      error.response.data.descricao);
-        alert(msg.get());
-      }	
-    })
-  
-    event.preventDefault()
-*/
-}
+  function buscarCartao(campoNumeroCartao) {
+    var numeroCartao = document.getElementById(campoNumeroCartao).value;
+    var divExisteCartao = document.getElementById('cartaoExiste');
 
+    console.log(numeroCartao);
+     const existe = existeCartaoNoBanco(numeroCartao);
+     if(existe)
+       {
+        divExisteCartao.textContent = 'OK! Boas compras!';
+      }
+    else{
+      divExisteCartao.textContent = 'Este cartão não existe! Gere um na página de gerar cartão.';
+    }
+  }
+*/
 /*
 function adquirirServico() {
   var campoNumeroCartao = document.getElementById("campoNumeroCartao");

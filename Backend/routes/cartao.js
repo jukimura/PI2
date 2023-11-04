@@ -7,7 +7,7 @@ const env = process.env;
 
 router.get('/getCartoes', async (req, res, next) => {
     try {
-      const connection = await db.createConnection(); // inicia conexão com o baco
+      const connection = await db.createConnection(); // inicia conexão com o banco
       let result = await connection.execute('SELECT * FROM cartoes'); //query para executar a busca
       res.send(result.rows); // retorno da query
     } catch (error) {
@@ -19,7 +19,7 @@ router.get('/getCartoes', async (req, res, next) => {
 router.get('/getCartao/:idCartao', async (req, res, next) => {
     const id = req.params.idCartao;
     try {
-        const connection = await db.createConnection(); // inicia conexão com o baco
+        const connection = await db.createConnection(); // inicia conexão com o banco
         let result = await connection.execute('SELECT * FROM cartoes WHERE Id_Cartao = :id', [id]);
         res.send(result.rows);
       } catch (error) {
