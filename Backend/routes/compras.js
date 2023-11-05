@@ -6,7 +6,7 @@ const env = process.env;
 
 router.get('/getCompras', async (req, res, next) => {
     try {
-        const connection = await db.createConnection(); // Get the connection object
+        const connection = await db.createConnection(); //inicia a conexão com o banco de dados
         const result = await connection.execute('SELECT * FROM Compras');
         res.send(result.rows);
       } catch (error) {
@@ -18,7 +18,7 @@ router.get('/getCompras', async (req, res, next) => {
 router.get('/getComprasById/:idCartao', async (req, res, next) => {
     const id = req.params.idCartao;
     try {
-        const connection = await db.createConnection(); // Get the connection object
+        const connection = await db.createConnection(); //inicia a conexão com o banco de dados
         const result = await connection.execute('SELECT * FROM Compras WHERE Id_Cartao = :id', [id]);
         res.send(result.rows);
       } catch (error) {

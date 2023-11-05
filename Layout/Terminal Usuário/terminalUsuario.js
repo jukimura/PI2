@@ -24,7 +24,7 @@ function validarNumeros(campo){
 }
 
 
-async function gerarCartao(pagina) //terminar de testar depois de conectar o banco
+async function gerarCartao(pagina) 
 {
     let existeId;
     let podeGerar = false;
@@ -82,7 +82,7 @@ async function gerarCartao(pagina) //terminar de testar depois de conectar o ban
     }
   }
   
-  function geraCodigo(){ //terminar de testar depois de conectar o banco
+  function geraCodigo(){ 
     const charset = '0123456789'; 
     let id = ' ';
 
@@ -155,7 +155,7 @@ async function gerarCartao(pagina) //terminar de testar depois de conectar o ban
   
 
   async function adquirirServico(idDoBotao) {
-    var campoNumeroCartao = document.getElementById("campoNumeroCartao");
+    var campoNumeroCartao = document.getElementById('campoNumeroCartao');
     var divExisteCartao = document.getElementById('cartaoExiste');
     console.log('id botao ' + idDoBotao);
     try {
@@ -213,6 +213,11 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log('Serviços selecionados:', listaDeServicos);
   }
 
+  const btnFinalizar = document.getElementById('btnFinalizar');
+  btnFinalizar.addEventListener('click', function() {
+    finalizarCompra(listaDeServicos);
+  });
+
   async function finalizarCompra(listaServicos) {
 
     var numeroCartao = document.getElementById("campoNumeroCartao").value;
@@ -225,9 +230,9 @@ document.addEventListener('DOMContentLoaded', function () {
       for (let i = 0; i < listaDeServicos.length; i++) {
         await inserirServicoNoBanco(listaDeServicos[i], numeroCartao);
       }
+      listaDeServicos = [];    
+      alert('Compra finalizada com sucesso!');
     }
-    listaDeServicos = [];    
-    alert('Compra finalizada com sucesso!');
   }
   
   async function inserirServicoNoBanco(servico, numeroCartao) {
@@ -257,9 +262,4 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     console.log('Inserindo serviço no banco de dados:', servico);
   }
-
-  const btnFinalizar = document.getElementById('btnFinalizar');
-  btnFinalizar.addEventListener('click', function() {
-    finalizarCompra(listaDeServicos);
-  });
 });
