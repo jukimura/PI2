@@ -24,22 +24,24 @@ function validarNumeros(campo){
 }
 
 
-function gerarCartao(pagina) //terminar de testar depois de conectar o banco
+async function gerarCartao(pagina) //terminar de testar depois de conectar o banco
 {
     let existeId;
     let podeGerar = false;
-
-    do{
+    
+    do {
       var idGerado = geraCodigo();
-      if(existeCartaoNoBanco(idGerado))
+      existeId = await existeCartaoNoBanco(idGerado);
+      if(existeId == false)
       {
-        existeId = true;
-      }
-      else{
         podeGerar = true;
-        existeId = false;
       }
-    }while(existeId == true);
+      else
+      {
+        podeGerar = false;
+      }
+    } while (podeGerar != true);
+
 
     if(podeGerar == true)
     {
@@ -79,32 +81,7 @@ function gerarCartao(pagina) //terminar de testar depois de conectar o banco
       divNumeroCartao.textContent = idGerado;
     }
   }
-
-  function existeCartaoNoBanco(idCartao)
-  {
-    console.log(idCartao);
-    let url = `http://localhost:3000/getCartao/${idCartao}`
-
-    axios.get(url)
-    .then(response => {
-      console.log(' response da request : ', response.data);
-      if (response.data == null || response.data === '') {
-        return false;
-      } else {
-        return true;
-      }
-    })
-    .catch(error  =>  {
-      if (error.response) {
-        const msg = new Comunicado (error.response.data.codigo, 
-                      error.response.data.mensagem, 
-                      error.response.data.descricao);
-        alert(msg.get());
-      }	
-      throw error;
-    })
-  }
-
+  
   function geraCodigo(){ //terminar de testar depois de conectar o banco
     const charset = '0123456789'; 
     let id = ' ';
@@ -117,56 +94,85 @@ function gerarCartao(pagina) //terminar de testar depois de conectar o banco
     }
     return id;
   }
-/*
-  function buscarCartao(campoNumeroCartao) {
-    var numeroCartao = document.getElementById(campoNumeroCartao).value;
-    var divExisteCartao = document.getElementById('cartaoExiste');
 
-    console.log(numeroCartao);
-     const existe = existeCartaoNoBanco(numeroCartao);
-     if(existe)
-       {
-        divExisteCartao.textContent = 'OK! Boas compras!';
+
+  async function existeCartaoNoBanco(idCartao) {
+    console.log(idCartao);
+    let url = `http://localhost:3000/getCartao/${idCartao}`;
+  
+    try {
+      const response = await axios.get(url);
+      console.log(' response da request : ', response.data);
+      if (response.data == null || response.data == '') {
+        return false;
+      } else {
+        return true;
       }
-    else{
-      divExisteCartao.textContent = 'Este cartão não existe! Gere um na página de gerar cartão.';
+    } catch (error) {
+      // Não use alert aqui, apenas lance o erro para ser tratado fora desta função
+      throw error;
     }
   }
-*/
-/*
-function adquirirServico() {
-  var campoNumeroCartao = document.getElementById("campoNumeroCartao");
-  var numeroCartao = campoNumeroCartao.value;
-  if(campoNumeroCartao.required && (numeroCartao == null || numeroCartao == ''))
-  {
-      alert("Preencha o número do cartão antes de comprar um serviço!");
-  }
-  else{
-    /*
-    let objServico = { codigo: numeroCartao};
-    let url = `http://localhost:3000/compra/${numeroCartao}` //post
 
-    let res = axios.post(url, objServico)
-    .then(response => {
-      if (response.data) {
-        const msg = new Comunicado (response.data.codigo, 
-                                    response.data.mensagem, 
-                      response.data.descricao);
-        alert(msg.get());
+  async function buscarCartao() {
+    var numeroCartao = document.getElementById('campoNumeroCartao').value;
+    var divExisteCartao = document.getElementById('cartaoExiste');
+    var btnAdquirirServico = document.getElementsByClassName('buttonScreenAdqServ');
+    var btnFinalizar = document.getElementById('btnFinalizar');
+    let exibirTextoOK = false;
+    console.log(numeroCartao);
+  
+    try {
+      if (numeroCartao == null || numeroCartao == '') {
+        alert("Preencha o número do cartão antes de comprar um serviço!");
       }
-    })
-    .catch(error  =>  {
-      
-      if (error.response) {
-        const msg = new Comunicado (error.response.data.codigo, 
-                                    error.response.data.mensagem, 
-                      error.response.data.descricao);
-        alert(msg.get());
-      }
-    })
+      else{
+            const existe = await existeCartaoNoBanco(numeroCartao);
+            console.log('Existe' + existe);
+            for (var i = 0; i < btnAdquirirServico.length; i++) {
+              if (existe) {
+                btnAdquirirServico[i].disabled = false;
+                exibirTextoOK = true;
+              } else {
+                // Desabilita o botão específico dentro da coleção
+                btnAdquirirServico[i].disabled = true;
+                exibirTextoOK = false;
+              }
+          }
+          if(exibirTextoOK)
+          {
+            divExisteCartao.textContent = 'OK! Boas compras!';
+            btnFinalizar.disabled = false;
+          }else{
+            btnFinalizar.disabled = true;
+            divExisteCartao.textContent = 'Este cartão não existe! Gere um na página de gerar cartão.';
+          }
+        }
+      } catch (error) {
+      console.error(error);
+    }
   }
-}
-*/
+  
+
+  async function adquirirServico(idDoBotao) {
+    var campoNumeroCartao = document.getElementById("campoNumeroCartao");
+    var divExisteCartao = document.getElementById('cartaoExiste');
+    console.log('id botao ' + idDoBotao);
+    try {
+
+      if (campoNumeroCartao.required && (campoNumeroCartao.value == null || campoNumeroCartao.value == '')) {
+        alert("Preencha o número do cartão antes de comprar um serviço!");
+      } else {
+        await buscarCartao();
+        if (divExisteCartao.textContent == 'OK! Boas compras!') { 
+          alert("Serviço adicionado à lista! Não se esqueça de finalizar a compra no final da página.");
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  
 
 function Comunicado (codigo,mensagem,descricao)
 {
@@ -185,7 +191,7 @@ function Comunicado (codigo,mensagem,descricao)
 
 
 document.addEventListener('DOMContentLoaded', function () {
-  const listaDeServicos = []; 
+  let listaDeServicos = []; 
   
   document.querySelectorAll('#listaServicos button').forEach(function(button) {
     button.addEventListener('click', function() {
@@ -207,41 +213,52 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log('Serviços selecionados:', listaDeServicos);
   }
 
-
-  
-
-  function finalizarCompra(listaServicos) {
+  async function finalizarCompra(listaServicos) {
 
     var numeroCartao = document.getElementById("campoNumeroCartao").value;
-    //fazer um for each e pra cada elemento, inserir no banco como id do cartao e id do servico
-    
-    /*
-      let objServico = { codigo: numeroCartao};
-      let url = `http://localhost:3000/compra/` //post
+    if(listaDeServicos == null || listaDeServicos == '')
+    {
+        alert('Você não selecionou nenhum serviço!');
+    }
+    else
+    {
+      for (let i = 0; i < listaDeServicos.length; i++) {
+        await inserirServicoNoBanco(listaDeServicos[i], numeroCartao);
+      }
+    }
+    listaDeServicos = [];    
+    alert('Compra finalizada com sucesso!');
+  }
   
-      let res = axios.post(url, objServico)
-      .then(response => {
-        if (response.data) {
-          const msg = new Comunicado (response.data.codigo, 
-                                      response.data.mensagem, 
-                        response.data.descricao);
-          alert(msg.get());
-        }
-      })
-      .catch(error  =>  {
-        
-        if (error.response) {
-          const msg = new Comunicado (error.response.data.codigo, 
-                                      error.response.data.mensagem, 
-                        error.response.data.descricao);
-          alert(msg.get());
-        }
-      })
-      */
-    console.log('Compra finalizada com os seguintes serviços:', listaServicos);
+  async function inserirServicoNoBanco(servico, numeroCartao) {
+
+    console.log('servico ' + servico);
+    console.log('numeroCartao' + numeroCartao);
+    
+    let objCompra = { idServico: servico};
+    let url = `http://localhost:3000/compraServico/${numeroCartao}` //post
+
+    let res = axios.post(url, objCompra)
+    .then(response => {
+      if (response.data) {
+        const msg = new Comunicado (response.data.codigo, 
+                                    response.data.mensagem, 
+                      response.data.descricao);
+      }
+    })
+    .catch(error  =>  {
+      
+      if (error.response) {
+        const msg = new Comunicado (error.response.data.codigo, 
+                                    error.response.data.mensagem, 
+                      error.response.data.descricao);
+        alert(msg.get());
+      }
+    })
+    console.log('Inserindo serviço no banco de dados:', servico);
   }
 
-  const btnFinalizar = document.getElementById('bntFinalizar');
+  const btnFinalizar = document.getElementById('btnFinalizar');
   btnFinalizar.addEventListener('click', function() {
     finalizarCompra(listaDeServicos);
   });
