@@ -1,0 +1,302 @@
+/*
+1 - 1b365d
+2 - 1c3775
+3 -  9199ac
+4 - 97999b
+5 - c5cfda
+oi ju*/
+
+.nomesProc{
+    font-size: 21px;
+    font-weight: 400px;
+    color: #002962;
+    font-family: 'Source Sans', sans-serif;
+  }
+body{
+  margin-right: 20px;
+  background-color: #c5cfda74;
+}
+head{
+  margin-right: 20px;
+}
+
+.nome {
+    background-color: #002962;
+    padding: 0.1px 0.1px 0.1px 0.1px;
+    color: #1b365d;
+    text-align: center;
+}
+
+.botao {
+    padding: 8px 8px;
+    border-style: unset;
+    margin-left: 225px;
+    background-color: #407ba7;
+    color: white;
+  }
+
+.botao:hover {
+    padding: 8px 8px;
+    border-style: unset;
+    margin-left: 225px;
+    background-color: rgba(255, 255, 255, 0.633);
+    color: #407ba7;
+  }
+
+.options {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #407ba7;
+    border-top: 1px solid rgb(0, 0, 0);
+    font-family: 'Source Sans', sans-serif;
+  }
+  
+  li {
+    float: left;
+  }
+  
+  li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+    .conteudo {
+    display: none;
+  }
+  
+  .visible {
+    display: block;
+  }
+  
+
+  input[type="text"] {
+    width: 35%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #9199ac;
+    border-radius: 4px;
+    box-sizing: border-box;
+    outline-color: #9199ac;
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+
+  .searchArea {
+    margin-left: 38%;
+    margin-top: 3%;
+    margin-bottom: 2%;
+}
+
+.card {
+  width: 25%;
+  height: 8%;
+  margin-top: 30px;
+  margin-left: 80px;
+  background-color: white;
+  border: 1.5px solid #9199ac;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  position: relative;
+  display: inline-block;
+}
+
+.card-content {
+  padding: 20px;
+  height: 500px;
+}
+
+.buttonScreenAdqServ{
+  border: 2px solid #9199ac;
+  border-radius: 5px;
+  width: 285px;
+  height: 35px;
+  margin-top: auto;
+  background-color: #c5cfda;
+}
+
+.buttonScreenAdqServ:hover{
+  background-color: rgba(255, 255, 255, 0.633);
+}
+
+#btnBusca{
+  background-color: #c5cfda;
+  height: 42px;
+  width: 42px;
+  margin-left: -3px;
+  border-radius: 5px;
+  border: 1px solid #9199ac;
+}
+
+.divFormGerarCartao {
+  width: 400px;
+  height: 250px;
+  margin: 20px auto;
+  padding: 15px;
+  margin-top: 100px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.formGerarCartao{
+  text-align: center;
+}
+
+
+#btnVoltarPagServicos{
+  margin-top: 10px;
+}
+
+#btnGerarCartao{
+  margin-top: 30px;
+}
+
+.imagens{
+  width: 150px;
+  height: 130px;
+  margin-top: 10px;
+  margin-left: 60px;
+  align-self: center;
+}
+
+
+.descricao{
+  height: 250px;
+  width: 300px;
+}
+
+.navBar{
+  margin-left: 162px;
+}
+
+.rodape{
+  height: 100px;
+}
+
+.textCenter{
+  margin-top: 35px;
+}
+
+.buttonScreenGerarCartao{
+  border: 2px solid #9199ac;
+  border-radius: 5px;
+  width: 250px;
+  height: 40px;
+  background-color: #c5cfda;
+  margin-left: -5px;
+}
+
+.buttonScreenGerarCartao:hover{
+  background-color: rgba(255, 255, 255, 0.633);
+}
+
+#imgCartao{
+  width: 300px;
+  height: 170px;
+  margin: 20px auto;
+  padding: 15px;
+  margin-top: 100px;
+  border: 2px solid #1b365d;
+  background-color: #407aa73e;
+  border-radius: 8px;
+  box-shadow: 2px 2px 2px 2px rgba(3, 0, 0, 0.286);
+  border-color: #1b365d;
+}
+
+#logo{
+  margin-left: 150px;
+  margin-top: 40px;
+}
+
+.logoCartao{
+  width: 150px;
+  height: 80px;
+}
+
+.tituloCartao{
+  color: #1b365d;
+  font-weight: bold;
+}
+
+#numeroCartao{
+  color: #1b365d;
+  font-size: 23px;
+}
+
+.logoPagina{
+  height: 90px;
+  width: 190px;
+  align-items: center;
+}
+
+#obs{
+  text-align: center;
+}
+
+.desc{
+  font-family: 'Source Sans', sans-serif;
+}
+
+#divBtnFinalizar{
+    margin-top: 100px;
+    margin-left: 515px;
+}
+
+#btnFinalizar{
+  border: 2px solid #9199ac;
+  border-radius: 5px;
+  width: 285px;
+  height: 50px;
+  margin-top: auto;
+  background-color: #c5cfda;
+  font-size: 20px;
+}
+
+#btnFinalizar:hover{
+  background-color: rgba(255, 255, 255, 0.633);
+}
+
+.divAviso{
+  width: 1278px;
+  height: 30px;
+  padding: 15px;
+  font-size: 20px;
+  text-align: center;
+  margin: 10px auto;
+  border: 1px solid #002962;
+  border-radius: 8px;
+  background-color: #407aa73e;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#digiteNumero {
+  font-size: 18px;
+  margin-top: 80px;
+}
+
+.selecaoDeServicos{
+  margin-left: 38%;
+}
+
+select{
+  width: 327px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #9199ac;
+  border-radius: 4px;
+  box-sizing: border-box;
+  outline-color: #9199ac;
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
