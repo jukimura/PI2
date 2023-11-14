@@ -27,9 +27,13 @@
     <div class="searchArea">
       <p id="digiteNumero">Digite o número do cartão: </p>
       <input type="text" placeholder="Número do cartão" name="numeroCartao" id="campoNumeroCartao" oninput="validarNumeros(this)" required>
-      <button type="submit" id="btnBusca" onclick="buscarCartao()"><i class="fa fa-search" ></i></button>
+      <button type="submit" id="btnBusca"><i class="fa fa-search" ></i></button>
       <div id="cartaoExiste"></div>
     </div>
+
+    <div id="divContainer">
+    </div>
+
 <!--
   <div class="selecaoDeServicos">
     <label for="opcoes" id="textoEscolaOpcao">Escolha uma opção:</label>
@@ -50,8 +54,10 @@
         <option value="opcao3">Kit Limpeza de Pele</option>
     </select>
     </div>
-  </div>
   </div>-->
+  <div class="rodape"></div>
+  <div class="rodape"></div>
+  </div>
 
 
   <div id="usoRecompensas" class="conteudo">
@@ -62,31 +68,3 @@ teste recompensas
 <script src="terminalPrestadorServicos.js"></script>
 </body>
 </html>
-
-
-<!--
-colocar no script pra gerar botão pra cada serviço que o cartão possui
-        $(document).ready(function(){
-            // Monitora a alteração no campo de texto
-            $("#carInput").on("input", function(){
-                // Limpa o conteúdo anterior
-                $("#result").empty();
-                
-                // Obtém o valor digitado
-                var enteredCar = $(this).val();
-                
-                // Gera elementos com base no valor digitado
-                for (var i = 0; i < 3; i++) {
-                    // Cria um elemento div
-                    var newDiv = $("<div>");
-                    
-                    // Adiciona conteúdo ao div
-                    newDiv.text(enteredCar + " - Result " + (i + 1));
-                    
-                    // Adiciona o div ao elemento com id "result"
-                    $("#result").append(newDiv);
-                }
-            });
-        });
-
--->

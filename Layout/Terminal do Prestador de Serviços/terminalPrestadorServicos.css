@@ -300,3 +300,36 @@ select{
   -moz-appearance: textfield;
   appearance: textfield;
 }
+
+.servicoComprado{
+  width: 25%;
+  height: 100px;
+  margin-top: 3%;
+  margin-left: 4.5%;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  position: relative;
+  display: inline-block;
+  padding: 15px 15px 15px;
+  font-size: 20px;
+  text-align: center;
+  border: 1px solid #002962;
+  background-color: #407aa73e;
+}
+
+#btnUtilizar {
+  right: 30px; /* Ajuste conforme necessário para posicionar mais para a esquerda */
+  top: 10px;  /* Ajuste conforme necessário para posicionar mais para baixo */
+  font-size: 15px;
+  border: 2px solid #9199ac;
+  border-radius: 5px;
+  width: 284px;
+  height: 40px;
+  background-color: #c5cfda;
+}
+
+.divBtnUtilizar{
+  margin-top: 30px;
+  margin-left: 10px;
+}

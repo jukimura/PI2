@@ -117,8 +117,6 @@ async function gerarCartao(pagina)
   async function buscarCartao() {
     var numeroCartao = document.getElementById('campoNumeroCartao').value;
     var divExisteCartao = document.getElementById('cartaoExiste');
-    var btnAdquirirServico = document.getElementsByClassName('buttonScreenAdqServ');
-    var btnFinalizar = document.getElementById('btnFinalizar');
     let exibirTextoOK = false;
     console.log(numeroCartao);
   
@@ -129,46 +127,20 @@ async function gerarCartao(pagina)
       else{
             const existe = await existeCartaoNoBanco(numeroCartao);
             console.log('Existe' + existe);
-            for (var i = 0; i < btnAdquirirServico.length; i++) {
               if (existe) {
-                btnAdquirirServico[i].disabled = false;
                 exibirTextoOK = true;
               } else {
                 // Desabilita o botão específico dentro da coleção
-                btnAdquirirServico[i].disabled = true;
                 exibirTextoOK = false;
               }
-          }
           if(exibirTextoOK)
           {
-            divExisteCartao.textContent = 'OK! Boas compras!';
-            btnFinalizar.disabled = false;
+            divExisteCartao.textContent = 'Esses são os serviços que você adquiriu.';
           }else{
-            btnFinalizar.disabled = true;
             divExisteCartao.textContent = 'Este cartão não existe! Gere um na página de gerar cartão.';
           }
         }
       } catch (error) {
-      console.error(error);
-    }
-  }
-  
-
-  async function adquirirServico(idDoBotao) {
-    var campoNumeroCartao = document.getElementById("campoNumeroCartao");
-    var divExisteCartao = document.getElementById('cartaoExiste');
-    console.log('id botao ' + idDoBotao);
-    try {
-
-      if (campoNumeroCartao.required && (campoNumeroCartao.value == null || campoNumeroCartao.value == '')) {
-        alert("Preencha o número do cartão antes de comprar um serviço!");
-      } else {
-        await buscarCartao();
-        if (divExisteCartao.textContent == 'OK! Boas compras!') { 
-          alert("Serviço adicionado à lista! Não se esqueça de finalizar a compra no final da página.");
-        }
-      }
-    } catch (error) {
       console.error(error);
     }
   }
@@ -191,8 +163,10 @@ function Comunicado (codigo,mensagem,descricao)
 
 
 document.addEventListener('DOMContentLoaded', function () {
-  let listaDeServicos = []; 
-  
+  let listaDeServicos = [];
+  let listaServicosAdquiridos = [];
+  let listaNomesServicosAdquiridos = [];
+
   document.querySelectorAll('#listaServicos button').forEach(function(button) {
     button.addEventListener('click', function() {
       var campoNumeroCartao = document.getElementById("campoNumeroCartao");
@@ -213,53 +187,116 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log('Serviços selecionados:', listaDeServicos);
   }
 
-  async function finalizarCompra(listaServicos) {
+  async function encontrarCompras() {
+    limparContainer();
+    var campoNumeroCartao = document.getElementById("campoNumeroCartao");
+    var divExisteCartao = document.getElementById('cartaoExiste');
+    try {
 
-    var numeroCartao = document.getElementById("campoNumeroCartao").value;
-    if(listaDeServicos == null || listaDeServicos == '')
-    {
-        alert('Você não selecionou nenhum serviço!');
-    }
-    else
-    {
-      for (let i = 0; i < listaDeServicos.length; i++) {
-        await inserirServicoNoBanco(listaDeServicos[i], numeroCartao);
+      if (campoNumeroCartao.required && (campoNumeroCartao.value == null || campoNumeroCartao.value == '')) {
+        alert("Preencha o número do cartão antes de comprar um serviço!");
+      } else {
+        await buscarCartao();
+        if (divExisteCartao.textContent == 'Esses são os serviços que você adquiriu.') { 
+          buscaComprasByCartao(campoNumeroCartao.value);
+        }
       }
-      listaDeServicos = [];    
-      alert('Compra finalizada com sucesso!');
+    } catch (error) {
+      console.error(error);
     }
+  }
+
+  const btnBusca = document.getElementById('btnBusca');
+  btnBusca.addEventListener('click', function () {
+    encontrarCompras();
+  });
+  
+  async function buscaComprasByCartao(idCartao) {
+    var divExisteCartao = document.getElementById('cartaoExiste');
+    console.log(idCartao);
+    let url = `http://localhost:3000/getComprasById/${idCartao}`;
+  
+    try {
+      const response = await axios.get(url);
+      console.log(' response da request : ', response.data);
+      if (response.data == null || response.data == '') {
+        divExisteCartao.textContent = 'Sem dados de compras encontrados.';
+        return false;
+      } else {
+        const terceirosValores = response.data.map(vetor => vetor[2]);
+        console.log('Terceiros valores:', terceirosValores);
+        // Limpa a lista antes de adicionar novos valores
+        listaServicosAdquiridos = [];
+        for (var i = 0; i < terceirosValores.length; i++) {
+          listaServicosAdquiridos.push(terceirosValores[i]);
+        }
+        console.log('Lista :', listaServicosAdquiridos);
+        gerarDivServicoAdquirido();
+        return true;
+      }
+    } catch (error) {
+      // Não use alert aqui, apenas lance o erro para ser tratado fora desta função
+      throw error;
+    }
+  }
+
+  async function getServicosName(idServico) {
+
+      let url = `http://localhost:3000/getServicoById/${idServico}`;
+  
+      try {
+        const response = await axios.get(url);
+        console.log(' response da request get servico by id: ', response.data);
+        if (response.data == null || response.data == '') {
+          return false;
+        } else {
+          listaNomesServicosAdquiridos.push(response.data);
+          console.log('Lista :', listaNomesServicosAdquiridos);
+          return true;
+        }
+      } catch (error) {
+        // Não use alert aqui, apenas lance o erro para ser tratado fora desta função
+        throw error;
+      }
+  }
+
+
+  
+  async function gerarDivServicoAdquirido() {
+    // Limpa o conteúdo anterior
+    var campoNumeroCartao = document.getElementById("campoNumeroCartao");
+    var idCartao = campoNumeroCartao.value;
+    var divContainer = document.getElementById('divContainer');
+    divContainer.innerHTML = '';
+    listaNomesServicosAdquiridos=[];
+
+    // Gera uma div para cada valor na lista de serviços adquiridos
+    for (var i = 0; i < listaServicosAdquiridos.length; i++) {
+      await getServicosName(listaServicosAdquiridos[i]);
+      var novaDiv = document.createElement('div');
+      novaDiv.className = 'servicoComprado'
+      // Adiciona conteúdo à div
+      novaDiv.textContent = listaNomesServicosAdquiridos[i];
+  
+      // Cria uma div para o botão 'utilizar'
+      var divBtnUtilizar = document.createElement('div');
+      divBtnUtilizar.className = 'divBtnUtilizar';
+      divBtnUtilizar.innerHTML = '<button id="btnUtilizar">Utlizar</button>';
+  
+      // Adiciona a div do botão à div principal
+      novaDiv.appendChild(divBtnUtilizar);
+  
+      // Adiciona a div principal ao contêiner
+      divContainer.appendChild(novaDiv);
+    }
+  }
+  function limparContainer() {
+    var divContainer = document.getElementById('divContainer');
+    // Define o conteúdo do container como uma string vazia para remover todas as divs
+    divContainer.innerHTML = '';
+    // ou
+    // divContainer.textContent = '';
   }
   
-  async function inserirServicoNoBanco(servico, numeroCartao) {
-
-    console.log('servico ' + servico);
-    console.log('numeroCartao' + numeroCartao);
-    
-    let objCompra = { idServico: servico};
-    let url = `http://localhost:3000/compraServico/${numeroCartao}` //post
-
-    let res = axios.post(url, objCompra)
-    .then(response => {
-      if (response.data) {
-        const msg = new Comunicado (response.data.codigo, 
-                                    response.data.mensagem, 
-                      response.data.descricao);
-      }
-    })
-    .catch(error  =>  {
-      
-      if (error.response) {
-        const msg = new Comunicado (error.response.data.codigo, 
-                                    error.response.data.mensagem, 
-                      error.response.data.descricao);
-        alert(msg.get());
-      }
-    })
-    console.log('Inserindo serviço no banco de dados:', servico);
-  }
-
-  const btnFinalizar = document.getElementById('btnFinalizar');
-  btnFinalizar.addEventListener('click', function() {
-    finalizarCompra(listaDeServicos);
-  });
 });
+
