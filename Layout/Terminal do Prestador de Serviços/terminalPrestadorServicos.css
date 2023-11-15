@@ -175,7 +175,7 @@ head{
 }
 
 .navBar{
-  margin-left: 162px;
+  margin-left: 345px;
 }
 
 .rodape{
@@ -332,4 +332,28 @@ select{
 .divBtnUtilizar{
   margin-top: 30px;
   margin-left: 10px;
+}
+
+#btnUtilizar:hover{
+  background-color: rgba(255, 255, 255, 0.633);
+}
+
+.textoServicosERecompensas{
+  font-size: 22px;
+  margin-left: 40px;
+}
+
+#btnFinalizarUso{
+  border: 2px solid #9199ac;
+  border-radius: 5px;
+  width: 285px;
+  height: 50px;
+  margin-top: 80px;
+  margin-left: 517px;
+  background-color: #c5cfda;
+  font-size: 20px;
+}
+
+#btnFinalizarUso:hover{
+  background-color: rgba(255, 255, 255, 0.633);
 }

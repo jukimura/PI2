@@ -163,28 +163,61 @@ function Comunicado (codigo,mensagem,descricao)
 
 
 document.addEventListener('DOMContentLoaded', function () {
-  let listaDeServicos = [];
+
   let listaServicosAdquiridos = [];
   let listaNomesServicosAdquiridos = [];
-
-  document.querySelectorAll('#listaServicos button').forEach(function(button) {
-    button.addEventListener('click', function() {
-      var campoNumeroCartao = document.getElementById("campoNumeroCartao");
-      var numeroCartao = campoNumeroCartao.value;
-      if(campoNumeroCartao.required && (numeroCartao == null || numeroCartao == ''))
-      {
-          alert("Preencha o número do cartão antes de comprar um serviço!");
-      }else
-      {
-        const idServico = button.getAttribute('idDoServico');
-        inserirServicoNaLista(idServico);
-      }
-    });
-  });
+  let listaServicosAUsar = [];
 
   function inserirServicoNaLista(idServico) {
-    listaDeServicos.push(idServico);
-    console.log('Serviços selecionados:', listaDeServicos);
+    listaServicosAUsar.push(idServico);
+    console.log('Serviços selecionados:', listaServicosAUsar);
+  }
+
+  async function finalizarSelecaoUtilizacao(listaServicos) {
+
+    var numeroCartao = document.getElementById("campoNumeroCartao").value;
+    if(listaServicosAUsar == null || listaServicosAUsar == '')
+    {
+        alert('Você não selecrionou nenhum serviço!');
+    }
+    else
+    {
+      // for (let i = 0; i < listaServicosAUsar.length; i++) {
+      //   await inserirServicoUsadoNoBanco(listaServicosAUsar[i], numeroCartao);
+      // }
+      // listaServicosAUsar = [];    
+      alert('Utilização finalizada com sucesso!');
+    }
+  }
+
+
+  async function inserirServicoUsadoNoBanco(servico, numeroCartao) {
+
+    console.log('servico ' + servico);
+    console.log('numeroCartao' + numeroCartao);
+    
+    let objCompra = { idServico: servico};
+    //mudar rota para a que altera o campo 'usou' na tabela compra
+  //  let url = `http://localhost:3000/compraServico/${numeroCartao}` //post
+
+    let res = axios.post(url, objCompra)
+    .then(response => {
+      if (response.data) {
+        const msg = new Comunicado (response.data.codigo, 
+                                    response.data.mensagem, 
+                      response.data.descricao);
+      }
+    })
+    .catch(error  =>  {
+      
+      if (error.response) {
+        const msg = new Comunicado (error.response.data.codigo, 
+                                    error.response.data.mensagem, 
+                      error.response.data.descricao);
+        alert(msg.get());
+      }
+    })
+    console.log('Alterando serviço no banco de dados:', servico);
   }
 
   async function encontrarCompras() {
@@ -227,6 +260,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log('Terceiros valores:', terceirosValores);
         // Limpa a lista antes de adicionar novos valores
         listaServicosAdquiridos = [];
+        listaServicosAUsar = [];
         for (var i = 0; i < terceirosValores.length; i++) {
           listaServicosAdquiridos.push(terceirosValores[i]);
         }
@@ -270,26 +304,54 @@ document.addEventListener('DOMContentLoaded', function () {
     divContainer.innerHTML = '';
     listaNomesServicosAdquiridos=[];
 
+    function configurarOnClick(idServico) {
+      return function() {
+        console.log('Botão clicado para o serviço com ID:', idServico);
+        inserirServicoNaLista(idServico);
+      };
+    }
+
+    function configurarFinalizar() {
+      console.log('Botão "Finalizar" clicado');
+      // Adicionar aqui a lógica para finalizar
+    }
+
     // Gera uma div para cada valor na lista de serviços adquiridos
     for (var i = 0; i < listaServicosAdquiridos.length; i++) {
       await getServicosName(listaServicosAdquiridos[i]);
       var novaDiv = document.createElement('div');
-      novaDiv.className = 'servicoComprado'
-      // Adiciona conteúdo à div
+      novaDiv.className = 'servicoComprado';
       novaDiv.textContent = listaNomesServicosAdquiridos[i];
-  
-      // Cria uma div para o botão 'utilizar'
+      novaDiv.id = listaServicosAdquiridos[i];
+    
       var divBtnUtilizar = document.createElement('div');
       divBtnUtilizar.className = 'divBtnUtilizar';
-      divBtnUtilizar.innerHTML = '<button id="btnUtilizar">Utlizar</button>';
-  
-      // Adiciona a div do botão à div principal
+      
+      var btnUtilizar = document.createElement('button');
+      btnUtilizar.id = 'btnUtilizar';
+      btnUtilizar.textContent = 'Utilizar';
+    
+      // Configurar o evento onclick para o botão
+      btnUtilizar.onclick = configurarOnClick(novaDiv.id);
+    
+      divBtnUtilizar.appendChild(btnUtilizar);
+    
       novaDiv.appendChild(divBtnUtilizar);
-  
-      // Adiciona a div principal ao contêiner
       divContainer.appendChild(novaDiv);
     }
+
+    var btnFinalizar = document.createElement('button');
+    btnFinalizar.id = 'btnFinalizarUso';
+    btnFinalizar.className = 'btnFinalizarUso';
+    btnFinalizar.textContent = 'Finalizar Compra';
+
+    // Configurar o evento onclick para o botão "Finalizar"
+    btnFinalizar.onclick = configurarFinalizar;
+
+    // Adicionar o botão "Finalizar" ao contêiner
+    divContainer.appendChild(btnFinalizar);
   }
+
   function limparContainer() {
     var divContainer = document.getElementById('divContainer');
     // Define o conteúdo do container como uma string vazia para remover todas as divs
