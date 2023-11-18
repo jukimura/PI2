@@ -168,6 +168,16 @@ document.addEventListener('DOMContentLoaded', function () {
   let listaNomesServicosAdquiridos = [];
   let listaServicosAUsar = [];
 
+  function configurarOnClick(idServico, btnUtilizar) {
+    return function() {
+      console.log('Botão clicado para o serviço com ID:', idServico);
+      inserirServicoNaLista(idServico);
+      alert('Serviço pronto para utilização!');
+      btnUtilizar.disabled = true;
+
+    };
+  }
+
   function inserirServicoNaLista(idServico) {
     listaServicosAUsar.push(idServico);
     console.log('Serviços selecionados:', listaServicosAUsar);
@@ -256,7 +266,7 @@ document.addEventListener('DOMContentLoaded', function () {
         divExisteCartao.textContent = 'Sem dados de compras encontrados.';
         return false;
       } else {
-        const terceirosValores = response.data.map(vetor => vetor[2]);
+        const terceirosValores = response.data.map(vetor => vetor[5]);
         console.log('Terceiros valores:', terceirosValores);
         // Limpa a lista antes de adicionar novos valores
         listaServicosAdquiridos = [];
@@ -304,20 +314,44 @@ document.addEventListener('DOMContentLoaded', function () {
     divContainer.innerHTML = '';
     listaNomesServicosAdquiridos=[];
 
-    function configurarOnClick(idServico) {
-      return function() {
-        console.log('Botão clicado para o serviço com ID:', idServico);
-        inserirServicoNaLista(idServico);
-      };
-    }
+
 
     function configurarFinalizar() {
       console.log('Botão "Finalizar" clicado');
-      // Adicionar aqui a lógica para finalizar
+      if(listaServicosAUsar == '' )
+      {
+        alert('Você não selecionou nenhum serviço!');
+      }
+      else
+      {
+        if(listaServicosAUsar.length == 3)
+        {
+          //logica de inserir na tabela bonificacao a recompensa onde qtd usos = 3
+          alert('3');
+        }else if(listaServicosAUsar.length == 4)
+        {
+          //logica de inserir na tabela bonificacao a recompensa onde qtd usos = 4
+          alert('4');
+        }else if(listaServicosAUsar.length == 5 || listaServicosAUsar.length > 5)
+        {
+          //logica de inserir na tabela bonificacao a recompensa onde qtd usos = 4
+          alert('5');
+        }
+        else{
+          alert('Botão finalizar clicado');
+          //logica de atualizar na na tabela 
+        }
+      }
     }
+
+    var divTextoServicos = document.createElement('div');
+    divTextoServicos.textContent = 'Serviços';
+    divTextoServicos.className = 'textoServicosERecompensas';
+    divContainer.appendChild(divTextoServicos);
 
     // Gera uma div para cada valor na lista de serviços adquiridos
     for (var i = 0; i < listaServicosAdquiridos.length; i++) {
+
       await getServicosName(listaServicosAdquiridos[i]);
       var novaDiv = document.createElement('div');
       novaDiv.className = 'servicoComprado';
@@ -332,7 +366,7 @@ document.addEventListener('DOMContentLoaded', function () {
       btnUtilizar.textContent = 'Utilizar';
     
       // Configurar o evento onclick para o botão
-      btnUtilizar.onclick = configurarOnClick(novaDiv.id);
+      btnUtilizar.onclick = configurarOnClick(novaDiv.id, btnUtilizar);
     
       divBtnUtilizar.appendChild(btnUtilizar);
     

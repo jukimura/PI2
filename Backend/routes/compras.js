@@ -7,7 +7,7 @@ const env = process.env;
 router.get('/getCompras', async (req, res, next) => {
     try {
         const connection = await db.createConnection(); //inicia a conexão com o banco de dados
-        const result = await connection.execute('SELECT * FROM Compras');
+        const result = await connection.execute('SELECT * FROM Compra');
         res.send(result.rows);
       } catch (error) {
         console.error('Erro ao executar a consulta:', error);
@@ -19,7 +19,7 @@ router.get('/getComprasById/:idCartao', async (req, res, next) => {
     const id = req.params.idCartao;
     try {
         const connection = await db.createConnection(); //inicia a conexão com o banco de dados
-        const result = await connection.execute('SELECT * FROM Compras WHERE Id_Cartao = :id', [id]);
+        const result = await connection.execute('SELECT * FROM Compra WHERE fk_id_cartao = :id', [id]);
         res.send(result.rows);
       } catch (error) {
         console.error('Erro ao executar a consulta:', error);
@@ -27,17 +27,43 @@ router.get('/getComprasById/:idCartao', async (req, res, next) => {
       }
 });
 
+router.get('/getComprasNaoUsadasById/:idCartao', async (req, res, next) => {
+  const id = req.params.idCartao;
+  const status = 'Disponível';
+  try {
+      const connection = await db.createConnection(); //inicia a conexão com o banco de dados
+      const result = await connection.execute('SELECT * FROM Compra WHERE fk_id_cartao = :id AND Status_compra =:status', [id, status]);
+      res.send(result.rows);
+    } catch (error) {
+      console.error('Erro ao executar a consulta:', error);
+      res.status(500).send('Erro interno do servidor');
+    }
+});
+
+router.get('/getComprasUsadasById/:idCartao', async (req, res, next) => {
+  const id = req.params.idCartao;
+  const status = 'Usado';
+  try {
+      const connection = await db.createConnection(); //inicia a conexão com o banco de dados
+      const result = await connection.execute('SELECT * FROM Compra WHERE fk_id_cartao = :id AND Status_compra =:status', [id, status]);
+      res.send(result.rows);
+    } catch (error) {
+      console.error('Erro ao executar a consulta:', error);
+      res.status(500).send('Erro interno do servidor');
+    }
+});
 
 router.post('/compraServico/:idCartao', async (req, res, next) => {
     const idCartao = req.params.idCartao; //declaração do que será usado para passar no body da requisição
     const idServico = req.body.idServico;
+    const status = 'Disponível';
 
       try{
         const connection = await db.createConnection(); //iniciar conexão com o banco
 
-        const result = 'INSERT INTO Compras (ID_Compra, ID_Cartao, ID_Servico, Data_Compra) VALUES(sequencia_compra.NEXTVAL, :2, :3, CURRENT_TIMESTAMP)';
+        const result = 'INSERT INTO Compra (fk_id_cartao, fk_id_servico, Data_Compra, Status_compra) VALUES(:1, :2, CURRENT_TIMESTAMP, :4)';
         
-        const dados = [idCartao, idServico];
+        const dados = [idCartao, idServico, status];
     
         let resInsert = await connection.execute(result, dados);
         await connection.commit();   //commitar a conexão para que os dados nao sejam perdidos
@@ -51,30 +77,6 @@ router.post('/compraServico/:idCartao', async (req, res, next) => {
           console.error('Erro ao executar a consulta:', error);
           res.status(500).send('Erro interno do servidor');
         }
-});
-
-router.get('/servicos', async (req, res, next) => {
-    const id = req.params.idCartao; //declaração do que será usado para passar no body da requisição
-    try {
-        const connection = await db.createConnection(); // iniciar conexão com o banco
-        const result = await connection.execute('SELECT * FROM servico');
-        res.send(result.rows); //retorna as linhas resultantes do select
-      } catch (error) {
-        console.error('Erro ao executar a consulta:', error);
-        res.status(500).send('Erro interno do servidor');
-      }
-});
-
-router.get('/getServicoById/:idServico', async (req, res, next) => {
-  const id = req.params.idServico; //declaração do que será usado para passar no body da requisição
-  try {
-      const connection = await db.createConnection(); // iniciar conexão com o banco
-      const result = await connection.execute('SELECT Nome_Servico FROM servico WHERE ID_Servicos = :id', [id]);
-      res.send(result.rows); //retorna as linhas resultantes do select
-    } catch (error) {
-      console.error('Erro ao executar a consulta:', error);
-      res.status(500).send('Erro interno do servidor');
-    }
 });
 
 module.exports = router;

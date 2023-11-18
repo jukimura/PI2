@@ -6,6 +6,9 @@ const bodyParser = require('body-parser');
 
 const rotaCartao = require('./routes/cartao');
 const rotaCompras = require('./routes/compras');
+const rotaServico = require('./routes/servico');
+const rotaRecompensa = require('./routes/recompensa');
+
 
 function middleWareGlobal (req, res, next)
 {
@@ -29,7 +32,8 @@ app.use(middleWareGlobal); // app.use cria o middleware global
 
 app.use('/', rotaCartao);
 app.use('/', rotaCompras);
-
+app.use('/', rotaServico);
+app.use('/', rotaRecompensa);
 
 app.use((req, res, next) => {
     const erro = new Error('Não encontrado');

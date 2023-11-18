@@ -8,7 +8,7 @@ const env = process.env;
 router.get('/getCartoes', async (req, res, next) => {
     try {
       const connection = await db.createConnection(); // inicia conexão com o banco
-      let result = await connection.execute('SELECT * FROM cartoes'); //query para executar a busca
+      let result = await connection.execute('SELECT * FROM Cartao'); //query para executar a busca
       res.send(result.rows); // retorno da query
     } catch (error) {
       console.error('Erro ao executar a consulta:', error);
@@ -20,7 +20,7 @@ router.get('/getCartao/:idCartao', async (req, res, next) => {
     const id = req.params.idCartao;
     try {
         const connection = await db.createConnection(); // inicia conexão com o banco
-        let result = await connection.execute('SELECT * FROM cartoes WHERE Id_Cartao = :id', [id]);
+        let result = await connection.execute('SELECT * FROM Cartao WHERE Id_cartao = :id', [id]);
         res.send(result.rows);
       } catch (error) {
         console.error('Erro ao executar a consulta:', error);
@@ -35,7 +35,7 @@ router.post('/cadastrarCartao', async(req, res, next) => { //inserir cartão
     try{
       const connection = await db.createConnection(); // inicia conexão com o banco
   
-      const result = `INSERT INTO cartoes(ID_Cartao) VALUES (:1)` 
+      const result = `INSERT INTO Cartao(Id_cartao) VALUES (:1)` 
 
       const dados = [idCartao];
   
