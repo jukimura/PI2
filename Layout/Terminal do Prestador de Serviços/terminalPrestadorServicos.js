@@ -168,7 +168,9 @@ document.addEventListener('DOMContentLoaded', function () {
   let listaServicosAUsar = [];
   let listaComprasAUsar = [];
   let listaCompras = [];
-
+  let listaRecompensas = [];
+  let listaNomesRecompensas = [];
+  let listaRecompensasAdquiridas = [];
 
   function inserirServicoNaLista(idServico) {
     listaServicosAUsar.push(idServico);
@@ -285,11 +287,18 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         alert('Funcionou');
         encontrarCompras();
-
+        //encontrarRecompensas();
       }else if(listaComprasAUsar.length == 4)
       {
         //logica de inserir na tabela bonificacao a recompensa onde qtd usos = 4
-        alert('4');
+        for(let i = 0; i < listaComprasAUsar.length; i++)
+        {
+          console.log('servico sendo editado', listaComprasAUsar[i]);
+          await registrarUso(listaComprasAUsar[i], campoNumeroCartao.value);
+        }
+        alert('Funcionou');
+        encontrarCompras();
+        //encontrarRecompensas();
       }else if(listaComprasAUsar.length >= 5)
       {
         //logica de inserir na tabela bonificacao a recompensa onde qtd usos = 4
@@ -301,6 +310,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         alert('Funcionou');
         encontrarCompras();
+        //encontrarRecompensas();
       }
       else{
         for(let i = 0; i < listaComprasAUsar.length; i++)
@@ -308,6 +318,7 @@ document.addEventListener('DOMContentLoaded', function () {
           console.log('servico sendo editado', listaComprasAUsar[i]);
           await registrarUso(listaComprasAUsar[i], campoNumeroCartao.value);
         }
+        listaComprasAUsar = [];
         alert('Funcionou');
         encontrarCompras();
       }
@@ -394,6 +405,118 @@ document.addEventListener('DOMContentLoaded', function () {
     divContainer.appendChild(divBtnFinalizar);
   }
 
+  //buscar recompensa adquirida pelo id do cartao
+  async function encontrarRecompensas() {
+    limparContainer();
+    var campoNumeroCartao = document.getElementById("campoNumeroCartao");
+    var divExisteCartao = document.getElementById('cartaoExiste');
+    try {
+
+      if (campoNumeroCartao.required && (campoNumeroCartao.value == null || campoNumeroCartao.value == '')) {
+        alert("Preencha o número do cartão antes de comprar um serviço!");
+      } else {
+        await buscarCartao();
+        if (divExisteCartao.textContent == 'Esses são os serviços que você adquiriu.') {
+          buscaRecompensasByCartao(campoNumeroCartao.value);
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function buscaRecompensasByCartao(idCartao) {
+    var divExisteCartao = document.getElementById('cartaoExiste');
+    let url = `http://localhost:3000/getRecompensasDisponiveis/${idCartao}`;
+  
+    try {
+      const response = await axios.get(url);
+      console.log(' response da request : ', response.data);
+      if (response.data == null || response.data == '') {
+        return false;
+      } else {
+        const bonificacoesId = response.data.map(vetor => vetor[0]);
+        const nameRecompensa = response.data.map(vetor => vetor[1]);
+        // Limpa a lista antes de adicionar novos valores
+        listaRecompensas = [];
+        for (var i = 0; i < bonificacoesId.length; i++) {
+          listaRecompensas.push(bonificacoesId[i]);
+          listaNomesRecompensas.push(nameRecompensa[i]);
+        }
+        gerarDivRecompensasAdquiridas();
+        return true;
+      }
+    } catch (error) {
+      // Não use alert aqui, apenas lance o erro para ser tratado fora desta função
+      throw error;
+    }
+  }
+
+  function configurarOnClickBtnUtilizarRecompensa(idBonificacao, btnUtilizar, idRecompensa) {
+    return function() {
+      console.log('Botão clicado para a recompensa com ID:', idRecompensa);
+      console.log('Botão clicado para a bonificação com ID: ', idBonificacao);
+      inserirServicoNaLista(idServico);
+      console.log('Tamanho lista servicos: ', listaServicosAdquiridos);
+      inserirCompraNaLista(idCompra);
+      console.log('Tamanho lista compras', listaComprasAUsar);
+      alert('Serviço pronto para utilização!');
+      btnUtilizar.disabled = true;
+    };
+  }
+  async function gerarDivRecompensasAdquiridas() {
+    // Limpa o conteúdo anterior
+    var campoNumeroCartao = document.getElementById("campoNumeroCartao");
+    var idCartao = campoNumeroCartao.value;
+    var divContainerRecompensas = document.getElementById('divContainerRecompensas');
+    divContainerRecompensas.innerHTML = '';
+    listaNomesServicosAdquiridos=[];
+
+    var divTextoRecompensas = document.createElement('div');
+    divTextoRecompensas.textContent = 'Serviços';
+    divTextoRecompensas.className = 'textoServicosERecompensas';
+    divContainerRecompensas.appendChild(divTextoRecompensas);
+
+    // Gera uma div para cada valor na lista de serviços adquiridos
+    for (var i = 0; i < listaRecompensas.length; i++) {
+      var divRecompensa = document.createElement('div');
+      divRecompensa.className = 'recompensaAdquirida';
+      divRecompensa.textContent = listaNomesRecompensas[i];
+      divRecompensa.id = listaRecompensas[i];
+    
+      var divBtnUtilizarRecompensa = document.createElement('div');
+      divBtnUtilizarRecompensa.className = 'divBtnUtilizar';
+      
+      var btnUtilizarRecompensa = document.createElement('button');
+      btnUtilizarRecompensa.id = 'btnUtilizarRecompensa';
+      btnUtilizarRecompensa.textContent = 'Utilizar';
+    
+      // Configurar o evento onclick para o botão
+      console.debug('id da compra', divServico.id)
+      btnUtilizarRecompensa.onclick = configurarOnClickBtnUtilizar(divServico.id, btnUtilizarRecompensa, listaNomesServicosAdquiridos[i]);
+    
+      divBtnUtilizarRecompensa.appendChild(btnUtilizarRecompensa);
+    
+      divServico.appendChild(divBtnUtilizarRecompensa);
+      divContainerRecompensas.appendChild(divRecompensa);
+    }
+    var divBtnFinalizarRecompensa = document.createElement('div');
+    divBtnFinalizarRecompensa.className = 'btnFinalizar';
+
+    var btnFinalizarRecompensa = document.createElement('button');
+    btnFinalizarRecompensa.id = 'btnFinalizarUso';
+    btnFinalizarRecompensa.className = 'btnFinalizarUso';
+    btnFinalizarRecompensa.textContent = 'Finalizar escolhas!';
+
+    // Configurar o evento onclick para o botão "Finalizar"
+    btnFinalizarRecompensa.onclick = configurarFinalizar;
+
+    divBtnFinalizar.appendChild(btnFinalizarRecompensa);
+
+    // Adicionar o botão "Finalizar" ao contêiner
+    divContainerRecompensas.appendChild(divBtnFinalizar);
+  }
+
   function limparContainer() {
     var divContainer = document.getElementById('divContainer');
     // Define o conteúdo do container como uma string vazia para remover todas as divs
@@ -403,3 +526,14 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   
 });
+
+
+//    listaServicosAdquiridos = servicos selecionados pela pessoa -> igual lista de compras a usar mas contem id dos servicos
+//    listaNomesServicosAdquiridos = nomes dos servicos que a pessoa possui disponiveis para uso
+//    listaServicosAUsar = servicos que a pessoa possui disponiveis para uso
+//    listaComprasAUsar = compras selecionadas pela pessoa -> igual lista de servicos adquiridos mas contem id da compra
+//    listaCompras = compras que a pessoa possui
+//    listaRecompensas = recompensas que a pessoa possui -> contem id da bonificacao
+//    listaNomesRecompensas = nomes das recompensas que a pessoa possui
+//    listaRecompensasAdquiridas = recompensas que a pessoa selecionou
+

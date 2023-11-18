@@ -3,6 +3,7 @@ Id_cartao number(07) CONSTRAINT pk_id_cartao PRIMARY KEY
 );
 
 SELECT * FROM Cartao;
+DELETE FROM cartao WHERE Id_cartao = 46250;
 
 SELECT * FROM Cartao WHERE Id_cartao = 1;
 
@@ -75,6 +76,9 @@ CREATE TABLE Bonificacao(
 Id_bonificacao number(03) CONSTRAINT pk_id_bonificacao PRIMARY KEY,
 fk_id_cartao number(07),
 fk_id_recompensa number(03),
+Data_aquisicao DATE NOT NULL,
+Status_recompensa varchar2(20) NOT NULL,
+Data_uso DATE,
 FOREIGN KEY (fk_id_cartao) REFERENCES Cartao(Id_cartao),
 FOREIGN KEY (fk_id_recompensa) REFERENCES Recompensa(Id_recompensa)
 );
@@ -118,7 +122,13 @@ END;
 
 SELECT * FROM Compra;
 
-SELECT * FROM Compra WHERE fk_Id_cartao = 1;
+SELECT * FROM Compra WHERE fk_Id_cartao = 49021;
+UPDATE Compra SET Data_uso = CURRENT_TIMESTAMP, Status_compra = 'Usado'
+WHERE fk_id_cartao = 70695 AND id_compra = 9;
+
 
 SELECT * FROM COMPRA WHERE fk_Id_cartao = 1 AND Status_compra = 'Disponível';
 SELECT * FROM COMPRA WHERE fk_Id_cartao = 1 AND Status_compra = 'Usado';
+
+DELETE FROM Compra WHERE fk_id_servico = 10 AND fk_id_cartao = 70695;
+
