@@ -79,4 +79,30 @@ router.post('/compraServico/:idCartao', async (req, res, next) => {
         }
 });
 
+router.patch('/registrarUso/:idCartao', async (req, res, next) => {
+  const idCartao = req.params.idCartao; //declaração do que será usado para passar no body da requisição
+  const idCompra = req.body.idCompra;
+  const status = 'Usado';
+
+    try{
+      const connection = await db.createConnection(); //iniciar conexão com o banco
+
+      const result = 'UPDATE Compra SET Data_uso = CURRENT_TIMESTAMP, Status_compra =:status WHERE fk_id_cartao =:idCartao AND id_compra =:idCompra';
+      const dados = [status, idCartao, idCompra];
+  
+      let resInsert = await connection.execute(result, dados);
+      await connection.commit();   //commitar a conexão para que os dados nao sejam perdidos
+
+      const rowsInserted = resInsert.rowsAffected; 
+
+      if(rowsInserted !== undefined &&  rowsInserted === 1) {
+        res.status(200).send('Uso registrado com sucesso.');
+    }
+    }catch (error) {
+        console.error('Erro ao executar a consulta:', error);
+        res.status(500).send('Erro interno do servidor');
+      }
+});
+
+
 module.exports = router;

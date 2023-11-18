@@ -223,7 +223,28 @@ document.addEventListener('DOMContentLoaded', function () {
     else
     {
       for (let i = 0; i < listaDeServicos.length; i++) {
-        await inserirServicoNoBanco(listaDeServicos[i], numeroCartao);
+        if(listaDeServicos[i] == 10)
+        {
+          for(let j = 0; j < 6; j++)
+          {
+            await inserirServicoNoBanco(8, numeroCartao);
+          }
+        }else if(listaDeServicos[i] == 11)
+        {
+          for(let j = 0; j < 6; j++)
+          {
+            await inserirServicoNoBanco(9, numeroCartao);
+          }
+        } else if(listaDeServicos[i] == 12)
+        {
+          for(let j = 0; j < 6; j++)
+          {
+            await inserirServicoNoBanco(4, numeroCartao);
+          }
+        }
+        else{
+          await inserirServicoNoBanco(listaDeServicos[i], numeroCartao);
+        }
       }
       listaDeServicos = [];    
       alert('Compra finalizada com sucesso!');

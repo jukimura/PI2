@@ -161,56 +161,166 @@ function Comunicado (codigo,mensagem,descricao)
 	}
 }
 
-
 document.addEventListener('DOMContentLoaded', function () {
 
   let listaServicosAdquiridos = [];
   let listaNomesServicosAdquiridos = [];
   let listaServicosAUsar = [];
+  let listaComprasAUsar = [];
+  let listaCompras = [];
 
-  function configurarOnClick(idServico, btnUtilizar) {
-    return function() {
-      console.log('Botão clicado para o serviço com ID:', idServico);
-      inserirServicoNaLista(idServico);
-      alert('Serviço pronto para utilização!');
-      btnUtilizar.disabled = true;
-
-    };
-  }
 
   function inserirServicoNaLista(idServico) {
     listaServicosAUsar.push(idServico);
-    console.log('Serviços selecionados:', listaServicosAUsar);
   }
 
-  async function finalizarSelecaoUtilizacao(listaServicos) {
+  function inserirCompraNaLista(idServico) {
+    listaComprasAUsar.push(idServico);
+  }
 
-    var numeroCartao = document.getElementById("campoNumeroCartao").value;
-    if(listaServicosAUsar == null || listaServicosAUsar == '')
+  async function encontrarCompras() {
+    limparContainer();
+    var campoNumeroCartao = document.getElementById("campoNumeroCartao");
+    var divExisteCartao = document.getElementById('cartaoExiste');
+    try {
+
+      if (campoNumeroCartao.required && (campoNumeroCartao.value == null || campoNumeroCartao.value == '')) {
+        alert("Preencha o número do cartão antes de comprar um serviço!");
+      } else {
+        await buscarCartao();
+        if (divExisteCartao.textContent == 'Esses são os serviços que você adquiriu.') {
+          buscaComprasByCartao(campoNumeroCartao.value);
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const btnBusca = document.getElementById('btnBusca');
+  btnBusca.addEventListener('click', function () {
+    encontrarCompras();
+  });
+  
+  async function buscaComprasByCartao(idCartao) {
+    var divExisteCartao = document.getElementById('cartaoExiste');
+    let url = `http://localhost:3000/getComprasNaoUsadasById/${idCartao}`;
+  
+    try {
+      const response = await axios.get(url);
+      console.log(' response da request : ', response.data);
+      if (response.data == null || response.data == '') {
+        divExisteCartao.textContent = 'Sem dados de compras encontrados.';
+        return false;
+      } else {
+        console.log('tamanho lista' + listaComprasAUsar.length);
+        const comprasId = response.data.map(vetor => vetor[0]);
+        for (var i = 0; i < comprasId.length; i++) {
+          listaCompras.push(comprasId[i]);
+        }
+        const servicosId = response.data.map(vetor => vetor[5]);
+        // Limpa a lista antes de adicionar novos valores
+        listaServicosAdquiridos = [];
+        listaServicosAUsar = [];
+        for (var i = 0; i < servicosId.length; i++) {
+          listaServicosAdquiridos.push(servicosId[i]);
+        }
+        gerarDivServicoAdquirido();
+        return true;
+      }
+    } catch (error) {
+      // Não use alert aqui, apenas lance o erro para ser tratado fora desta função
+      throw error;
+    }
+  }
+
+  async function getServicosName(idServico) {
+
+      let url = `http://localhost:3000/getServicoById/${idServico}`;
+  
+      try {
+        const response = await axios.get(url);
+        if (response.data == null || response.data == '') {
+          return false;
+        } else {
+          listaNomesServicosAdquiridos.push(response.data);
+          return true;
+        }
+      } catch (error) {
+        // Não use alert aqui, apenas lance o erro para ser tratado fora desta função
+        throw error;
+      }
+  }
+
+
+  function configurarOnClickBtnUtilizar(idCompra, btnUtilizar, idServico) {
+    return function() {
+      console.log('Botão clicado para o serviço com ID:', idServico);
+      console.log('Botão clicado para a compra com ID: ', idCompra);
+      inserirServicoNaLista(idServico);
+      console.log('Tamanho lista servicos: ', listaServicosAdquiridos);
+      inserirCompraNaLista(idCompra);
+      console.log('Tamanho lista compras', listaComprasAUsar);
+      alert('Serviço pronto para utilização!');
+      btnUtilizar.disabled = true;
+    };
+  }
+
+ async function configurarFinalizar() {
+    var campoNumeroCartao = document.getElementById("campoNumeroCartao");
+    console.log('Botão "Finalizar" clicado');
+    if(listaComprasAUsar == '' )
     {
-        alert('Você não selecrionou nenhum serviço!');
+      alert('Você não selecionou nenhum serviço!');
     }
     else
     {
-      // for (let i = 0; i < listaServicosAUsar.length; i++) {
-      //   await inserirServicoUsadoNoBanco(listaServicosAUsar[i], numeroCartao);
-      // }
-      // listaServicosAUsar = [];    
-      alert('Utilização finalizada com sucesso!');
+      if(listaComprasAUsar.length == 3)
+      {
+        //logica de inserir na tabela bonificacao a recompensa onde qtd usos = 3
+        for(let i = 0; i < listaComprasAUsar.length; i++)
+        {
+          console.log('servico sendo editado', listaComprasAUsar[i]);
+          await registrarUso(listaComprasAUsar[i], campoNumeroCartao.value);
+        }
+        alert('Funcionou');
+        encontrarCompras();
+
+      }else if(listaComprasAUsar.length == 4)
+      {
+        //logica de inserir na tabela bonificacao a recompensa onde qtd usos = 4
+        alert('4');
+      }else if(listaComprasAUsar.length >= 5)
+      {
+        //logica de inserir na tabela bonificacao a recompensa onde qtd usos = 4
+
+        for(let i = 0; i < listaComprasAUsar.length; i++)
+        {
+          console.log('servico sendo editado', listaComprasAUsar[i]);
+          await registrarUso(listaComprasAUsar[i], campoNumeroCartao.value);
+        }
+        alert('Funcionou');
+        encontrarCompras();
+      }
+      else{
+        for(let i = 0; i < listaComprasAUsar.length; i++)
+        {
+          console.log('servico sendo editado', listaComprasAUsar[i]);
+          await registrarUso(listaComprasAUsar[i], campoNumeroCartao.value);
+        }
+        alert('Funcionou');
+        encontrarCompras();
+      }
     }
   }
 
+  async function registrarUso(idCompra, numeroCartao) {
 
-  async function inserirServicoUsadoNoBanco(servico, numeroCartao) {
+    let objCompra = { idCompra: idCompra};
+    console.log(objCompra);
+    let url = `http://localhost:3000/registrarUso/${numeroCartao}` //post
 
-    console.log('servico ' + servico);
-    console.log('numeroCartao' + numeroCartao);
-    
-    let objCompra = { idServico: servico};
-    //mudar rota para a que altera o campo 'usou' na tabela compra
-  //  let url = `http://localhost:3000/compraServico/${numeroCartao}` //post
-
-    let res = axios.post(url, objCompra)
+    let res = axios.patch(url, objCompra)
     .then(response => {
       if (response.data) {
         const msg = new Comunicado (response.data.codigo, 
@@ -227,84 +337,7 @@ document.addEventListener('DOMContentLoaded', function () {
         alert(msg.get());
       }
     })
-    console.log('Alterando serviço no banco de dados:', servico);
   }
-
-  async function encontrarCompras() {
-    limparContainer();
-    var campoNumeroCartao = document.getElementById("campoNumeroCartao");
-    var divExisteCartao = document.getElementById('cartaoExiste');
-    try {
-
-      if (campoNumeroCartao.required && (campoNumeroCartao.value == null || campoNumeroCartao.value == '')) {
-        alert("Preencha o número do cartão antes de comprar um serviço!");
-      } else {
-        await buscarCartao();
-        if (divExisteCartao.textContent == 'Esses são os serviços que você adquiriu.') { 
-          buscaComprasByCartao(campoNumeroCartao.value);
-        }
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  const btnBusca = document.getElementById('btnBusca');
-  btnBusca.addEventListener('click', function () {
-    encontrarCompras();
-  });
-  
-  async function buscaComprasByCartao(idCartao) {
-    var divExisteCartao = document.getElementById('cartaoExiste');
-    console.log(idCartao);
-    let url = `http://localhost:3000/getComprasById/${idCartao}`;
-  
-    try {
-      const response = await axios.get(url);
-      console.log(' response da request : ', response.data);
-      if (response.data == null || response.data == '') {
-        divExisteCartao.textContent = 'Sem dados de compras encontrados.';
-        return false;
-      } else {
-        const terceirosValores = response.data.map(vetor => vetor[5]);
-        console.log('Terceiros valores:', terceirosValores);
-        // Limpa a lista antes de adicionar novos valores
-        listaServicosAdquiridos = [];
-        listaServicosAUsar = [];
-        for (var i = 0; i < terceirosValores.length; i++) {
-          listaServicosAdquiridos.push(terceirosValores[i]);
-        }
-        console.log('Lista :', listaServicosAdquiridos);
-        gerarDivServicoAdquirido();
-        return true;
-      }
-    } catch (error) {
-      // Não use alert aqui, apenas lance o erro para ser tratado fora desta função
-      throw error;
-    }
-  }
-
-  async function getServicosName(idServico) {
-
-      let url = `http://localhost:3000/getServicoById/${idServico}`;
-  
-      try {
-        const response = await axios.get(url);
-        console.log(' response da request get servico by id: ', response.data);
-        if (response.data == null || response.data == '') {
-          return false;
-        } else {
-          listaNomesServicosAdquiridos.push(response.data);
-          console.log('Lista :', listaNomesServicosAdquiridos);
-          return true;
-        }
-      } catch (error) {
-        // Não use alert aqui, apenas lance o erro para ser tratado fora desta função
-        throw error;
-      }
-  }
-
-
   
   async function gerarDivServicoAdquirido() {
     // Limpa o conteúdo anterior
@@ -314,36 +347,6 @@ document.addEventListener('DOMContentLoaded', function () {
     divContainer.innerHTML = '';
     listaNomesServicosAdquiridos=[];
 
-
-
-    function configurarFinalizar() {
-      console.log('Botão "Finalizar" clicado');
-      if(listaServicosAUsar == '' )
-      {
-        alert('Você não selecionou nenhum serviço!');
-      }
-      else
-      {
-        if(listaServicosAUsar.length == 3)
-        {
-          //logica de inserir na tabela bonificacao a recompensa onde qtd usos = 3
-          alert('3');
-        }else if(listaServicosAUsar.length == 4)
-        {
-          //logica de inserir na tabela bonificacao a recompensa onde qtd usos = 4
-          alert('4');
-        }else if(listaServicosAUsar.length == 5 || listaServicosAUsar.length > 5)
-        {
-          //logica de inserir na tabela bonificacao a recompensa onde qtd usos = 4
-          alert('5');
-        }
-        else{
-          alert('Botão finalizar clicado');
-          //logica de atualizar na na tabela 
-        }
-      }
-    }
-
     var divTextoServicos = document.createElement('div');
     divTextoServicos.textContent = 'Serviços';
     divTextoServicos.className = 'textoServicosERecompensas';
@@ -351,12 +354,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Gera uma div para cada valor na lista de serviços adquiridos
     for (var i = 0; i < listaServicosAdquiridos.length; i++) {
-
+      console.log('testeeee', listaComprasAUsar.length);
       await getServicosName(listaServicosAdquiridos[i]);
-      var novaDiv = document.createElement('div');
-      novaDiv.className = 'servicoComprado';
-      novaDiv.textContent = listaNomesServicosAdquiridos[i];
-      novaDiv.id = listaServicosAdquiridos[i];
+      var divServico = document.createElement('div');
+      divServico.className = 'servicoComprado';
+      divServico.textContent = listaNomesServicosAdquiridos[i];
+      divServico.id = listaCompras[i];
     
       var divBtnUtilizar = document.createElement('div');
       divBtnUtilizar.className = 'divBtnUtilizar';
@@ -366,24 +369,29 @@ document.addEventListener('DOMContentLoaded', function () {
       btnUtilizar.textContent = 'Utilizar';
     
       // Configurar o evento onclick para o botão
-      btnUtilizar.onclick = configurarOnClick(novaDiv.id, btnUtilizar);
+      console.debug('id da compra', divServico.id)
+      btnUtilizar.onclick = configurarOnClickBtnUtilizar(divServico.id, btnUtilizar, listaNomesServicosAdquiridos[i]);
     
       divBtnUtilizar.appendChild(btnUtilizar);
     
-      novaDiv.appendChild(divBtnUtilizar);
-      divContainer.appendChild(novaDiv);
+      divServico.appendChild(divBtnUtilizar);
+      divContainer.appendChild(divServico);
     }
+    var divBtnFinalizar = document.createElement('div');
+    divBtnFinalizar.className = 'btnFinalizar';
 
     var btnFinalizar = document.createElement('button');
     btnFinalizar.id = 'btnFinalizarUso';
     btnFinalizar.className = 'btnFinalizarUso';
-    btnFinalizar.textContent = 'Finalizar Compra';
+    btnFinalizar.textContent = 'Finalizar escolhas!';
 
     // Configurar o evento onclick para o botão "Finalizar"
     btnFinalizar.onclick = configurarFinalizar;
 
+    divBtnFinalizar.appendChild(btnFinalizar);
+
     // Adicionar o botão "Finalizar" ao contêiner
-    divContainer.appendChild(btnFinalizar);
+    divContainer.appendChild(divBtnFinalizar);
   }
 
   function limparContainer() {
@@ -395,4 +403,3 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   
 });
-
