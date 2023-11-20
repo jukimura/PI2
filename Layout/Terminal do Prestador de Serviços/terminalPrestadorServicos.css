@@ -341,6 +341,7 @@ select{
 .textoServicosERecompensas{
   font-size: 22px;
   margin-left: 40px;
+  margin-top: 20px;
 }
 
 #btnFinalizarUso{
@@ -356,4 +357,40 @@ select{
 
 #btnFinalizarUso:hover{
   background-color: rgba(255, 255, 255, 0.633);
+}
+
+.recompensaAdquirida{
+  width: 25%;
+  height: 100px;
+  margin-top: 3%;
+  margin-left: 4.5%;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  position: relative;
+  display: inline-block;
+  padding: 15px 15px 15px;
+  font-size: 20px;
+  text-align: center;
+  border: 1px solid #002962;
+  background-color: #407aa73e;
+}
+
+#btnUtilizarRecompensa {
+  right: 30px; /* Ajuste conforme necessário para posicionar mais para a esquerda */
+  top: 10px;  /* Ajuste conforme necessário para posicionar mais para baixo */
+  font-size: 15px;
+  border: 2px solid #9199ac;
+  border-radius: 5px;
+  width: 284px;
+  height: 40px;
+  background-color: #c5cfda;
+}
+
+#btnUtilizarRecompensa:hover{
+  background-color: rgba(255, 255, 255, 0.633);
+}
+
+#divTextoRecompensas{
+  margin-top: 30px;
 }

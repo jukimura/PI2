@@ -87,7 +87,7 @@ router.patch('/registrarUso/:idCartao', async (req, res, next) => {
     try{
       const connection = await db.createConnection(); //iniciar conexão com o banco
 
-      const result = 'UPDATE Compra SET Data_uso = CURRENT_TIMESTAMP, Status_compra =:status WHERE fk_id_cartao =:idCartao AND id_compra =:idCompra';
+      const result = 'UPDATE Compra SET Data_uso = CURRENT_TIMESTAMP, Status_compra =:1 WHERE fk_id_cartao =:2 AND id_compra =:3';
       const dados = [status, idCartao, idCompra];
   
       let resInsert = await connection.execute(result, dados);
