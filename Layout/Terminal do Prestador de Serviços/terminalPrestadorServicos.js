@@ -199,6 +199,8 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   async function buscaComprasByCartao(idCartao) {
+    listaComprasSelecionadas = [];
+    listaComprasByCartao = [];
     var divExisteCartao = document.getElementById('cartaoExiste');
     let url = `http://localhost:3000/getComprasNaoUsadasById/${idCartao}`;
   
@@ -318,7 +320,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (response.data == null || response.data == '') {
         return false;
       } else {
-        return true;
+        return response.data;
       }
     } catch (error) {
       // Não use alert aqui, apenas lance o erro para ser tratado fora desta função
@@ -338,36 +340,45 @@ document.addEventListener('DOMContentLoaded', function () {
       if(listaComprasSelecionadas.length == 3)
       {
         let qtd_usos = await getRecompensaByQtd(3);
-        //inserirRecompensaNoBanco(campoNumeroCartao.value, qtd_usos);
+        const idRecompensa = qtd_usos[0][0];
+        await inserirRecompensaNoBanco(campoNumeroCartao.value, idRecompensa);
         for(let i = 0; i < listaComprasSelecionadas.length; i++)
         {
           console.log('servico sendo editado', listaComprasSelecionadas[i]);
-          await registrarUso(listaComprasSelecionadas[i], campoNumeroCartao.value);
+          await registrarUso(listaComprasSelecionadas[i].idCompra, campoNumeroCartao.value);
         }
+        listaComprasSelecionadas = [];
+        listaComprasByCartao = [];
         alert('Recompensa recebida!!');
         encontrarCompras();
         encontrarRecompensas();
       }else if(listaComprasSelecionadas.length == 4)
       {
         qtd_usos = await getRecompensaByQtd(4);
-        //inserirRecompensaNoBanco(campoNumeroCartao.value, qtd_usos);
+        const idRecompensa = qtd_usos[0][0];
+        await inserirRecompensaNoBanco(campoNumeroCartao.value, idRecompensa);
         for(let i = 0; i < listaComprasSelecionadas.length; i++)
         {
           console.log('servico sendo editado', listaComprasSelecionadas[i]);
-          await registrarUso(listaComprasSelecionadas[i], campoNumeroCartao.value);
+          await registrarUso(listaComprasSelecionadas[i].idCompra, campoNumeroCartao.value);
         }
+        listaComprasSelecionadas = [];
+        listaComprasByCartao = [];
         alert('Recompensa recebida!!');
         encontrarCompras();
         encontrarRecompensas();
       }else if(listaComprasSelecionadas.length >= 5)
       {
         qtd_usos = await getRecompensaByQtd(5);
-        //inserirRecompensaNoBanco(campoNumeroCartao.value, qtd_usos);
+        const idRecompensa = qtd_usos[0][0];
+        await inserirRecompensaNoBanco(campoNumeroCartao.value, idRecompensa);
         for(let i = 0; i < listaComprasSelecionadas.length; i++)
         {
           console.log('servico sendo editado', listaComprasSelecionadas[i]);
-          await registrarUso(listaComprasSelecionadas[i], campoNumeroCartao.value);
+          await registrarUso(listaComprasSelecionadas[i].idCompra, campoNumeroCartao.value);
         }
+        listaComprasSelecionadas = [];
+        listaComprasByCartao = [];
         alert('Recompensa recebida!!');
         encontrarCompras();
         encontrarRecompensas();
@@ -421,6 +432,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   async function inserirRecompensaNoBanco(numeroCartao, idRecompensa) {
 
+    console.log('ENTROU aqui no inserir');
     let objBonificacao = { idRecompensa: idRecompensa};
     let url = `http://localhost:3000/registroRecompensa/${numeroCartao}` //post
 
@@ -441,13 +453,13 @@ document.addEventListener('DOMContentLoaded', function () {
         alert(msg.get());
       }
     })
-    console.log('Inserindo bonificação no banco de dados:', servico);
+    console.log('Inserindo bonificação no banco de dados:', objBonificacao);
   }
 
   async function registrarUsoRecompensa(idBonificacao, numeroCartao) {
 
     let objBonificacao = { idBonificacao: idBonificacao};
-    let url = `http://localhost:3000/registroUsoRecompensa/${numeroCartao}` //post
+    let url = `http://localhost:3000/registrarUsoRecompensa/${numeroCartao}` //post
 
     let res = axios.patch(url, objBonificacao)
     .then(response => {
