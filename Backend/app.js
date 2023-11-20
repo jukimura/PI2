@@ -8,6 +8,7 @@ const rotaCartao = require('./routes/cartao');
 const rotaCompras = require('./routes/compras');
 const rotaServico = require('./routes/servico');
 const rotaRecompensa = require('./routes/recompensa');
+const rotaBonificacao = require('./routes/bonificacao');
 
 
 function middleWareGlobal (req, res, next)
@@ -34,6 +35,7 @@ app.use('/', rotaCartao);
 app.use('/', rotaCompras);
 app.use('/', rotaServico);
 app.use('/', rotaRecompensa);
+app.use('/', rotaBonificacao);
 
 app.use((req, res, next) => {
     const erro = new Error('Não encontrado');
