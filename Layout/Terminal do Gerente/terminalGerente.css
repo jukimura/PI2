@@ -17,7 +17,7 @@ head{
 .botao {
     padding: 8px 8px;
     border-style: unset;
-    margin-left: 225px;
+    margin-left: 100px;
     background-color: #407ba7;
     color: white;
   }
@@ -25,7 +25,7 @@ head{
 .botao:hover {
     padding: 8px 8px;
     border-style: unset;
-    margin-left: 225px;
+    margin-left: 100px;
     background-color: rgba(255, 255, 255, 0.633);
     color: #407ba7;
   }
@@ -96,11 +96,6 @@ head{
 }
 
 
-
-.navBar{
-  margin-left: -35px;
-}
-
 .rodape{
   height: 100px;
 }
@@ -132,9 +127,29 @@ table {
   margin-top: 10px;
 }
 
+#tableServicosNaoUsados {
+  width: 100%;
+  margin-top: 50px;
+}
+
+#celulaServicosNaoUsados{
+  height: 30px;
+  width: 25%;
+}
+
+
+#tableVendas{
+  margin-top: 50px;
+}
+
 #celula{
     width: 50%;
     height: 30px;
+}
+
+#celulaVenda{
+  width: 25%;
+  height: 30px;
 }
 
 
