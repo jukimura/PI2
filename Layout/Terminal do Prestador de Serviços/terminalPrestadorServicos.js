@@ -168,11 +168,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   //SERVICOS
 
-  function adicionarCompra(idCompra, nomeServico, dataCompra, idServico) {
-    let compra = { idCompra: idCompra, nomeServico: nomeServico, dataCompra: dataCompra ,idServico: idServico };
-    listaComprasByCartao.push(compra);
-  }
-
   const btnBusca = document.getElementById('btnBusca');
   btnBusca.addEventListener('click', function () {
     encontrarCompras();
@@ -229,6 +224,27 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
+  function adicionarCompra(idCompra, nomeServico, dataCompra, idServico) {
+    let compra = { idCompra: idCompra, nomeServico: nomeServico, dataCompra: dataCompra ,idServico: idServico };
+    listaComprasByCartao.push(compra);
+  }
+
+  async function getServicosName(idServico) {
+    let url = `http://localhost:3000/getServicoById/${idServico}`;
+  
+    try {
+      const response = await axios.get(url);
+      if (response.data == null || response.data == '') {
+        return null; // Retorna null se o serviço não for encontrado
+      } else {
+        return response.data; // Retorna o nome do serviço
+      }
+    } catch (error) {
+      // Não use alert aqui, apenas lance o erro para ser tratado fora desta função
+      throw error;
+    }
+  }
+
   async function gerarDivServicoAdquirido() {
     // Limpa o conteúdo anterior
     var campoNumeroCartao = document.getElementById("campoNumeroCartao");
@@ -281,21 +297,7 @@ document.addEventListener('DOMContentLoaded', function () {
     divContainer.appendChild(divBtnFinalizar);
   }
 
-  async function getServicosName(idServico) {
-    let url = `http://localhost:3000/getServicoById/${idServico}`;
-  
-    try {
-      const response = await axios.get(url);
-      if (response.data == null || response.data == '') {
-        return null; // Retorna null se o serviço não for encontrado
-      } else {
-        return response.data; // Retorna o nome do serviço
-      }
-    } catch (error) {
-      // Não use alert aqui, apenas lance o erro para ser tratado fora desta função
-      throw error;
-    }
-  }
+
   
   function configurarOnClickBtnUtilizar(idCompra, btnUtilizar, dataCompra, idServico) {
     return function() {
@@ -310,23 +312,6 @@ document.addEventListener('DOMContentLoaded', function () {
       let compra = { idCompra: idCompra, dataCompra: dataCompra, idServico: idServico};
       listaComprasSelecionadas.push(compra);
     } 
-
-  async function getRecompensaByQtd(Qtd_minima_usos) {
-    let url = `http://localhost:3000/getRecompensaByQtd/${Qtd_minima_usos}`;
-  
-    try {
-      const response = await axios.get(url);
-      console.log(' response da request : ', response.data);
-      if (response.data == null || response.data == '') {
-        return false;
-      } else {
-        return response.data;
-      }
-    } catch (error) {
-      // Não use alert aqui, apenas lance o erro para ser tratado fora desta função
-      throw error;
-    }
-  }
 
   async function configurarFinalizar() {
     console.log('entrou finalizar');
@@ -397,37 +382,21 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  async function registrarUso(idCompra, numeroCartao) {
-
-    console.log('Id compra', idCompra);
-    console.log('id cartao', numeroCartao);
-    let objCompra = { idCompra: idCompra};
-    let url = `http://localhost:3000/registrarUso/${numeroCartao}` //post
-
-    let res = axios.patch(url, objCompra)
-    .then(response => {
-      if (response.data) {
-        const msg = new Comunicado (response.data.codigo, 
-                                    response.data.mensagem, 
-                      response.data.descricao);
-      }
-    })
-    .catch(error  =>  {
-      
-      if (error.response) {
-        const msg = new Comunicado (error.response.data.codigo, 
-                                    error.response.data.mensagem, 
-                      error.response.data.descricao);
-        alert(msg.get());
-      }
-    })
-  }
-
-//RECOMPENSAS
+  async function getRecompensaByQtd(Qtd_minima_usos) {
+    let url = `http://localhost:3000/getRecompensaByQtd/${Qtd_minima_usos}`;
   
-  function adicionarRecompensa(idBonificacao, nomeRecompensa, dataAquisicao, idRecompensa) {
-    let recompensa = { idBonificacao: idBonificacao, nomeRecompensa: nomeRecompensa, dataAquisicao: dataAquisicao, idRecompensa: idRecompensa};
-    listaRecompensasByCartao.push(recompensa);
+    try {
+      const response = await axios.get(url);
+      console.log(' response da request : ', response.data);
+      if (response.data == null || response.data == '') {
+        return false;
+      } else {
+        return response.data;
+      }
+    } catch (error) {
+      // Não use alert aqui, apenas lance o erro para ser tratado fora desta função
+      throw error;
+    }
   }
 
   async function inserirRecompensaNoBanco(numeroCartao, idRecompensa) {
@@ -456,12 +425,15 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log('Inserindo bonificação no banco de dados:', objBonificacao);
   }
 
-  async function registrarUsoRecompensa(idBonificacao, numeroCartao) {
 
-    let objBonificacao = { idBonificacao: idBonificacao};
-    let url = `http://localhost:3000/registrarUsoRecompensa/${numeroCartao}` //post
+  async function registrarUso(idCompra, numeroCartao) {
 
-    let res = axios.patch(url, objBonificacao)
+    console.log('Id compra', idCompra);
+    console.log('id cartao', numeroCartao);
+    let objCompra = { idCompra: idCompra};
+    let url = `http://localhost:3000/registrarUso/${numeroCartao}` //post
+
+    let res = axios.patch(url, objCompra)
     .then(response => {
       if (response.data) {
         const msg = new Comunicado (response.data.codigo, 
@@ -524,6 +496,11 @@ document.addEventListener('DOMContentLoaded', function () {
     } catch (error) {
       throw error;
     }
+  }
+
+  function adicionarRecompensa(idBonificacao, nomeRecompensa, dataAquisicao, idRecompensa) {
+    let recompensa = { idBonificacao: idBonificacao, nomeRecompensa: nomeRecompensa, dataAquisicao: dataAquisicao, idRecompensa: idRecompensa};
+    listaRecompensasByCartao.push(recompensa);
   }
 
   async function gerarDivRecompensasAdquiridas() {
@@ -600,6 +577,11 @@ document.addEventListener('DOMContentLoaded', function () {
     };
   }
 
+  function inserirRecompensaNaLista(idBonificacao, dataAquisicao, idRecompensa) {
+    let recompensa = { idBonificacao: idBonificacao, dataAquisicao: dataAquisicao, idRecompensa: idRecompensa};
+    listaRecompensasSelecionadas.push(recompensa);
+  } 
+
   async function configurarFinalizarRecompensa() {
     var campoNumeroCartao = document.getElementById("campoNumeroCartao");
     if(listaRecompensasSelecionadas == '')
@@ -620,17 +602,35 @@ document.addEventListener('DOMContentLoaded', function () {
     
   }
 
-  function inserirRecompensaNaLista(idBonificacao, dataAquisicao, idRecompensa) {
-    let recompensa = { idBonificacao: idBonificacao, dataAquisicao: dataAquisicao, idRecompensa: idRecompensa};
-    listaRecompensasSelecionadas.push(recompensa);
-  } 
+  async function registrarUsoRecompensa(idBonificacao, numeroCartao) {
+
+    let objBonificacao = { idBonificacao: idBonificacao};
+    let url = `http://localhost:3000/registrarUsoRecompensa/${numeroCartao}` //post
+
+    let res = axios.patch(url, objBonificacao)
+    .then(response => {
+      if (response.data) {
+        const msg = new Comunicado (response.data.codigo, 
+                                    response.data.mensagem, 
+                      response.data.descricao);
+      }
+    })
+    .catch(error  =>  {
+      
+      if (error.response) {
+        const msg = new Comunicado (error.response.data.codigo, 
+                                    error.response.data.mensagem, 
+                      error.response.data.descricao);
+        alert(msg.get());
+      }
+    })
+  }
+
+
 
   function limparContainer() {
     var divContainer = document.getElementById('divContainer');
-    // Define o conteúdo do container como uma string vazia para remover todas as divs
     divContainer.innerHTML = '';
-    // ou
-    // divContainer.textContent = '';
   }
 
   function limparContainerRecompensas() {

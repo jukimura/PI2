@@ -281,3 +281,35 @@ head{
 #digiteNumero {
   font-size: 18px;
 }
+
+table, th, td {
+  border: 1px solid #002962;
+  border-collapse: collapse;
+}
+
+table {
+  width: 100%;
+  margin-top: 10px;
+}
+th, td{
+  width: 30%;
+  height: 30px;
+}
+
+th{
+  background-color: #407aa73e;
+}
+
+
+#table1{
+  margin-top: 50px;
+}
+
+#btnBuscaPagRelatorio{
+  background-color: #c5cfda;
+  height: 42px;
+  width: 42px;
+  margin-left: -3px;
+  border-radius: 5px;
+  border: 1px solid #9199ac;
+}

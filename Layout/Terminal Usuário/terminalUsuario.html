@@ -19,7 +19,7 @@
       <div class="navBar">
       <li><a href="#" class="botao" id="servicosBtn" onclick="exibirPaginaCorreta('servico')">Comprar serviços</a></li>
       <li><a href="#" class="botao" id="gerarCartaoBtn" onclick="exibirPaginaCorreta('gerarCartao')">Gerar Cartão</a></li>
-      <li><a href="#" class="botao" id="relatorioUsuarioBtn" onclick="exibirPaginaCorreta('relatorio')">Relatório</a></li>
+      <li><a href="#" class="botao" id="relatorioUsuarioBtn" onclick="exibirPaginaCorreta('relatorio')">Relatório de Serviços do Cliente</a></li>
     </div>
     </ul>
   
@@ -32,7 +32,7 @@
     <div class="searchArea">
     <p id="digiteNumero">Digite o número do cartão: </p>
     <input type="text" placeholder="Número do cartão" name="numeroCartao" id="campoNumeroCartao" oninput="validarNumeros(this)" required>
-    <button type="submit" id="btnBusca" onclick="buscarCartao()"><i class="fa fa-search" ></i></button>
+    <button type="submit" id="btnBusca" onclick="buscarCartao('campoNumeroCartao')"><i class="fa fa-search" ></i></button>
     <div id="cartaoExiste"></div>
   </div>
   <div id="listaServicos">
@@ -213,7 +213,42 @@
 </div>
 
 <div id="relatorio" class="conteudo">
-  <p class="nomesProc">Página de Relatório</p>
+  <div class="searchArea">
+    <p id="digiteNumero">Digite o número do cartão: </p>
+    <input type="text" placeholder="Número do cartão" name="numeroCartao" id="campoNumeroCartaoRelatorio" oninput="validarNumeros(this)" required>
+    <button type="submit" id="btnBuscaPagRelatorio"><i class="fa fa-search" ></i></button>
+    <div id="cartaoExisteRelatorio"></div>
+  </div>
+      <table class="tabela" id="table1">
+        <thead>
+            <tr>
+                <th>Serviços/Kits Adquiridos</th>
+                <th>Data da compra</th>
+                <th>Data da utilização</th>
+                <th>Saldo restante</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+      <br><br>
+
+    <table class="tabela" id="table2">
+        <thead>
+            <tr>
+                <th>Recompensas recebidas</th>
+                <th>Data do recebimento</th>
+                <th>Data da utilização</th>
+                <th>Saldo restante</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <div class="rodape"></div>
+    <div class="rodape"></div>
 </div>
 
 <script src="terminalUsuario.js"></script>

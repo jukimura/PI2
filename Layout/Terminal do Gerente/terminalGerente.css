@@ -1,0 +1,182 @@
+
+body{
+  margin-right: 20px;
+  background-color: #c5cfda74;
+}
+head{
+  margin-right: 20px;
+}
+
+.nome {
+    background-color: #002962;
+    padding: 0.1px 0.1px 0.1px 0.1px;
+    color: #1b365d;
+    text-align: center;
+}
+
+.botao {
+    padding: 8px 8px;
+    border-style: unset;
+    margin-left: 225px;
+    background-color: #407ba7;
+    color: white;
+  }
+
+.botao:hover {
+    padding: 8px 8px;
+    border-style: unset;
+    margin-left: 225px;
+    background-color: rgba(255, 255, 255, 0.633);
+    color: #407ba7;
+  }
+
+.options {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #407ba7;
+    border-top: 1px solid rgb(0, 0, 0);
+    font-family: 'Source Sans', sans-serif;
+  }
+  
+  li {
+    float: left;
+  }
+  
+  li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+    .conteudo {
+    display: none;
+  }
+  
+  .visible {
+    display: block;
+  }
+  
+
+  input[type="text"] {
+    width: 35%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #9199ac;
+    border-radius: 4px;
+    box-sizing: border-box;
+    outline-color: #9199ac;
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+
+  .searchArea {
+    margin-left: 38%;
+    margin-top: 3%;
+    margin-bottom: 2%;
+}
+
+.card {
+  width: 25%;
+  height: 8%;
+  margin-top: 30px;
+  margin-left: 80px;
+  background-color: white;
+  border: 1.5px solid #9199ac;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  position: relative;
+  display: inline-block;
+}
+
+
+
+.navBar{
+  margin-left: -35px;
+}
+
+.rodape{
+  height: 100px;
+}
+
+.textCenter{
+  margin-top: 35px;
+}
+
+
+
+#numeroCartao{
+  color: #1b365d;
+  font-size: 23px;
+}
+
+.logoPagina{
+  height: 90px;
+  width: 190px;
+  align-items: center;
+}
+
+table, th, td {
+  border: 1px solid #002962;
+  border-collapse: collapse;
+}
+
+table {
+  width: 100%;
+  margin-top: 10px;
+}
+
+#celula{
+    width: 50%;
+    height: 30px;
+}
+
+
+#table1{
+  margin-top: 50px;
+}
+
+#btnBuscaPagRelatorio{
+  background-color: #c5cfda;
+  height: 42px;
+  width: 42px;
+  margin-left: -3px;
+  border-radius: 5px;
+  border: 1px solid #9199ac;
+}
+
+#divBtnAtualizar{
+    margin-top: 50px;
+    margin-left: 515px;
+    margin-bottom: 20px;
+}
+
+.btnAtualizar{
+  border: 2px solid #9199ac;
+  border-radius: 5px;
+  width: 285px;
+  height: 50px;
+  margin-top: auto;
+  background-color: #c5cfda;
+  font-size: 20px;
+}
+
+.btnAtualizar:hover{
+  background-color: rgba(255, 255, 255, 0.633);
+}
+
+#tableRecompensas{
+    margin-top: 50px;
+
+}
+
+#celulaRecompensas{
+    width: 25%;
+    height: 30px;
+}

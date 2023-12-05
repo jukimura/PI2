@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minha Página</title>
+  <link rel="stylesheet" type="text/css" href="terminalGerente.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://fonts.google.com/specimen/Source+Sans+3" />
+  <link rel="stylesheet" href="https://fonts.google.com/specimen/Cormorant+Garamond?preview.size=58&sort=popularity" />
+</head>
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <div class="nome">
+      <img class ="logoPagina" src="Imagens\logo branco sem fundo.png" alt="Descrição da Imagem">
+    </div>
+
+    <ul class="options">
+      <div class="navBar">
+      <li><a href="#" class="botao" id="dadosVendas" onclick="exibirPaginaCorreta('vendas')">Dados sobre vendas</a></li>
+      <li><a href="#" class="botao" id="dadosUtilizacao" onclick="exibirPaginaCorreta('utilizacoes')">Dados sobre utilizações</a></li>
+      <li><a href="#" class="botao" id="dadosRecompensas" onclick="exibirPaginaCorreta('recompensas')">Dados sobre recompensas</a></li>
+    </div>
+    </ul>
+  
+    <div id="vendas" class="conteudo visible">
+        <div id="divBtnAtualizar"><button class="btnAtualizar" id="btnAtualizarVendas" onclick="">Atualizar relatório de vendas</button></div>
+        <table id="table1">
+          <thead>
+              <tr>
+                  <th id="celula">Quantidade de vendas serviços individuais</th>
+                  <th id="celula">Quantidade de vendas de kits de serviços</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td id="celula"></td>
+                  <td id="celula"></td>
+              </tr>
+              <tr>
+                  <td id="celula"></td>
+                  <td id="celula"></td>
+              </tr>
+              <tr>
+                <td id="celula"></td>
+                <td id="celula"></td>
+            </tr>
+            <tr>
+                <td id="celula"></td>
+                <td id="celula"></td>
+            </tr>
+            <tr>
+                <td id="celula"></td>
+                <td id="celula"></td>
+            </tr>
+          </tbody>
+      </table>
+  
+        <br><br>
+  
+      <div class="rodape"></div>
+      <div class="rodape"></div>
+    </div>
+
+
+    <div id="utilizacoes" class="conteudo">
+    <div id="divBtnAtualizar"><button class="btnAtualizar" id="btnAtualizarUtilizacoes" onclick="     ">Atualizar relatório de utilizações</button></div>
+        <table id="table1">
+          <thead>
+              <tr>
+                  <th id="celula">Nome do serviço</th>
+                  <th id="celula">Quantidade de utilizações</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td id="celula"></td>
+                  <td id="celula"></td>
+              </tr>
+              <tr>
+                  <td id="celula"></td>
+                  <td id="celula"></td>
+              </tr>
+              <tr>
+                <td id="celula"></td>
+                <td id="celula"></td>
+            </tr>
+            <tr>
+                <td id="celula"></td>
+                <td id="celula"></td>
+            </tr>
+            <tr>
+                <td id="celula"></td>
+                <td id="celula"></td>
+            </tr>
+          </tbody>
+      </table>
+  
+        <br><br>
+  
+      <div class="rodape"></div>
+      <div class="rodape"></div>
+    </div>
+
+    
+    <div id="recompensas" class="conteudo">
+        <div id="divBtnAtualizar"><button class="btnAtualizar" id="btnAtualizarRecompensas" onclick="     ">Atualizar relatório de recompensas</button></div>
+        <table id="tableRecompensas">
+          <thead>
+              <tr>
+                  <th id="celulaRecompensas">Qtd. de recompensas geradas</th>
+                  <th id="celulaRecompensas">Qtd. de serviços não utilizados</th>
+                  <th id="celulaRecompensas">Qtd. de serviços individuais não utilizados</th>
+                  <th id="celulaRecompensas">Qtd. de kits de serviços não utilizados</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td id="celulaRecompensas"></td>
+                  <td id="celulaRecompensas"></td>
+                  <td id="celulaRecompensas"></td>
+                  <td id="celulaRecompensas"></td>
+              </tr>
+              <tr>
+                  <td id="celulaRecompensas"></td>
+                  <td id="celulaRecompensas"></td>
+                  <td id="celulaRecompensas"></td>
+                  <td id="celulaRecompensas"></td>
+              </tr>
+              <tr>
+                <td id="celulaRecompensas"></td>
+                <td id="celulaRecompensas"></td>
+                <td id="celulaRecompensas"></td>
+                <td id="celulaRecompensas"></td>
+            </tr>
+            <tr>
+                <td id="celulaRecompensas"></td>
+                <td id="celulaRecompensas"></td>
+                <td id="celulaRecompensas"></td>
+                  <td id="celulaRecompensas"></td>
+            </tr>
+          </tbody>
+      </table>
+  
+        <br><br>
+      <div class="rodape"></div>
+      <div class="rodape"></div>
+    </div>
+
+<script src="terminalGerente.js"></script>
+</body>
+</html>

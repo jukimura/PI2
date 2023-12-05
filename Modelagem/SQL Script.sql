@@ -3,11 +3,6 @@ Id_cartao number(07) CONSTRAINT pk_id_cartao PRIMARY KEY
 );
 
 SELECT * FROM Cartao;
-DELETE FROM cartao WHERE Id_cartao = 46250;
-
-SELECT * FROM Cartao WHERE Id_cartao = 1;
-
-INSERT INTO Cartao VALUES(Id);
 
 CREATE TABLE Servico(
 Id_servico number(03) CONSTRAINT pk_id_servico PRIMARY KEY,
@@ -36,14 +31,12 @@ INSERT INTO Servico (Nome_Servico, Saldo_Servico) VALUES('Rinomodelação', 1);
 INSERT INTO Servico (Nome_Servico, Saldo_Servico) VALUES('Depilação Laser', 1);
 INSERT INTO Servico (Nome_Servico, Saldo_Servico) VALUES('Manicure', 1);
 INSERT INTO Servico (Nome_Servico, Saldo_Servico) VALUES('Pedicure', 1);
-INSERT INTO Servico (Nome_Servico, Saldo_Servico) VALUES('Kit Manicure', 6);
-INSERT INTO Servico (Nome_Servico, Saldo_Servico) VALUES('Kit Pedicure', 6);
-INSERT INTO Servico (Nome_Servico, Saldo_Servico) VALUES('Kit Limpeza de Pele', 6);
+INSERT INTO Servico (Nome_Servico, Saldo_Servico) VALUES('Kit Manicure', 1);
+INSERT INTO Servico (Nome_Servico, Saldo_Servico) VALUES('Kit Pedicure', 1);
+INSERT INTO Servico (Nome_Servico, Saldo_Servico) VALUES('Kit Limpeza de Pele', 1);
 
 
 SELECT * FROM Servico;
-
-SELECT Nome_servico FROM Servico WHERE Id_servico = 1;
 
 
 CREATE TABLE Recompensa(
@@ -70,7 +63,6 @@ INSERT INTO Recompensa (Nome_recompensa, Qtd_minima_usos)VALUES ('Drenagem linf�
 
 SELECT * FROM Recompensa;
 
-SELECT * FROM Recompensa WHERE Qtd_minima_usos = 3;
 
 CREATE TABLE Bonificacao(
 Id_bonificacao number(03) CONSTRAINT pk_id_bonificacao PRIMARY KEY,
@@ -82,6 +74,8 @@ Data_uso DATE,
 FOREIGN KEY (fk_id_cartao) REFERENCES Cartao(Id_cartao),
 FOREIGN KEY (fk_id_recompensa) REFERENCES Recompensa(Id_recompensa)
 );
+
+SELECT * FROM BONIFICACAO;
 
 CREATE SEQUENCE SEQUENCE_ID_BONIFICACAO
     MINVALUE 1
@@ -122,13 +116,7 @@ END;
 
 SELECT * FROM Compra;
 
-SELECT * FROM Compra WHERE fk_Id_cartao = 49021;
-UPDATE Compra SET Data_uso = CURRENT_TIMESTAMP, Status_compra = 'Usado'
-WHERE fk_id_cartao = 70695 AND id_compra = 9;
-
 
 SELECT * FROM COMPRA WHERE fk_Id_cartao = 1 AND Status_compra = 'Disponível';
 SELECT * FROM COMPRA WHERE fk_Id_cartao = 1 AND Status_compra = 'Usado';
-
-DELETE FROM Compra WHERE fk_id_servico = 10 AND fk_id_cartao = 70695;
 

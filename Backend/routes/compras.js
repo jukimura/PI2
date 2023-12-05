@@ -53,6 +53,34 @@ router.get('/getComprasUsadasById/:idCartao', async (req, res, next) => {
     }
 });
 
+router.get('/getInfosRelatorio1/:idCartao', async (req, res, next) => {
+  const id = req.params.idCartao;
+  try {
+      const connection = await db.createConnection(); //inicia a conexão com o banco de dados
+      const result = await connection.execute('SELECT s.Nome_servico, c.Data_compra, c.Data_uso,c.Status_compra '+
+                                              'FROM Servico s INNER JOIN Compra c ON s.Id_servico = c.fk_id_servico '+
+                                              'WHERE c.fk_id_cartao =:id', [id]);
+      res.send(result.rows);
+    } catch (error) {
+      console.error('Erro ao executar a consulta:', error);
+      res.status(500).send('Erro interno do servidor');
+    }
+});
+
+router.get('/getInfosRelatorio2/:idCartao', async (req, res, next) => {
+  const id = req.params.idCartao;
+  try {
+      const connection = await db.createConnection(); //inicia a conexão com o banco de dados
+      const result = await connection.execute('SELECT r.Nome_recompensa, b.Data_aquisicao, b.Data_uso, b.Status_recompensa '+
+                                              'FROM Recompensa r INNER JOIN Bonificacao b ON r.Id_recompensa = b.fk_id_recompensa '+
+                                              'WHERE b.fk_id_cartao =:id', [id]);
+      res.send(result.rows);
+    } catch (error) {
+      console.error('Erro ao executar a consulta:', error);
+      res.status(500).send('Erro interno do servidor');
+    }
+});
+
 router.post('/compraServico/:idCartao', async (req, res, next) => {
     const idCartao = req.params.idCartao; //declaração do que será usado para passar no body da requisição
     const idServico = req.body.idServico;
