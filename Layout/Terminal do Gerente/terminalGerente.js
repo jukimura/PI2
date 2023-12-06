@@ -281,19 +281,19 @@ function exibirPaginaCorreta(pagina) {
     btnAtualizarServicosNaoUsados.addEventListener('click', function() {
       buscaInfosTableIndividuaisNaoUsados();
       buscaInfosTableKitsNaoUsados();
-      gerarLinhaRelatorioNaoUsados();
     });
   
     async function buscaInfosTableIndividuaisNaoUsados() {
       limparTabela('tableServicosNaoUsados');
-      listaRelatorioTbVendasIndividuais = [];
-    //  let url = `http://localhost:3000/`;
+      listaRelatorioIndividuaisNaoUsados = [];
+      let url = `http://localhost:3000/relatorioServicosNaoUtilizados`;
     
       try {
         const response = await axios.get(url);
         console.log(' response da request : ', response.data);
         if (response.data == null || response.data == '') {
-          divExisteCartao.textContent = 'Sem dados encontrados.';
+          adicionarLinhaNaListaInviduaisNaoUsados('-','-','-');
+          gerarLinhaRelatorioIndividuaisNaoUsados();
           return false;
         } else {
           console.log(response.data);
@@ -305,6 +305,7 @@ function exibirPaginaCorreta(pagina) {
             adicionarLinhaNaListaInviduaisNaoUsados(nomeServico[i], qtdIndividuaisNaoUsados[i], totalIndividuaisNaoUsados[0]);
           }
           console.log('LISTA RELATORIO', listaRelatorioIndividuaisNaoUsados);
+          gerarLinhaRelatorioIndividuaisNaoUsados();
           return true;
         }
       } catch (error) {
@@ -315,13 +316,14 @@ function exibirPaginaCorreta(pagina) {
     async function buscaInfosTableKitsNaoUsados() {
       limparTabela('tableServicosNaoUsados');
       listaRelatorioKitsNaoUsados = [];
-    //  let url = `http://localhost:3000/`;
+      let url = `http://localhost:3000/relatorioKitsNaoUtilizados`;
     
       try {
         const response = await axios.get(url);
         console.log(' response da request : ', response.data);
         if (response.data == null || response.data == '') {
-          divExisteCartao.textContent = 'Sem dados encontrados.';
+          adicionarLinhaNaListaKitsNaoUsados('-','-','-');
+          gerarLinhaRelatorioKitsNaoUsados();
           return false;
         } else {
           console.log(response.data);
@@ -332,7 +334,8 @@ function exibirPaginaCorreta(pagina) {
             console.log('nome kit ', nomeKit[i]);
             adicionarLinhaNaListaKitsNaoUsados(nomeKit[i], qtdKitsNaoUsados[i], totalKitsNaoUsados[0]);
           }
-          console.log('kits nao usadps', listaRelatorioKitsNaoUsados);
+          console.log('kits nao usados', listaRelatorioKitsNaoUsados);
+          gerarLinhaRelatorioKitsNaoUsados();
           return true;
         }
       } catch (error) {
@@ -350,41 +353,52 @@ function exibirPaginaCorreta(pagina) {
       listaRelatorioKitsNaoUsados.push(linha);
     }
     
-    function gerarLinhaRelatorioNaoUsados() {
-      var tabelaServicosNaoUsados = document.getElementById('tableServicosNaoUsados');
-  
-        for (var i = 0; i < listaRelatorioIndividuaisNaoUsados.length; i++) {
-          var novaLinha = tabelaServicosNaoUsados.insertRow();
-    
+    function gerarLinhaRelatorioIndividuaisNaoUsados() {
+      var tabelaRelatorioNaoUsados = document.getElementById('tableServicosNaoUsados');
+      for (var i = 0; i <  listaRelatorioIndividuaisNaoUsados.length; i++) {
+          var novaLinha = tabelaRelatorioNaoUsados.insertRow();
+          novaLinha.id = 'linhaNaoUsados'+i;
           var cellNomeServico = novaLinha.insertCell(0);
           cellNomeServico.textContent = listaRelatorioIndividuaisNaoUsados[i].nomeServico;
           
-          var cellQtdIndividuais = novaLinha.insertCell(1);
-          cellQtdIndividuais.textContent = listaRelatorioIndividuaisNaoUsados[i].qtdIndividuaisNaoUsados;
+          var cellQtdServicos = novaLinha.insertCell(1);
+          cellQtdServicos.textContent = listaRelatorioIndividuaisNaoUsados[i].qtdIndividuaisNaoUsados;
         
       }
-      for (var i = 0; i < listaRelatorioKitsNaoUsados.length; i++) {  
-        var cellNomeKit = novaLinha.insertCell(2);
-        cellNomeKit.textContent = listaRelatorioKitsNaoUsados[i].nomeKit;
-        
-        var cellQtdKits = novaLinha.insertCell(3);
-        cellQtdKits.textContent = listaRelatorioKitsNaoUsados[i].qtdKitsNaoUsados;
-    }
-      var pulaLinha = tabelaServicosNaoUsados.insertRow();
-
-      var linhaTotal = tabelaServicosNaoUsados.insertRow();
-      var cellTotalIndviduaisNaoUsados = linhaAdicional.insertCell(0);
+      var linhaTotal = tabelaRelatorioNaoUsados.insertRow();
+      var cellTotalIndviduaisNaoUsados = linhaTotal.insertCell(0);
+      cellTotalIndviduaisNaoUsados.id = 'totalServicosIndividuaisNaoUsados';
       cellTotalIndviduaisNaoUsados.textContent = 'Total: ';
       
-      var cellQtdTotalIndviduaisNaoUsados = linhaAdicional.insertCell(1);
+      var cellQtdTotalIndviduaisNaoUsados = linhaTotal.insertCell(1);
+      cellQtdTotalIndviduaisNaoUsados.id = 'totalServicosIndividuaisNaoUsados';
       cellQtdTotalIndviduaisNaoUsados.textContent = listaRelatorioIndividuaisNaoUsados[0].totalIndividuaisNaoUsados;
-
-      var cellTotalKitsNaoUsados = linhaAdicional.insertCell(2);
-      cellTotalKitsNaoUsados.textContent = 'Total: ';
-
-      var celQtdTotalKitsNaoUsados = linhaAdicional.insertCell(3);
-      celQtdTotalKitsNaoUsados.textContent = listaRelatorioKitsNaoUsados[0].totalKitsNaoUsados;
     }
+
+    function gerarLinhaRelatorioKitsNaoUsados() {
+      var tabelaRelatorioNaoUsados = document.getElementById('tableServicosNaoUsados');
+      let linha;
+        for (var i = 0; i < listaRelatorioKitsNaoUsados.length; i++) { 
+          linha = document.getElementById('linhaNaoUsados'+i);
+          var cellNomeKit = linha.insertCell(2);
+          cellNomeKit.textContent = listaRelatorioKitsNaoUsados[i].nomeKit;
+          
+          var cellQtdKits = linha.insertCell(3);
+          cellQtdKits.textContent = listaRelatorioKitsNaoUsados[i].qtdKitServicos;
+        }
+        linha = document.getElementById('linhaNaoUsados'+listaRelatorioKitsNaoUsados.length);
+        var celltotalKitsNaoUsados = linha.insertCell(2);
+        celltotalKitsNaoUsados.id= 'cellTotalKitsNaoUsados';
+        celltotalKitsNaoUsados.textContent = 'Total: ';
+        let quantidadeKits=0;
+
+        for (var i = 0; i < listaRelatorioKitsNaoUsados.length; i++) { 
+          quantidadeKits += listaRelatorioKitsNaoUsados[i].qtdKitServicos;
+        }
+        var celQtdTotalKitsServicosNaoUsados = linha.insertCell(3);
+        celQtdTotalKitsServicosNaoUsados.id= 'cellTotalKitsNaoUsados';
+        celQtdTotalKitsServicosNaoUsados.textContent = quantidadeKits;
+      }
 
 
     function limparTabela(idTabela) {
