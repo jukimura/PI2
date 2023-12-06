@@ -440,6 +440,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         else if(listaRelatorioTb1[i].status == 'Disponível')
         {
+          cellNomeServico.classList.add('color'); 
+          cellDataCompra.classList.add('color'); 
+          cellDataUso.classList.add('color'); 
+          cellSaldoRestante.classList.add('color'); 
           cellSaldoRestante.textContent = 1;
         }
         }
@@ -497,6 +501,10 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       else if(listaRelatorioTb2[i].status == 'Disponível')
       {
+        cellNomeRecompensa.classList.add('color'); 
+        cellDataAquisicao.classList.add('color'); 
+        cellDataUso.classList.add('color'); 
+        cellSaldoRestante.classList.add('color'); 
         cellSaldoRestante.textContent = 1;
       }
       }

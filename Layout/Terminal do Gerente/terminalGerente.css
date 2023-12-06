@@ -125,10 +125,11 @@ table, th, td {
 table {
   width: 100%;
   margin-top: 10px;
+  text-align: center;
 }
 
 th{
-  background-color: #407aa73e;
+  background-color: #407aa75e;
 }
 
 #tableServicosNaoUsados {
@@ -209,23 +210,16 @@ th{
     height: 30px;
 }
 
-#totalServicosIndividuais
-{
+#celulaTotal{
   background-color: #407aa73e;
 }
 
-#cellTotalServicos{
-  background-color: #407aa73e;
+
+#tableUtilizacoesRecompensas{
+  margin-top: 50px;
 }
 
-#cellTotalRecompensas{
-  background-color: #407aa73e;
+#tableRecompensasNaoUsadas{
+  margin-top: 50px;
 }
 
-#cellTotalKitsNaoUsados{
-  background-color: #407aa73e;
-}
-
-#totalServicosIndividuaisNaoUsados{
-  background-color: #407aa73e;
-}

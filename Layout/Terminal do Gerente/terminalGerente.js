@@ -17,10 +17,12 @@ function exibirPaginaCorreta(pagina) {
     let listaRelatorioTbVendasIndividuais = [];
     let listaRelatorioTbVendasKits = [];
     let listaRelatorioUtilizacoes = [];
+    let listaRelatorioUtilizacoesRecompensas = [];
     let listaRelatorioRecompensas = [];
     let listaRelatorioIndividuaisNaoUsados = [];
     let listaRelatorioKitsNaoUsados = [];
-
+    let listaRecompensasNaoUsadas = [];
+    
     //DADOS SOBRE VENDAS
     const btnAtualizarVendas = document.getElementById('btnAtualizarVendas');
     btnAtualizarVendas.addEventListener('click', function() {
@@ -112,11 +114,11 @@ function exibirPaginaCorreta(pagina) {
       }
       var linhaTotal = tabelaVendasRelatorio.insertRow();
       var cellTotalServicosIndviduais = linhaTotal.insertCell(0);
-      cellTotalServicosIndviduais.id = 'totalServicosIndividuais';
+      cellTotalServicosIndviduais.id = 'celulaTotal';
       cellTotalServicosIndviduais.textContent = 'Total: ';
       
       var cellQtdTotalServicosIndviduais = linhaTotal.insertCell(1);
-      cellQtdTotalServicosIndviduais.id = 'totalServicosIndividuais';
+      cellQtdTotalServicosIndviduais.id = 'celulaTotal';
       cellQtdTotalServicosIndviduais.textContent = listaRelatorioTbVendasIndividuais[0].totalServicosIndividuais;
     }
 
@@ -149,6 +151,7 @@ function exibirPaginaCorreta(pagina) {
     const btnAtualizarUtilizacoes = document.getElementById('btnAtualizarUtilizacoes');
     btnAtualizarUtilizacoes.addEventListener('click', function() {
       buscaInfosTableUtilizacoes();
+      buscaInfosTableUtilizacoesRecompensas();
     });
 
     async function buscaInfosTableUtilizacoes() {
@@ -200,12 +203,71 @@ function exibirPaginaCorreta(pagina) {
       var linhaTotal = tabelaUtilizacoes.insertRow();
       var cellTotalServicosIndviduais = linhaTotal.insertCell(0);
       cellTotalServicosIndviduais.textContent = 'Total: ';
-      cellTotalServicosIndviduais.id='cellTotalServicos';
+      cellTotalServicosIndviduais.id='celulaTotal';
       
       var cellQtdTotalServicosUsados = linhaTotal.insertCell(1);
       console.log('test', listaRelatorioUtilizacoes[0].qtdTotalServicosUsados);
-      cellQtdTotalServicosUsados.id='cellTotalServicos';
+      cellQtdTotalServicosUsados.id='celulaTotal';
       cellQtdTotalServicosUsados.textContent = listaRelatorioUtilizacoes[0].qtdTotalServicosUsados;
+
+    }
+
+    //dados sobre utilizações de recompensas
+    async function buscaInfosTableUtilizacoesRecompensas() {
+      limparTabela('tableUtilizacoesRecompensas');
+      listaRelatorioUtilizacoesRecompensas = [];
+      let url = `http://localhost:3000/relatorioUsosRecompensas`;
+    
+      try {
+        const response = await axios.get(url);
+        console.log(' response da request : ', response.data);
+        if (response.data == null || response.data == '') {
+          adicionarLinhaNaListaUtilizacoesRecompensas('-','-','-');
+          gerarLinhaRelatorioUtilizacoesRecompensas();
+          return false;
+        } else {
+          console.log(response.data);
+          const nomeRecompensa = response.data.map(vetor => vetor[0]);
+          const qtdRecompensasUsadas = response.data.map(vetor => vetor[1]);
+          const qtdTotalRecompensasUsadas = response.data.map(vetor => vetor[2]);
+          for (var i = 0; i < nomeRecompensa.length; i++) {
+            adicionarLinhaNaListaUtilizacoesRecompensas(nomeRecompensa[i], qtdRecompensasUsadas[i], qtdTotalRecompensasUsadas[0]);
+          }
+          gerarLinhaRelatorioUtilizacoesRecompensas();
+          return true;
+        }
+      } catch (error) {
+        throw error;
+      }
+    }
+  
+    function adicionarLinhaNaListaUtilizacoesRecompensas(nomeRecompensa, qtdRecompensasUsadas, qtdTotalRecompensasUsadas) {
+      let linha = { nomeRecompensa: nomeRecompensa, qtdRecompensasUsadas: qtdRecompensasUsadas, qtdTotalRecompensasUsadas: qtdTotalRecompensasUsadas};
+      listaRelatorioUtilizacoesRecompensas.push(linha);
+    }
+    
+    function gerarLinhaRelatorioUtilizacoesRecompensas() {
+      var tabelaUtilizacoesRecompensas = document.getElementById('tableUtilizacoesRecompensas');
+  
+        for (var i = 0; i < listaRelatorioUtilizacoesRecompensas.length; i++) {
+          var novaLinha = tabelaUtilizacoesRecompensas.insertRow();
+    
+          var cellNomeRecompensa = novaLinha.insertCell(0);
+          cellNomeRecompensa.textContent = listaRelatorioUtilizacoesRecompensas[i].nomeRecompensa;
+          
+          var cellQtdServicosUsados = novaLinha.insertCell(1);
+          cellQtdServicosUsados.textContent = listaRelatorioUtilizacoesRecompensas[i].qtdRecompensasUsadas;
+          
+      }
+      var linhaTotal = tabelaUtilizacoesRecompensas.insertRow();
+      var cellTotalServicosIndviduais = linhaTotal.insertCell(0);
+      cellTotalServicosIndviduais.textContent = 'Total: ';
+      cellTotalServicosIndviduais.id='celulaTotal';
+      
+      var cellQtdTotalServicosUsados = linhaTotal.insertCell(1);
+      console.log('test', listaRelatorioUtilizacoesRecompensas[0].qtdTotalRecompensasUsadas);
+      cellQtdTotalServicosUsados.id='celulaTotal';
+      cellQtdTotalServicosUsados.textContent = listaRelatorioUtilizacoesRecompensas[0].qtdTotalRecompensasUsadas;
 
     }
 
@@ -266,11 +328,11 @@ function exibirPaginaCorreta(pagina) {
       }
       var linhaTotal = tabelaRecompensasRelatorio.insertRow();
       var cellTotalRecompensas = linhaTotal.insertCell(0);
-      cellTotalRecompensas.id='cellTotalRecompensas';
+      cellTotalRecompensas.id='celulaTotal';
       cellTotalRecompensas.textContent = 'Total: ';
       
       var cellQtdTotalRecompensas = linhaTotal.insertCell(1);
-      cellQtdTotalRecompensas.id='cellTotalRecompensas';
+      cellQtdTotalRecompensas.id='celulaTotal';
       cellQtdTotalRecompensas.textContent = listaRelatorioRecompensas[0].qtdTotalRecompensas;      
     }
 
@@ -281,6 +343,7 @@ function exibirPaginaCorreta(pagina) {
     btnAtualizarServicosNaoUsados.addEventListener('click', function() {
       buscaInfosTableIndividuaisNaoUsados();
       buscaInfosTableKitsNaoUsados();
+      buscaInfosTableRecompensasNaoUsadas();
     });
   
     async function buscaInfosTableIndividuaisNaoUsados() {
@@ -367,11 +430,11 @@ function exibirPaginaCorreta(pagina) {
       }
       var linhaTotal = tabelaRelatorioNaoUsados.insertRow();
       var cellTotalIndviduaisNaoUsados = linhaTotal.insertCell(0);
-      cellTotalIndviduaisNaoUsados.id = 'totalServicosIndividuaisNaoUsados';
+      cellTotalIndviduaisNaoUsados.id = 'celulaTotal';
       cellTotalIndviduaisNaoUsados.textContent = 'Total: ';
       
       var cellQtdTotalIndviduaisNaoUsados = linhaTotal.insertCell(1);
-      cellQtdTotalIndviduaisNaoUsados.id = 'totalServicosIndividuaisNaoUsados';
+      cellQtdTotalIndviduaisNaoUsados.id = 'celulaTotal';
       cellQtdTotalIndviduaisNaoUsados.textContent = listaRelatorioIndividuaisNaoUsados[0].totalIndividuaisNaoUsados;
     }
 
@@ -388,7 +451,7 @@ function exibirPaginaCorreta(pagina) {
         }
         linha = document.getElementById('linhaNaoUsados'+listaRelatorioKitsNaoUsados.length);
         var celltotalKitsNaoUsados = linha.insertCell(2);
-        celltotalKitsNaoUsados.id= 'cellTotalKitsNaoUsados';
+        celltotalKitsNaoUsados.id= 'celulaTotal';
         celltotalKitsNaoUsados.textContent = 'Total: ';
         let quantidadeKits=0;
 
@@ -396,10 +459,69 @@ function exibirPaginaCorreta(pagina) {
           quantidadeKits += listaRelatorioKitsNaoUsados[i].qtdKitServicos;
         }
         var celQtdTotalKitsServicosNaoUsados = linha.insertCell(3);
-        celQtdTotalKitsServicosNaoUsados.id= 'cellTotalKitsNaoUsados';
+        celQtdTotalKitsServicosNaoUsados.id= 'celulaTotal';
         celQtdTotalKitsServicosNaoUsados.textContent = quantidadeKits;
       }
 
+      //DADOS SOBRE RECOMPENSAS NÃO UTILIZADAS
+    
+      async function buscaInfosTableRecompensasNaoUsadas() {
+        limparTabela('tableRecompensasNaoUsadas');
+        listaRecompensasNaoUsadas = [];
+        let url = `http://localhost:3000/relatorioRecompensasNaoUsadas`;
+      
+        try {
+          const response = await axios.get(url);
+          console.log(' response da request : ', response.data);
+          if (response.data == null || response.data == '') {
+            adicionarLinhaNaListaRecompensasNaoUsadas('-','-','-');
+            gerarLinhaRelatorioRecompensasNaoUsadas();
+            return false;
+          } else {
+            console.log(response.data);
+            const nomeRecompensa = response.data.map(vetor => vetor[0]);
+            const qtdRecompensasNaoUsadas = response.data.map(vetor => vetor[1]);
+            const qtdTotalRecompensasNaoUsadas = response.data.map(vetor => vetor[2]);
+            for (var i = 0; i < nomeRecompensa.length; i++) {
+              adicionarLinhaNaListaRecompensasNaoUsadas(nomeRecompensa[i], qtdRecompensasNaoUsadas[i], qtdTotalRecompensasNaoUsadas[0]);
+            }
+            gerarLinhaRelatorioRecompensasNaoUsadas();
+            return true;
+          }
+        } catch (error) {
+          throw error;
+        }
+      }
+    
+      function adicionarLinhaNaListaRecompensasNaoUsadas(nomeRecompensa, qtdRecompensasNaoUsadas, qtdTotalRecompensasNaoUsadas) {
+        let linha = { nomeRecompensa: nomeRecompensa, qtdRecompensasNaoUsadas: qtdRecompensasNaoUsadas, qtdTotalRecompensasNaoUsadas: qtdTotalRecompensasNaoUsadas};
+        listaRecompensasNaoUsadas.push(linha);
+      }
+      
+      function gerarLinhaRelatorioRecompensasNaoUsadas() {
+        var tableRecompensasNaoUsadas = document.getElementById('tableRecompensasNaoUsadas');
+    
+          for (var i = 0; i < listaRecompensasNaoUsadas.length; i++) {
+            var novaLinha = tableRecompensasNaoUsadas.insertRow();
+      
+            var cellNomeRecompensa = novaLinha.insertCell(0);
+            cellNomeRecompensa.textContent = listaRecompensasNaoUsadas[i].nomeRecompensa;
+            
+            var cellQtdRecompensasNaoUsadas = novaLinha.insertCell(1);
+            cellQtdRecompensasNaoUsadas.textContent = listaRecompensasNaoUsadas[i].qtdRecompensasNaoUsadas;
+            
+        }
+        var linhaTotal = tableRecompensasNaoUsadas.insertRow();
+        var cellTotalServicosIndviduais = linhaTotal.insertCell(0);
+        cellTotalServicosIndviduais.textContent = 'Total: ';
+        cellTotalServicosIndviduais.id='celulaTotal';
+        
+        var cellQtdTotalServicosUsados = linhaTotal.insertCell(1);
+        console.log('test', listaRecompensasNaoUsadas[0].qtdRecompensasNaoUsadas);
+        cellQtdTotalServicosUsados.id='celulaTotal';
+        cellQtdTotalServicosUsados.textContent = listaRecompensasNaoUsadas[0].qtdTotalRecompensasNaoUsadas;
+  
+      }
 
     function limparTabela(idTabela) {
       var tabela = document.getElementById(idTabela); // Substitua 'suaTabela' pelo ID da sua tabela

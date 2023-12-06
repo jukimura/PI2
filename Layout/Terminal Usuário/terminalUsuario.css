@@ -297,7 +297,7 @@ th, td{
 }
 
 th{
-  background-color: #407aa73e;
+  background-color: #407aa75e;
 }
 
 
@@ -312,4 +312,8 @@ th{
   margin-left: -3px;
   border-radius: 5px;
   border: 1px solid #9199ac;
+}
+
+.color{
+  background-color: #c5cfda;
 }
