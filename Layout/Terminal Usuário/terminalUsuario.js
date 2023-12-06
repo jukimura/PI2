@@ -114,9 +114,8 @@ async function gerarCartao(pagina)
     }
   }
 
-  async function buscarCartao(idPagina) {
-    console.log('idPagina' + idPagina);
-    var numeroCartao = document.getElementById(idPagina).value;
+  async function buscarCartao() {
+    var numeroCartao = document.getElementById('campoNumeroCartao').value;
     var divExisteCartao = document.getElementById('cartaoExiste');
     var btnAdquirirServico = document.getElementsByClassName('buttonScreenAdqServ');
     var btnFinalizar = document.getElementById('btnFinalizar');

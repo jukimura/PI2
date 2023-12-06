@@ -31,27 +31,27 @@ function exibirPaginaCorreta(pagina) {
     async function buscaInfosTableVendasIndividuais() {
       limparTabela('tableVendas');
       listaRelatorioTbVendasIndividuais = [];
-    //  let url = `http://localhost:3000/`;
+      let url = `http://localhost:3000/relatorioVendasServicos`;
     
       try {
+
         const response = await axios.get(url);
-        console.log(' response da request : ', response.data);
         if (response.data == null || response.data == '') {
-          divExisteCartao.textContent = 'Sem dados encontrados.';
+          adicionarLinhaNaListaInviduaisNaoUsados('-','-','-');
+          gerarLinhaRelatorioVendasIndividuais();
           return false;
         } else {
-          console.log(response.data);
-          const nomeServico = response.data.map(vetor => vetor[0]);
-          const qtdServicosIndividuais = response.data.map(vetor => vetor[1]);
-          const totalServicosIndividuais = response.data.map(vetor => vetor[2]);
-          for (var i = 0; i < nomeServico.length; i++) {
-            console.log('servico', nomeServico[i]);
-            adicionarLinhaNaListaVendasInviduais(nomeServico[i], qtdServicosIndividuais[i], totalServicosIndividuais[0]);
-          }
-          console.log('LISTA RELATORIO', listaRelatorioTb1);
-          gerarLinhaRelatorioVendas();
-          return true;
+        console.log(' response da request : ', response.data);
+        const nomeServico = response.data.map(vetor => vetor[0]);
+        const qtdServicosIndividuais = response.data.map(vetor => vetor[1]);
+        const totalServicosIndividuais = response.data.map(vetor => vetor[2]);
+        for (var i = 0; i < nomeServico.length; i++) {
+          adicionarLinhaNaListaVendasInviduais(nomeServico[i], qtdServicosIndividuais[i], totalServicosIndividuais[0]);
         }
+        console.log('LISTA ', listaRelatorioTbVendasIndividuais);
+        gerarLinhaRelatorioVendasIndividuais();
+        return true;
+      }
       } catch (error) {
         throw error;
       }
@@ -60,25 +60,27 @@ function exibirPaginaCorreta(pagina) {
     async function buscaInfosTableVendasKits() {
       limparTabela('tableVendas');
       listaRelatorioTbVendasKits = [];
-    //  let url = `http://localhost:3000/`;
+      let url = `http://localhost:3000/relatorioVendasKits`;
     
       try {
         const response = await axios.get(url);
         console.log(' response da request : ', response.data);
         if (response.data == null || response.data == '') {
-          divExisteCartao.textContent = 'Sem dados encontrados.';
+          adicionarLinhaNaListaVendasKits('-','-','-');
+          gerarLinhaRelatorioVendasKits();
           return false;
         } else {
           console.log(response.data);
           const nomeKit = response.data.map(vetor => vetor[0]);
           const qtdKitServicos = response.data.map(vetor => vetor[1]);
           const totalKitServicos = response.data.map(vetor => vetor[2]);
-          for (var i = 0; i < nomeServico.length; i++) {
-            console.log('servico', nomeServico[i]);
-            adicionarLinhaNaListaVendasKits(nomeKit[i], qtdKitServicos[i], totalKitServicos[0]);
+          let resultado = 0;
+
+          for (var i = 0; i < nomeKit.length; i++) {
+            resultado = qtdKitServicos[i] / 6;
+            adicionarLinhaNaListaVendasKits(nomeKit[i], resultado);            
           }
-          console.log('LISTA RELATORIO', listaRelatorioTb1);
-          gerarLinhaRelatorioVendas();
+          gerarLinhaRelatorioVendasKits();
           return true;
         }
       } catch (error) {
@@ -91,17 +93,16 @@ function exibirPaginaCorreta(pagina) {
       listaRelatorioTbVendasIndividuais.push(linha);
     }
 
-    function adicionarLinhaNaListaVendasKits(nomeKit, qtdKitServicos, totalKitServicos) {
-      let linha = { nomeKit: nomeKit, qtdKitServicos: qtdKitServicos, totalKitServicos: totalKitServicos};
+    function adicionarLinhaNaListaVendasKits(nomeKit, qtdKitServicos) {
+      let linha = { nomeKit: nomeKit, qtdKitServicos: qtdKitServicos};
       listaRelatorioTbVendasKits.push(linha);
     }
     
-    function gerarLinhaRelatorioVendas() {
+    function gerarLinhaRelatorioVendasIndividuais() {
       var tabelaVendasRelatorio = document.getElementById('tableVendas');
-  
-        for (var i = 0; i < listaRelatorioTbVendasIndividuais.length; i++) {
+      for (var i = 0; i <  listaRelatorioTbVendasIndividuais.length; i++) {
           var novaLinha = tabelaVendasRelatorio.insertRow();
-    
+          novaLinha.id = 'novaLinha'+i;
           var cellNomeServico = novaLinha.insertCell(0);
           cellNomeServico.textContent = listaRelatorioTbVendasIndividuais[i].nomeServico;
           
@@ -109,30 +110,41 @@ function exibirPaginaCorreta(pagina) {
           cellQtdServicos.textContent = listaRelatorioTbVendasIndividuais[i].qtdServicosIndividuais;
         
       }
-      for (var i = 0; i < listaRelatorioTbVendasKits.length; i++) {  
-        var cellNomeKit = novaLinha.insertCell(2);
-        cellNomeKit.textContent = listaRelatorioTbVendasKits[i].nomeKit;
-        
-        var cellQtdKits = novaLinha.insertCell(3);
-        cellQtdKits.textContent = listaRelatorioTbVendasKits[i].qtdKitServicos;
-    }
-      var pulaLinha = tabelaVendasRelatorio.insertRow();
-
       var linhaTotal = tabelaVendasRelatorio.insertRow();
-      var cellTotalServicosIndviduais = linhaAdicional.insertCell(0);
+      var cellTotalServicosIndviduais = linhaTotal.insertCell(0);
+      cellTotalServicosIndviduais.id = 'totalServicosIndividuais';
       cellTotalServicosIndviduais.textContent = 'Total: ';
       
-      var cellQtdTotalServicosIndviduais = linhaAdicional.insertCell(1);
+      var cellQtdTotalServicosIndviduais = linhaTotal.insertCell(1);
+      cellQtdTotalServicosIndviduais.id = 'totalServicosIndividuais';
       cellQtdTotalServicosIndviduais.textContent = listaRelatorioTbVendasIndividuais[0].totalServicosIndividuais;
-
-      var cellTotalKitsServicos = linhaAdicional.insertCell(2);
-      cellTotalKitsServicos.textContent = 'Total: ';
-
-      var celQtdTotalKitsServicos = linhaAdicional.insertCell(3);
-      celQtdTotalKitsServicos.textContent = listaRelatorioTbVendasKits[0].totalKitServicos;
     }
 
+    function gerarLinhaRelatorioVendasKits() {
+      var tabelaVendasRelatorio = document.getElementById('tableVendas');
+      console.log('Entrou aqui teste');
+      let linha;
+        for (var i = 0; i < listaRelatorioTbVendasKits.length; i++) { 
+          linha = document.getElementById('novaLinha'+i);
+          var cellNomeKit = linha.insertCell(2);
+          cellNomeKit.textContent = listaRelatorioTbVendasKits[i].nomeKit;
+          
+          var cellQtdKits = linha.insertCell(3);
+          cellQtdKits.textContent = listaRelatorioTbVendasKits[i].qtdKitServicos;
+        }
+        linha = document.getElementById('novaLinha'+listaRelatorioTbVendasKits.length);
+        var cellTotalKitsServicos = linha.insertCell(2);
+        cellTotalKitsServicos.id= 'cellTotalKits';
+        cellTotalKitsServicos.textContent = 'Total: ';
+        let quantidadeKits=0;
 
+        for (var i = 0; i < listaRelatorioTbVendasKits.length; i++) { 
+          quantidadeKits += listaRelatorioTbVendasKits[i].qtdKitServicos;
+        }
+        var celQtdTotalKitsServicos = linha.insertCell(3);
+        celQtdTotalKitsServicos.id= 'cellTotalKits';
+        celQtdTotalKitsServicos.textContent = quantidadeKits;
+      }
     //DADOS SOBRE UTILIZAÇÕES
     const btnAtualizarUtilizacoes = document.getElementById('btnAtualizarUtilizacoes');
     btnAtualizarUtilizacoes.addEventListener('click', function() {
@@ -142,13 +154,14 @@ function exibirPaginaCorreta(pagina) {
     async function buscaInfosTableUtilizacoes() {
       limparTabela('tableUtilizacoes');
       listaRelatorioUtilizacoes = [];
-    //  let url = `http://localhost:3000/`;
+      let url = `http://localhost:3000/relatorioUsos`;
     
       try {
         const response = await axios.get(url);
         console.log(' response da request : ', response.data);
         if (response.data == null || response.data == '') {
-          divExisteCartao.textContent = 'Sem dados encontrados.';
+          adicionarLinhaNaListaUtilizacoes('-','-','-');
+          gerarLinhaRelatorioUtilizacoes();
           return false;
         } else {
           console.log(response.data);
@@ -158,7 +171,6 @@ function exibirPaginaCorreta(pagina) {
           for (var i = 0; i < nomeServico.length; i++) {
             adicionarLinhaNaListaUtilizacoes(nomeServico[i], qtdServicosUsadosPorServico[i], qtdTotalServicosUsados[0]);
           }
-          console.log('LISTA RELATORIO', listaRelatorioUtilizacoes);
           gerarLinhaRelatorioUtilizacoes();
           return true;
         }
@@ -186,11 +198,14 @@ function exibirPaginaCorreta(pagina) {
           
       }
       var linhaTotal = tabelaUtilizacoes.insertRow();
-      var cellTotalServicosIndviduais = linhaAdicional.insertCell(0);
+      var cellTotalServicosIndviduais = linhaTotal.insertCell(0);
       cellTotalServicosIndviduais.textContent = 'Total: ';
+      cellTotalServicosIndviduais.id='cellTotalServicos';
       
-      var cellQtdTotalServicosUsados = novaLinha.insertCell(1);
-      cellQtdTotalServicosUsados.textContent = listaRelatorioUtilizacoes[i].qtdTotalServicosUsados;
+      var cellQtdTotalServicosUsados = linhaTotal.insertCell(1);
+      console.log('test', listaRelatorioUtilizacoes[0].qtdTotalServicosUsados);
+      cellQtdTotalServicosUsados.id='cellTotalServicos';
+      cellQtdTotalServicosUsados.textContent = listaRelatorioUtilizacoes[0].qtdTotalServicosUsados;
 
     }
 
@@ -204,13 +219,14 @@ function exibirPaginaCorreta(pagina) {
     async function buscaInfosTableRecompensas() {
       limparTabela('tableRecompensas');
       listaRelatorioRecompensas = [];
-    //  let url = `http://localhost:3000/`;
+      let url = `http://localhost:3000/relatorioRecompensas`;
     
       try {
         const response = await axios.get(url);
         console.log(' response da request : ', response.data);
         if (response.data == null || response.data == '') {
-          divExisteCartao.textContent = 'Sem dados encontrados.';
+          adicionarLinhaNaListaRecompensas('-','-','-');
+          gerarLinhaRelatorioRecompensas();
           return false;
         } else {
           console.log(response.data);
@@ -221,7 +237,7 @@ function exibirPaginaCorreta(pagina) {
             console.log('recompensa', nomeRecompensa[i]);
             adicionarLinhaNaListaRecompensas(nomeRecompensa[i], qtdRecompensasPorTipo[i], qtdTotalRecompensas[i]);
           }
-          console.log('LISTA RELATORIO', listaRelatorioTb1);
+          console.log('LISTA RELATORIO', listaRelatorioRecompensas);
           gerarLinhaRelatorioRecompensas();
           return true;
         }
@@ -249,10 +265,12 @@ function exibirPaginaCorreta(pagina) {
           
       }
       var linhaTotal = tabelaRecompensasRelatorio.insertRow();
-      var cellTotalRecompensas = linhaAdicional.insertCell(0);
+      var cellTotalRecompensas = linhaTotal.insertCell(0);
+      cellTotalRecompensas.id='cellTotalRecompensas';
       cellTotalRecompensas.textContent = 'Total: ';
       
-      var cellQtdTotalRecompensas = linhaAdicional.insertCell(1);
+      var cellQtdTotalRecompensas = linhaTotal.insertCell(1);
+      cellQtdTotalRecompensas.id='cellTotalRecompensas';
       cellQtdTotalRecompensas.textContent = listaRelatorioRecompensas[0].qtdTotalRecompensas;      
     }
 

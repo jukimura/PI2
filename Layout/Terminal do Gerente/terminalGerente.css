@@ -127,7 +127,16 @@ table {
   margin-top: 10px;
 }
 
+th{
+  background-color: #407aa73e;
+}
+
 #tableServicosNaoUsados {
+  width: 100%;
+  margin-top: 50px;
+}
+
+#tableUtilizacoes{
   width: 100%;
   margin-top: 50px;
 }
@@ -150,6 +159,10 @@ table {
 #celulaVenda{
   width: 25%;
   height: 30px;
+}
+
+#cellTotalKits{
+  background-color: #407aa73e;
 }
 
 
@@ -194,4 +207,17 @@ table {
 #celulaRecompensas{
     width: 25%;
     height: 30px;
+}
+
+#totalServicosIndividuais
+{
+  background-color: #407aa73e;
+}
+
+#cellTotalServicos{
+  background-color: #407aa73e;
+}
+
+#cellTotalRecompensas{
+  background-color: #407aa73e;
 }
