@@ -68,6 +68,7 @@ router.get('/getInfosRelatorio1/:idCartao', async (req, res, next) => {
     }
 });
 
+
 router.get('/getInfosRelatorio2/:idCartao', async (req, res, next) => {
   const id = req.params.idCartao;
   try {

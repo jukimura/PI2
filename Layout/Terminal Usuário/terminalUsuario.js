@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', function () {
   let listaDeServicos = []; 
   let listaRelatorioTb1 = [];
   let listaRelatorioTb2 = [];
-
+  let listaSaldosServicos = [];
   
   document.querySelectorAll('#listaServicos button').forEach(function(button) {
     button.addEventListener('click', function() {
@@ -340,7 +340,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const status = response.data.map(vetor => vetor[3]);
         for (var i = 0; i < nomeServico.length; i++) {
           console.log('id servico', nomeServico[i]);
-          adicionarLinhaNaLista(nomeServico[i], dataCompra[i], dataUso[i], status[i]);
+            adicionarLinhaNaLista(nomeServico[i], dataCompra[i], dataUso[i], status[i]);
         }
         console.log('LISTA RELATORIO', listaRelatorioTb1);
         gerarLinhaRelatorio1Cliente();
@@ -381,7 +381,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let linha = { nomeServico: nomeServico, dataCompra: dataCompra, dataUso: dataUso, status: status};
     listaRelatorioTb1.push(linha);
   }
-
+  
   function adicionarLinhaNaLista2(nomeRecompensa, dataAquisicao, dataUso, status) {
     let linha = { nomeRecompensa: nomeRecompensa, dataAquisicao: dataAquisicao, dataUso: dataUso, status: status};
     listaRelatorioTb2.push(linha);
@@ -389,59 +389,60 @@ document.addEventListener('DOMContentLoaded', function () {
 
   
   function gerarLinhaRelatorio1Cliente() {
-    var campoNumeroCartao = document.getElementById('campoNumeroCartaoRelatorio');
-    var idCartao = campoNumeroCartao.value;
-    var tabelaRelatorio1 = document.getElementById('table1');
-
-    for (var i = 0; i < listaRelatorioTb1.length; i++) {
-      var novaLinha = tabelaRelatorio1.insertRow();
-
-      var cellNomeServico = novaLinha.insertCell(0);
-      cellNomeServico.textContent = listaRelatorioTb1[i].nomeServico;
-
-      var cellDataCompra = novaLinha.insertCell(1);
-      var dataCompra = new Date(listaRelatorioTb1[i].dataCompra);
-      var dia = dataCompra.getDate();
-      var mes = dataCompra.getMonth() + 1;
-      var ano = dataCompra.getFullYear().toString().slice(-2);
-
-      dia = dia < 10 ? '0' + dia : dia;
-      mes = mes < 10 ? '0' + mes : mes;
-
-      var dataFormatada = dia + '/' + mes + '/' + ano;
-
-      cellDataCompra.textContent = dataFormatada;
-
-      var cellDataUso = novaLinha.insertCell(2);
-      if(listaRelatorioTb1[i].dataUso != null)
-      {
-        var dataUso = new Date(listaRelatorioTb1[i].dataUso);
-        var dia2 = dataUso.getDate();
-        var mes2 = dataUso.getMonth() + 1;
-        var ano2 = dataUso.getFullYear().toString().slice(-2);
+      var campoNumeroCartao = document.getElementById('campoNumeroCartaoRelatorio');
+      var idCartao = campoNumeroCartao.value;
+      var tabelaRelatorio1 = document.getElementById('table1');
   
-        dia2 = dia2 < 10 ? '0' + dia2 : dia2;
-        mes2 = mes2 < 10 ? '0' + mes2 : mes2;
+      for (var i = 0; i < listaRelatorioTb1.length; i++) {
+        var novaLinha = tabelaRelatorio1.insertRow();
   
-        var dataFormatada2 = dia2 + '/' + mes2 + '/' + ano2;
+        var cellNomeServico = novaLinha.insertCell(0);
+        cellNomeServico.textContent = listaRelatorioTb1[i].nomeServico;
   
-        cellDataUso.textContent = dataFormatada2;
-      }
-      else{
-        cellDataUso.textContent = "-";
-      }
-      
-
-      var cellSaldoRestante = novaLinha.insertCell(3);
-      if(listaRelatorioTb1[i].status == 'Usado')
-      {
-          cellSaldoRestante.textContent = 0;
-      }
-      else if(listaRelatorioTb1[i].status == 'Disponível')
-      {
-        cellSaldoRestante.textContent = 1;
-      }
-      }
+        var cellDataCompra = novaLinha.insertCell(1);
+        var dataCompra = new Date(listaRelatorioTb1[i].dataCompra);
+        var dia = dataCompra.getDate();
+        var mes = dataCompra.getMonth() + 1;
+        var ano = dataCompra.getFullYear().toString().slice(-2);
+  
+        dia = dia < 10 ? '0' + dia : dia;
+        mes = mes < 10 ? '0' + mes : mes;
+  
+        var dataFormatada = dia + '/' + mes + '/' + ano;
+  
+        cellDataCompra.textContent = dataFormatada;
+  
+        var cellDataUso = novaLinha.insertCell(2);
+        if(listaRelatorioTb1[i].dataUso != null)
+        {
+          var dataUso = new Date(listaRelatorioTb1[i].dataUso);
+          var dia2 = dataUso.getDate();
+          var mes2 = dataUso.getMonth() + 1;
+          var ano2 = dataUso.getFullYear().toString().slice(-2);
+    
+          dia2 = dia2 < 10 ? '0' + dia2 : dia2;
+          mes2 = mes2 < 10 ? '0' + mes2 : mes2;
+    
+          var dataFormatada2 = dia2 + '/' + mes2 + '/' + ano2;
+    
+          cellDataUso.textContent = dataFormatada2;
+        }
+        else{
+          cellDataUso.textContent = "-";
+        }
+        
+  
+        var cellSaldoRestante = novaLinha.insertCell(3);
+        
+        if(listaRelatorioTb1[i].status == 'Usado')
+        {
+            cellSaldoRestante.textContent = 0;
+        }
+        else if(listaRelatorioTb1[i].status == 'Disponível')
+        {
+          cellSaldoRestante.textContent = 1;
+        }
+        }
   }
 
     
