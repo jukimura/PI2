@@ -2,7 +2,6 @@ CREATE TABLE Cartao(
 Id_cartao number(07) CONSTRAINT pk_id_cartao PRIMARY KEY
 );
 
-SELECT * FROM Cartao;
 
 CREATE TABLE Servico(
 Id_servico number(03) CONSTRAINT pk_id_servico PRIMARY KEY,
@@ -36,8 +35,6 @@ INSERT INTO Servico (Nome_Servico, Saldo_Servico) VALUES('Kit Pedicure', 1);
 INSERT INTO Servico (Nome_Servico, Saldo_Servico) VALUES('Kit Limpeza de Pele', 1);
 
 
-SELECT * FROM Servico;
-
 
 CREATE TABLE Recompensa(
 Id_recompensa number(03) CONSTRAINT pk_id_recompensa PRIMARY KEY,
@@ -61,7 +58,6 @@ INSERT INTO Recompensa (Nome_recompensa, Qtd_minima_usos)VALUES ('Massagem relax
 INSERT INTO Recompensa (Nome_recompensa, Qtd_minima_usos)VALUES ('Massagem redutora ', 4);
 INSERT INTO Recompensa (Nome_recompensa, Qtd_minima_usos)VALUES ('Drenagem linfática', 5);
 
-SELECT * FROM Recompensa;
 
 
 CREATE TABLE Bonificacao(
@@ -75,7 +71,6 @@ FOREIGN KEY (fk_id_cartao) REFERENCES Cartao(Id_cartao),
 FOREIGN KEY (fk_id_recompensa) REFERENCES Recompensa(Id_recompensa)
 );
 
-SELECT * FROM BONIFICACAO;
 
 CREATE SEQUENCE SEQUENCE_ID_BONIFICACAO
     MINVALUE 1
@@ -89,7 +84,6 @@ BEGIN
     :NEW.Id_bonificacao := SEQUENCE_ID_BONIFICACAO.nextval;
 END;
 
-SELECT * FROM Bonificacao;
 
 CREATE TABLE Compra(
 Id_compra number(05) CONSTRAINT pk_id_compra PRIMARY KEY,
@@ -113,10 +107,3 @@ CREATE OR REPLACE TRIGGER TRIGGER_ID_COMPRA
 BEGIN
     :NEW.Id_compra := SEQUENCE_ID_COMPRA.nextval;
 END;
-
-SELECT * FROM Compra;
-
-
-SELECT * FROM COMPRA WHERE fk_Id_cartao = 1 AND Status_compra = 'Disponível';
-SELECT * FROM COMPRA WHERE fk_Id_cartao = 1 AND Status_compra = 'Usado';
-

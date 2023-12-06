@@ -89,7 +89,7 @@ router.get('/relatorioVendasServicos', async (req, res, next) => {
       const connection = await db.createConnection();
       
       const result = await connection.execute(`SELECT s.Nome_servico, COUNT(c.Id_compra) AS qtdVendas, 
-        (SELECT COUNT(*) FROM COMPRA) AS TotalServicosUsados FROM Servico s LEFT JOIN Compra c 
+        (SELECT COUNT(*) FROM COMPRA WHERE fk_id_servico NOT IN (10, 11, 12)) AS TotalServicosUsados FROM Servico s LEFT JOIN Compra c 
         ON s.Id_servico = c.fk_id_servico WHERE c.fk_id_servico NOT IN (10, 11, 12) GROUP BY s.Nome_servico`);
       res.send(result.rows);
   } catch (error) {
@@ -103,7 +103,7 @@ router.get('/relatorioVendasKits', async (req, res, next) => {
       const connection = await db.createConnection();
       
       const result = await connection.execute(`SELECT s.Nome_servico, COUNT(c.Id_compra) AS qtdVendas, 
-        (SELECT COUNT(*) FROM COMPRA) AS TotalServicosUsados FROM Servico s LEFT JOIN Compra c 
+        (SELECT COUNT(*) FROM COMPRA WHERE fk_id_servico IN (10, 11, 12)) AS TotalServicosUsados FROM Servico s LEFT JOIN Compra c 
         ON s.Id_servico = c.fk_id_servico WHERE c.fk_id_servico IN (10, 11, 12) GROUP BY s.Nome_servico`);
       res.send(result.rows);
   } catch (error) {
@@ -185,10 +185,10 @@ router.get('/relatorioServicosNaoUtilizados', async (req, res, next) => {
       
       const result = await connection.execute(`
           SELECT s.NOME_SERVICO, COUNT(c.Id_compra) AS QuantidadeNaoUsados,
-          (SELECT COUNT(*) FROM COMPRA WHERE Status_compra= 'Disponível' AND FK_ID_SERVICO NOT IN (10, 11, 12)) AS TotalIndividuaisNaoUsados
+          (SELECT COUNT(*) FROM COMPRA WHERE Status_compra= 'Disponível') AS TotalIndividuaisNaoUsados
           FROM Compra c
           INNER JOIN Servico s ON s.ID_SERVICO = c.FK_ID_SERVICO
-          WHERE c.STATUS_COMPRA = 'Disponível' AND c.FK_ID_SERVICO NOT IN (10, 11, 12)
+          WHERE c.STATUS_COMPRA = 'Disponível'
           GROUP BY s.NOME_SERVICO
       `);
 
@@ -199,25 +199,6 @@ router.get('/relatorioServicosNaoUtilizados', async (req, res, next) => {
   }
 });
 
-router.get('/relatorioKitsNaoUtilizados', async (req, res, next) => {
-  try {
-      const connection = await db.createConnection();
-    
-      const result = await connection.execute(`
-          SELECT s.NOME_SERVICO, COUNT(c.Id_compra) AS QuantidadeNaoUsados,
-          (SELECT COUNT(*) FROM COMPRA WHERE Status_compra= 'Disponível' AND FK_ID_SERVICO IN (10, 11, 12)) AS TotalIndividuaisNaoUsados
-          FROM Compra c
-          INNER JOIN Servico s ON s.ID_SERVICO = c.FK_ID_SERVICO
-          WHERE c.STATUS_COMPRA = 'Disponível' AND c.FK_ID_SERVICO IN (10, 11, 12)
-          GROUP BY s.NOME_SERVICO
-      `);
-
-      res.send(result.rows);
-  } catch (error) {
-      console.error('Erro ao executar a consulta:', error);
-      res.status(500).send('Erro interno do servidor');
-  }
-});
 
 router.post('/compraServico/:idCartao', async (req, res, next) => {
     const idCartao = req.params.idCartao; //declaração do que será usado para passar no body da requisição

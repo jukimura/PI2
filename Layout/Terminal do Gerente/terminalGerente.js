@@ -342,7 +342,6 @@ function exibirPaginaCorreta(pagina) {
     const btnAtualizarServicosNaoUsados = document.getElementById('btnAtualizarServicosNaoUsados');
     btnAtualizarServicosNaoUsados.addEventListener('click', function() {
       buscaInfosTableIndividuaisNaoUsados();
-      buscaInfosTableKitsNaoUsados();
       buscaInfosTableRecompensasNaoUsadas();
     });
   
@@ -350,7 +349,6 @@ function exibirPaginaCorreta(pagina) {
       limparTabela('tableServicosNaoUsados');
       listaRelatorioIndividuaisNaoUsados = [];
       let url = `http://localhost:3000/relatorioServicosNaoUtilizados`;
-    
       try {
         const response = await axios.get(url);
         console.log(' response da request : ', response.data);
@@ -359,7 +357,7 @@ function exibirPaginaCorreta(pagina) {
           gerarLinhaRelatorioIndividuaisNaoUsados();
           return false;
         } else {
-          console.log(response.data);
+          console.log('ALOO' + response.data);
           const nomeServico = response.data.map(vetor => vetor[0]);
           const qtdIndividuaisNaoUsados = response.data.map(vetor => vetor[1]);
           const totalIndividuaisNaoUsados = response.data.map(vetor => vetor[2]);
@@ -375,45 +373,10 @@ function exibirPaginaCorreta(pagina) {
         throw error;
       }
     }
-
-    async function buscaInfosTableKitsNaoUsados() {
-      limparTabela('tableServicosNaoUsados');
-      listaRelatorioKitsNaoUsados = [];
-      let url = `http://localhost:3000/relatorioKitsNaoUtilizados`;
-    
-      try {
-        const response = await axios.get(url);
-        console.log(' response da request : ', response.data);
-        if (response.data == null || response.data == '') {
-          adicionarLinhaNaListaKitsNaoUsados('-','-','-');
-          gerarLinhaRelatorioKitsNaoUsados();
-          return false;
-        } else {
-          console.log(response.data);
-          const nomeKit = response.data.map(vetor => vetor[0]);
-          const qtdKitsNaoUsados = response.data.map(vetor => vetor[1]);
-          const totalKitsNaoUsados = response.data.map(vetor => vetor[2]);
-          for (var i = 0; i < nomeKit.length; i++) {
-            console.log('nome kit ', nomeKit[i]);
-            adicionarLinhaNaListaKitsNaoUsados(nomeKit[i], qtdKitsNaoUsados[i], totalKitsNaoUsados[0]);
-          }
-          console.log('kits nao usados', listaRelatorioKitsNaoUsados);
-          gerarLinhaRelatorioKitsNaoUsados();
-          return true;
-        }
-      } catch (error) {
-        throw error;
-      }
-    }
   
     function adicionarLinhaNaListaInviduaisNaoUsados(nomeServico, qtdIndividuaisNaoUsados, totalIndividuaisNaoUsados) {
       let linha = { nomeServico: nomeServico, qtdIndividuaisNaoUsados: qtdIndividuaisNaoUsados, totalIndividuaisNaoUsados: totalIndividuaisNaoUsados};
       listaRelatorioIndividuaisNaoUsados.push(linha);
-    }
-
-    function adicionarLinhaNaListaKitsNaoUsados(nomeKit, qtdKitServicos, totalKitServicos) {
-      let linha = { nomeKit: nomeKit, qtdKitServicos: qtdKitServicos, totalKitServicos: totalKitServicos};
-      listaRelatorioKitsNaoUsados.push(linha);
     }
     
     function gerarLinhaRelatorioIndividuaisNaoUsados() {
@@ -438,33 +401,7 @@ function exibirPaginaCorreta(pagina) {
       cellQtdTotalIndviduaisNaoUsados.textContent = listaRelatorioIndividuaisNaoUsados[0].totalIndividuaisNaoUsados;
     }
 
-    function gerarLinhaRelatorioKitsNaoUsados() {
-      var tabelaRelatorioNaoUsados = document.getElementById('tableServicosNaoUsados');
-      let linha;
-        for (var i = 0; i < listaRelatorioKitsNaoUsados.length; i++) { 
-          linha = document.getElementById('linhaNaoUsados'+i);
-          var cellNomeKit = linha.insertCell(2);
-          cellNomeKit.textContent = listaRelatorioKitsNaoUsados[i].nomeKit;
-          
-          var cellQtdKits = linha.insertCell(3);
-          cellQtdKits.textContent = listaRelatorioKitsNaoUsados[i].qtdKitServicos;
-        }
-        linha = document.getElementById('linhaNaoUsados'+listaRelatorioKitsNaoUsados.length);
-        var celltotalKitsNaoUsados = linha.insertCell(2);
-        celltotalKitsNaoUsados.id= 'celulaTotal';
-        celltotalKitsNaoUsados.textContent = 'Total: ';
-        let quantidadeKits=0;
-
-        for (var i = 0; i < listaRelatorioKitsNaoUsados.length; i++) { 
-          quantidadeKits += listaRelatorioKitsNaoUsados[i].qtdKitServicos;
-        }
-        var celQtdTotalKitsServicosNaoUsados = linha.insertCell(3);
-        celQtdTotalKitsServicosNaoUsados.id= 'celulaTotal';
-        celQtdTotalKitsServicosNaoUsados.textContent = quantidadeKits;
-      }
-
       //DADOS SOBRE RECOMPENSAS NÃO UTILIZADAS
-    
       async function buscaInfosTableRecompensasNaoUsadas() {
         limparTabela('tableRecompensasNaoUsadas');
         listaRecompensasNaoUsadas = [];
