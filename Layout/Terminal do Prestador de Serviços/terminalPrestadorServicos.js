@@ -280,6 +280,13 @@ document.addEventListener('DOMContentLoaded', function () {
       divServico.appendChild(divBtnUtilizar);
       divContainer.appendChild(divServico);
     }
+
+    var saldoRestante = document.createElement('div');
+    saldoRestante.textContent = 'Saldo total restante: ' + listaComprasByCartao.length;
+    saldoRestante.id='saldoRestante';
+    divContainer.appendChild(saldoRestante);
+
+
     var divBtnFinalizar = document.createElement('div');
     divBtnFinalizar.className = 'btnFinalizar';
 
@@ -539,6 +546,12 @@ document.addEventListener('DOMContentLoaded', function () {
       divRecompensa.appendChild(divBtnUtilizarRecompensa);
       divContainerRecompensas.appendChild(divRecompensa);
     }
+
+    var saldoRestante = document.createElement('div');
+    saldoRestante.textContent = 'Saldo total restante: ' + listaRecompensasByCartao.length;
+    saldoRestante.id='saldoRestanteRecompensas';
+    divContainerRecompensas.appendChild(saldoRestante);
+
     var divBtnFinalizarRecompensa = document.createElement('div');
     divBtnFinalizarRecompensa.className = 'btnFinalizar';
 
